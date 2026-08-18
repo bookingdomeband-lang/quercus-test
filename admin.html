@@ -7,57 +7,53 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
 <style>
-  :root{--cream:#f7f0e4;--cream-2:#f1e7d6;--forest:#2f3417;--copper:#9c6b34;--copper-2:#b98a45;--ink:#38341f;--muted:#8c8368;--line:rgba(156,107,52,.3);--D:"Cormorant Garamond",serif;--U:"Jost",system-ui,sans-serif}
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:var(--U);background:var(--cream);color:var(--ink);padding-bottom:5rem}
-  .topbar{position:sticky;top:0;z-index:5;background:var(--forest);color:#f7f0e4;display:flex;align-items:center;justify-content:space-between;padding:1rem clamp(1rem,4vw,2rem)}
-  .brand{font-family:var(--D);font-size:1.4rem;display:flex;align-items:center;gap:.5rem}
-  .brand i{width:7px;height:7px;background:var(--copper-2);transform:rotate(45deg)}
-  .brand small{font-family:var(--U);font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--copper-2);margin-left:.4rem}
-  .wrap{width:min(760px,92vw);margin:2.4rem auto}
-  h2{font-family:var(--D);font-weight:500;color:var(--forest);font-size:1.9rem;margin-bottom:.3rem}
-  .hint{font-size:.85rem;color:var(--muted);margin-bottom:1.4rem;line-height:1.5}
-  .card{background:#fff;border:1px solid var(--line);border-radius:4px;padding:1.4rem 1.5rem;margin-bottom:1.6rem}
-  .card>h3{font-family:var(--D);font-weight:500;color:var(--copper);font-size:1.5rem;margin-bottom:1rem;display:flex;align-items:center;gap:.6rem}
-  .dmd{width:7px;height:7px;background:var(--copper);transform:rotate(45deg);display:inline-block;flex:none}
-  label{display:block;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:.8rem 0 .3rem}
-  .soft{text-transform:none;letter-spacing:0;font-size:.85em}
-  input,textarea{width:100%;font-family:var(--U);font-size:1rem;color:var(--ink);background:var(--cream);border:1px solid var(--line);border-radius:3px;padding:.6rem .7rem}
-  input:focus,textarea:focus{outline:none;border-color:var(--copper);background:#fff}
-  textarea{resize:vertical;min-height:52px}
-  .dish-row{border:1px dashed var(--line);border-radius:4px;padding:.9rem 1rem;margin-bottom:.9rem;background:var(--cream)}
-  .g2{display:grid;grid-template-columns:1fr 90px;gap:.6rem}
-  .ra{display:flex;justify-content:flex-end;margin-top:.5rem}
-
-  /* Allergènes checkboxes */
-  .alg-checks{display:flex;flex-wrap:wrap;gap:6px;margin-top:.5rem}
-  .alg-check{display:inline-flex;align-items:center;gap:4px;cursor:pointer;padding:3px 8px 3px 4px;border-radius:20px;border:1px solid var(--line);transition:background .15s,border-color .15s;user-select:none}
-  .alg-check input{width:auto;padding:0;margin:0;accent-color:var(--copper);cursor:pointer}
-  .alg-check svg{width:20px;height:20px;flex:none}
-  .alg-check span{font-family:var(--U);font-size:.64rem;letter-spacing:.06em;color:var(--muted)}
-  .alg-check:has(input:checked){background:rgba(156,107,52,.1);border-color:var(--copper)}
-  .alg-check:has(input:checked) span{color:var(--copper)}
-
-  .btn{font-family:var(--U);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--copper);color:var(--copper);background:none;padding:.55rem 1rem;border-radius:3px;cursor:pointer;transition:.2s}
-  .btn:hover{background:var(--copper);color:#fff}
-  .ghost{border-color:var(--line)!important;color:var(--muted)!important}.ghost:hover{background:var(--muted)!important;color:#fff!important}
-  .danger{border-color:#b25b4a!important;color:#b25b4a!important;padding:.4rem .7rem!important}.danger:hover{background:#b25b4a!important;color:#fff!important}
-  .add-line{margin-top:.5rem}
-  .fr{display:grid;grid-template-columns:1fr 110px auto;gap:.6rem;align-items:center;margin-bottom:.6rem}
-  .savebar{position:fixed;bottom:0;left:0;right:0;background:rgba(247,240,228,.96);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:.9rem clamp(1rem,4vw,2rem);display:flex;align-items:center;justify-content:space-between;gap:1rem}
-  .msg{font-size:.85rem;line-height:1.4}
-  .ok{color:#2f5c1a}.err{color:#b25b4a}
-  .save{background:var(--forest)!important;border-color:var(--forest)!important;color:#f7f0e4!important;font-size:.78rem!important;padding:.7rem 1.6rem!important}
-  .save:hover{background:#474f2b!important}
-  .gate{min-height:100svh;display:flex;align-items:center;justify-content:center;padding:1.5rem}
-  .box{width:min(380px,92vw);background:#fff;border:1px solid var(--line);border-radius:6px;padding:2.2rem 2rem;text-align:center}
-  .diamond{width:12px;height:12px;background:var(--copper);transform:rotate(45deg);margin:0 auto 1rem}
-  .box h1{font-family:var(--D);font-weight:500;color:var(--forest);font-size:1.8rem}
-  .box p{font-size:.85rem;color:var(--muted);margin:.3rem 0 1.4rem}
-  .box input{text-align:center;margin-bottom:1rem}
-  .emsg{color:#b25b4a;font-size:.82rem;min-height:1.2em;margin-top:.6rem;line-height:1.4}
-  .hidden{display:none!important}
-  .tag{font-family:var(--U);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
+:root{--cream:#f7f0e4;--cream-2:#f1e7d6;--forest:#2f3417;--copper:#9c6b34;--copper-2:#b98a45;--ink:#38341f;--muted:#8c8368;--line:rgba(156,107,52,.3);--D:"Cormorant Garamond",serif;--U:"Jost",system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--U);background:var(--cream);color:var(--ink);padding-bottom:5rem}
+.topbar{position:sticky;top:0;z-index:5;background:var(--forest);color:#f7f0e4;display:flex;align-items:center;justify-content:space-between;padding:1rem clamp(1rem,4vw,2rem)}
+.brand{font-family:var(--D);font-size:1.4rem;display:flex;align-items:center;gap:.5rem}
+.brand i{width:7px;height:7px;background:var(--copper-2);transform:rotate(45deg)}
+.brand small{font-family:var(--U);font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--copper-2);margin-left:.4rem}
+.wrap{width:min(760px,92vw);margin:2.4rem auto}
+h2{font-family:var(--D);font-weight:500;color:var(--forest);font-size:1.9rem;margin-bottom:.3rem}
+.hint{font-size:.85rem;color:var(--muted);margin-bottom:1.4rem;line-height:1.5}
+.card{background:#fff;border:1px solid var(--line);border-radius:4px;padding:1.4rem 1.5rem;margin-bottom:1.6rem}
+.card>h3{font-family:var(--D);font-weight:500;color:var(--copper);font-size:1.5rem;margin-bottom:1rem;display:flex;align-items:center;gap:.6rem}
+.dmd{width:7px;height:7px;background:var(--copper);transform:rotate(45deg);display:inline-block;flex:none}
+label{display:block;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:.8rem 0 .3rem}
+.soft{text-transform:none;letter-spacing:0;font-size:.85em}
+input,textarea{width:100%;font-family:var(--U);font-size:1rem;color:var(--ink);background:var(--cream);border:1px solid var(--line);border-radius:3px;padding:.6rem .7rem}
+input:focus,textarea:focus{outline:none;border-color:var(--copper);background:#fff}
+textarea{resize:vertical;min-height:52px}
+.dish-row{border:1px dashed var(--line);border-radius:4px;padding:.9rem 1rem;margin-bottom:.9rem;background:var(--cream)}
+.g2{display:grid;grid-template-columns:1fr 90px;gap:.6rem}
+.ra{display:flex;justify-content:flex-end;margin-top:.5rem}
+.alg-checks{display:flex;flex-wrap:wrap;gap:5px;margin-top:.5rem}
+.alg-ck{display:inline-flex;align-items:center;gap:4px;cursor:pointer;padding:3px 8px 3px 4px;border-radius:20px;border:1px solid var(--line);transition:background .15s,border-color .15s;user-select:none}
+.alg-ck input[type=checkbox]{width:auto;padding:0;margin:0;accent-color:var(--copper);cursor:pointer;background:none;border:none}
+.alg-ck img{width:18px;height:18px;border-radius:50%;flex:none}
+.alg-ck span{font-family:var(--U);font-size:.62rem;letter-spacing:.06em;color:var(--muted)}
+.alg-ck.checked{background:rgba(156,107,52,.1);border-color:var(--copper)}
+.alg-ck.checked span{color:var(--copper)}
+.btn{font-family:var(--U);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--copper);color:var(--copper);background:none;padding:.55rem 1rem;border-radius:3px;cursor:pointer;transition:.2s}
+.btn:hover{background:var(--copper);color:#fff}
+.ghost{border-color:var(--line)!important;color:var(--muted)!important}.ghost:hover{background:var(--muted)!important;color:#fff!important}
+.danger{border-color:#b25b4a!important;color:#b25b4a!important;padding:.4rem .7rem!important}.danger:hover{background:#b25b4a!important;color:#fff!important}
+.add-line{margin-top:.5rem}
+.fr{display:grid;grid-template-columns:1fr 110px auto;gap:.6rem;align-items:center;margin-bottom:.6rem}
+.savebar{position:fixed;bottom:0;left:0;right:0;background:rgba(247,240,228,.96);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:.9rem clamp(1rem,4vw,2rem);display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.msg{font-size:.85rem;line-height:1.4}
+.ok{color:#2f5c1a}.err{color:#b25b4a}
+.save{background:var(--forest)!important;border-color:var(--forest)!important;color:#f7f0e4!important;font-size:.78rem!important;padding:.7rem 1.6rem!important}
+.save:hover{background:#474f2b!important}
+.gate{min-height:100svh;display:flex;align-items:center;justify-content:center;padding:1.5rem}
+.box{width:min(380px,92vw);background:#fff;border:1px solid var(--line);border-radius:6px;padding:2.2rem 2rem;text-align:center}
+.diamond{width:12px;height:12px;background:var(--copper);transform:rotate(45deg);margin:0 auto 1rem}
+.box h1{font-family:var(--D);font-weight:500;color:var(--forest);font-size:1.8rem}
+.box p{font-size:.85rem;color:var(--muted);margin:.3rem 0 1.4rem}
+.box input{text-align:center;margin-bottom:1rem}
+.emsg{color:#b25b4a;font-size:.82rem;min-height:1.2em;margin-top:.6rem;line-height:1.4}
+.hidden{display:none!important}
 </style>
 </head>
 <body>
@@ -71,7 +67,6 @@
     <div class="emsg" id="loginErr"></div>
   </div>
 </div>
-
 <div id="app" class="hidden">
   <div class="topbar">
     <span class="brand"><i></i> Le Quercus <small>Admin</small></span>
@@ -79,7 +74,7 @@
   </div>
   <div class="wrap">
     <h2>Modifier la carte</h2>
-    <p class="hint">Modifiez le plat du jour ou les plats et leurs allergènes, puis cliquez sur « Enregistrer ».</p>
+    <p class="hint">Modifiez le plat du jour ou les plats et leurs allergènes, puis cliquez sur « Enregistrer ».</p>
     <div class="card">
       <h3><span class="dmd"></span> Plat du jour</h3>
       <label>Nom <span class="soft">(vide = masqué)</span></label><input id="pj_nom" placeholder="Ex. Blanquette de veau"/>
@@ -105,172 +100,204 @@
       <label style="margin-top:1rem">Mention</label><input id="fnote" placeholder="Ex. Du lundi au vendredi, le midi"/>
     </div>
   </div>
-  <div class="savebar">
-    <span class="msg" id="msg"></span>
-    <button class="btn save" id="saveBtn">Enregistrer</button>
-  </div>
+  <div class="savebar"><span class="msg" id="msg"></span><button class="btn save" id="saveBtn">Enregistrer</button></div>
 </div>
-
 <script>
-  const ALLERGEN_IMGS={"gluten": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48cGF0aCBkPSJNMTIgNGMwIDAgMSAzIDAgNXMtMyAyLTMgMiAyIDEgMiA0LTEgNS0xIDUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS42IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48cGF0aCBkPSJNMTIgNGMwIDAtMSAzIDAgNXMzIDIgMyAyLTIgMS0yIDQgMSA1IDEgNSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjYiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxsaW5lIHgxPSIxMiIgeTE9IjQiIHgyPSIxMiIgeTI9IjIwIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PC9zdmc+", "crustaces": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48cGF0aCBkPSJNNyAxNCBROSAxMCAxMiA5IFExNSAxMCAxNyAxNCIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjYiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxjaXJjbGUgY3g9IjEyIiBjeT0iNSIgcj0iMS41IiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0xMCA5IFExMCA2IDEyIDUgUTE0IDYgMTQgOSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjQiIGZpbGw9Im5vbmUiLz48cGF0aCBkPSJNOCAxNCBRNyAxNyA5IDE5IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNCIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTE2IDE0IFExNyAxNyAxNSAxOSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjQiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjwvc3ZnPg==", "oeufs": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48ZWxsaXBzZSBjeD0iMTIiIGN5PSIxMyIgcng9IjUuNSIgcnk9IjYiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS43Ii8+PHBhdGggZD0iTTkuNSA3LjUgUTEyIDQgMTQuNSA3LjUiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS43IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48ZWxsaXBzZSBjeD0iMTIiIGN5PSIxNCIgcng9IjIuMiIgcnk9IjIuMiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=", "poissons": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48cGF0aCBkPSJNNyAxMiBDOSA4LjUgMTMgOCAxNyAxMiBDMTMgMTUuNSA5IDE1IDcgMTJaIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0xNyAxMiBMMjEgOSBMMjAgMTIgTDIxIDE1WiIgZmlsbD0id2hpdGUiLz48Y2lyY2xlIGN4PSIxMCIgY3k9IjExIiByPSIxIiBmaWxsPSIjOWM2YjM0Ii8+PC9zdmc+", "arachides": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48ZWxsaXBzZSBjeD0iMTAiIGN5PSIxMCIgcng9IjMiIHJ5PSI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNyIvPjxlbGxpcHNlIGN4PSIxNCIgY3k9IjE1IiByeD0iMyIgcnk9IjQiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS43Ii8+PHBhdGggZD0iTTExLjUgMTMgUTEyIDEyIDEyLjUgMTEiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS40IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48L3N2Zz4=", "soja": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48Y2lyY2xlIGN4PSIxMiIgY3k9IjkiIHI9IjMuNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjciLz48cGF0aCBkPSJNOC41IDEyIEM3IDE1IDggMTggMTIgMTkgQzE2IDE4IDE3IDE1IDE1LjUgMTIiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS43IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48bGluZSB4MT0iMTIiIHkxPSI1LjUiIHgyPSIxMiIgeTI9IjMuNSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjwvc3ZnPg==", "lait": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48cGF0aCBkPSJNOS41IDUuNSBMMTUuNSA1LjUgTDE3IDkgTDE3IDE5IEw3IDE5IEw3IDkgWiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjciIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48bGluZSB4MT0iNyIgeTE9IjkiIHgyPSIxNyIgeTI9IjkiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS4zIi8+PC9zdmc+", "fruits_coque": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48ZWxsaXBzZSBjeD0iMTIiIGN5PSIxNSIgcng9IjUiIHJ5PSI1IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNyIvPjxwYXRoIGQ9Ik05IDEyIFExMiA1LjUgMTUgMTIiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS43IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48bGluZSB4MT0iMTIiIHkxPSI4IiB4Mj0iMTIiIHkyPSI1IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PC9zdmc+", "celeri": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48bGluZSB4MT0iMTIiIHkxPSIxOSIgeDI9IjEyIiB5Mj0iNyIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik0xMiAxNCBDMTAgMTIgNyAxMiA2IDkuNSBDOC41IDguNSAxMSAxMC41IDEyIDEzIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0xMiAxMSBDMTQgOSAxNyA5IDE4IDYuNSBDMTUuNSA1LjUgMTMgNy41IDEyIDEwIiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg==", "moutarde": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48Y2lyY2xlIGN4PSIxMiIgY3k9IjE1IiByPSI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNyIvPjxwYXRoIGQ9Ik05LjUgMTMuNSBRMTIgMTEgMTQuNSAxMy41IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGNpcmNsZSBjeD0iMTIiIGN5PSI4LjUiIHI9IjIuMiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjYiLz48L3N2Zz4=", "sesame": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48ZWxsaXBzZSBjeD0iOC41IiBjeT0iOCIgcng9IjIiIHJ5PSIzLjIiIGZpbGw9IndoaXRlIiB0cmFuc2Zvcm09InJvdGF0ZSgtMjAgOC41IDgpIi8+PGVsbGlwc2UgY3g9IjE1LjUiIGN5PSI4IiByeD0iMiIgcnk9IjMuMiIgZmlsbD0id2hpdGUiIHRyYW5zZm9ybT0icm90YXRlKDIwIDE1LjUgOCkiLz48ZWxsaXBzZSBjeD0iOC41IiBjeT0iMTYiIHJ4PSIyIiByeT0iMy4yIiBmaWxsPSJ3aGl0ZSIgdHJhbnNmb3JtPSJyb3RhdGUoMjAgOC41IDE2KSIvPjxlbGxpcHNlIGN4PSIxNS41IiBjeT0iMTYiIHJ4PSIyIiByeT0iMy4yIiBmaWxsPSJ3aGl0ZSIgdHJhbnNmb3JtPSJyb3RhdGUoLTIwIDE1LjUgMTYpIi8+PGVsbGlwc2UgY3g9IjEyIiBjeT0iMTIiIHJ4PSIyIiByeT0iMy4yIiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg=="};
-const ALLERGEN_LIST=[{"key": "gluten", "label": "Gluten"}, {"key": "crustaces", "label": "Crustacés"}, {"key": "oeufs", "label": "Œufs"}, {"key": "poissons", "label": "Poissons"}, {"key": "arachides", "label": "Arachides"}, {"key": "soja", "label": "Soja"}, {"key": "lait", "label": "Lait"}, {"key": "fruits_coque", "label": "Fruits à coque"}, {"key": "celeri", "label": "Céleri"}, {"key": "moutarde", "label": "Moutarde"}, {"key": "sesame", "label": "Sésame"}];
-  const DM={"platDuJour": {"nom": "", "desc": "", "prix": "", "date": ""}, "sections": [{"titre": "Entrées", "sous": "Pour commencer", "plats": [{"nom": "Velouté de potimarron", "desc": "Huile de noisette torréfiée, éclats de châtaigne.", "prix": "9", "allergenes": ["lait", "fruits_coque"]}, {"nom": "Œuf parfait, champignons des bois", "desc": "Crème de champignons, copeaux de comté.", "prix": "11", "allergenes": ["oeufs", "lait"]}, {"nom": "Terrine de campagne maison", "desc": "Pickles de légumes, pain de seigle grillé.", "prix": "10", "allergenes": ["gluten"]}]}, {"titre": "Plats", "sous": "Le cœur du repas", "plats": [{"nom": "Suprême de volaille fermière", "desc": "Jus au thym, purée fumée au bois de chêne.", "prix": "19", "allergenes": ["lait"]}, {"nom": "Filet de bœuf, sauce aux morilles", "desc": "Gratin dauphinois, légumes de saison.", "prix": "26", "allergenes": ["lait"]}, {"nom": "Pavé de cabillaud rôti", "desc": "Beurre blanc, écrasé de pommes de terre.", "prix": "21", "allergenes": ["poissons", "lait"]}, {"nom": "Risotto d'automne aux cèpes", "desc": "Noisettes torréfiées, parmesan. Végétarien.", "prix": "17", "allergenes": ["lait", "fruits_coque"]}]}, {"titre": "Desserts", "sous": "La douceur", "plats": [{"nom": "Tarte fine aux pommes", "desc": "Caramel au beurre salé, glace vanille.", "prix": "8", "allergenes": ["gluten", "lait", "oeufs"]}, {"nom": "Fondant au chocolat", "desc": "Cœur coulant, crème anglaise.", "prix": "8", "allergenes": ["gluten", "lait", "oeufs"]}, {"nom": "Fromages affinés", "desc": "Sélection du moment, confiture de saison.", "prix": "9", "allergenes": ["lait"]}]}, {"titre": "Desserts glacés", "sous": "Glaces & sorbets", "type": "glaces", "parfums": {"glaces": ["Vanille", "Chocolat", "Café", "Caramel beurre salé", "Fraise", "Pistache"], "sorbets": ["Citron", "Framboise", "Mangue", "Fruits rouges", "Menthe"]}, "plats": [{"nom": "Coupe 2 boules", "desc": "Au choix dans notre sélection.", "prix": "5", "allergenes": ["lait", "oeufs"]}, {"nom": "Coupe 3 boules", "desc": "Au choix, avec chantilly maison.", "prix": "7", "allergenes": ["lait", "oeufs"]}, {"nom": "Café liégeois", "desc": "Glace café, chantilly maison.", "prix": "7", "allergenes": ["lait", "oeufs"]}, {"nom": "Coupe enfant", "desc": "2 boules au choix, nappage chocolat ou fraise.", "prix": "4", "allergenes": ["lait", "oeufs"]}]}], "supplements": {"titre": "Suppléments", "lignes": [{"label": "Supplément sauce", "prix": "1,50 €"}, {"label": "Supplément fromage", "prix": "2 €"}, {"label": "Café ou infusion", "prix": "2 €"}, {"label": "Pain maison (portion)", "prix": "1 €"}]}, "menuEnfant": {"titre": "Menu enfant", "sous": "Jusqu'à 12 ans", "plats": [{"nom": "Steak haché frites", "desc": "Viande fraîche, frites maison.", "prix": "9", "allergenes": ["gluten"]}, {"nom": "Nuggets de poulet", "desc": "Frites maison, sauce tomate.", "prix": "9", "allergenes": ["gluten", "oeufs"]}, {"nom": "Pâtes au beurre", "desc": "Parmesan, option sauce tomate.", "prix": "7", "allergenes": ["gluten", "lait"]}], "inclus": "Boisson + dessert inclus"}, "formule": {"titre": "Formule du midi", "lignes": [{"label": "Entrée + Plat", "prix": "22 €"}, {"label": "Plat + Dessert", "prix": "22 €"}, {"label": "Entrée + Plat + Dessert", "prix": "27 €"}], "note": "Du lundi au vendredi, le midi"}};
-  const ALLERGEN_SVGS={"gluten":"<svg viewBox="0 0 24 24" width="28" height="28" xmlns="http://www.w3.org/2000/svg" aria-label="Gluten"><circle cx="12" cy="12" r="11" fill="#9c6b34"/><circle cx="12" cy="12" r="6" fill="white"/></svg>","crustaces":"<svg viewBox="0 0 24 24" width="28" height="28" xmlns="http://www.w3.org/2000/svg" aria-label="Crustacés"><circle cx="12" cy="12" r="11" fill="#9c6b34"/><circle cx="12" cy="12" r="6" fill="white"/></svg>","oeufs":"<svg viewBox="0 0 24 24" width="28" height="28" xmlns="http://www.w3.org/2000/svg" aria-label="Œufs"><circle cx="12" cy="12" r="11" fill="#9c6b34"/><circle cx="12" cy="12" r="6" fill="white"/></svg>","poissons":"<svg viewBox="0 0 24 24" width="28" height="28" xmlns="http://www.w3.org/2000/svg" aria-label="Poissons"><circle cx="12" cy="12" r="11" fill="#9c6b34"/><circle cx="12" cy="12" r="6" fill="white"/></svg>","arachides":"<svg viewBox="0 0 24 24" width="28" height="28" xmlns="http://www.w3.org/2000/svg" aria-label="Arachides"><circle cx="12" cy="12" r="11" fill="#9c6b34"/><circle cx="12" cy="12" r="6" fill="white"/></svg>","soja":"<svg viewBox="0 0 24 24" width="28" height="28" xmlns="http://www.w3.org/2000/svg" aria-label="Soja"><circle cx="12" cy="12" r="11" fill="#9c6b34"/><circle cx="12" cy="9" r="3" fill="none" stroke="white" stroke-width="1.7"/> <path d="M9 12 C7 15 8 18 12 18 C16 18 17 15 15 12" fill="none" stroke="white" stroke-width="1.7" stroke-linecap="round"/> <line x1="12" y1="6" x2="12" y2="4" stroke="white" stroke-width="1.5"/> <path d="M10 4 Q12 2 14 4" fill="none" stroke="white" stroke-width="1.3"/></svg>","lait":"<svg viewBox="0 0 24 24" width="28" height="28" xmlns="http://www.w3.org/2000/svg" aria-label="Lait"><circle cx="12" cy="12" r="11" fill="#9c6b34"/><circle cx="12" cy="12" r="6" fill="white"/></svg>","fruits_coque":"<svg viewBox="0 0 24 24" width="28" height="28" xmlns="http://www.w3.org/2000/svg" aria-label="Fruits à coque"><circle cx="12" cy="12" r="11" fill="#9c6b34"/><circle cx="12" cy="12" r="6" fill="white"/></svg>","celeri":"<svg viewBox="0 0 24 24" width="28" height="28" xmlns="http://www.w3.org/2000/svg" aria-label="Céleri"><circle cx="12" cy="12" r="11" fill="#9c6b34"/><circle cx="12" cy="12" r="6" fill="white"/></svg>","moutarde":"<svg viewBox="0 0 24 24" width="28" height="28" xmlns="http://www.w3.org/2000/svg" aria-label="Moutarde"><circle cx="12" cy="12" r="11" fill="#9c6b34"/><circle cx="12" cy="12" r="6" fill="white"/></svg>","sesame":"<svg viewBox="0 0 24 24" width="28" height="28" xmlns="http://www.w3.org/2000/svg" aria-label="Sésame"><circle cx="12" cy="12" r="11" fill="#9c6b34"/><ellipse cx="9" cy="8" rx="2" ry="3.5" fill="white" transform="rotate(-15 9 8)"/> <ellipse cx="15" cy="8" rx="2" ry="3.5" fill="white" transform="rotate(15 15 8)"/> <ellipse cx="9" cy="16" rx="2" ry="3.5" fill="white" transform="rotate(15 9 16)"/> <ellipse cx="15" cy="16" rx="2" ry="3.5" fill="white" transform="rotate(-15 15 16)"/> <ellipse cx="12" cy="12" rx="2" ry="3.5" fill="white"/></svg>"};
-  const ALLERGEN_LIST=[{"key": "gluten", "label": "Gluten"}, {"key": "crustaces", "label": "Crustacés"}, {"key": "oeufs", "label": "Œufs"}, {"key": "poissons", "label": "Poissons"}, {"key": "arachides", "label": "Arachides"}, {"key": "soja", "label": "Soja"}, {"key": "lait", "label": "Lait"}, {"key": "fruits_coque", "label": "Fruits à coque"}, {"key": "celeri", "label": "Céleri"}, {"key": "moutarde", "label": "Moutarde"}, {"key": "sesame", "label": "Sésame"}];
 
-  let PW=sessionStorage.getItem('qpw')||"";
-  let menu=null;
-  const $=id=>document.getElementById(id);
+const ALLERGEN_IMGS = {"gluten": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48cGF0aCBkPSJNMTIgNGMwIDAgMSAzIDAgNXMtMyAyLTMgMiAyIDEgMiA0LTEgNS0xIDUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS42IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48cGF0aCBkPSJNMTIgNGMwIDAtMSAzIDAgNXMzIDIgMyAyLTIgMS0yIDQgMSA1IDEgNSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjYiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxsaW5lIHgxPSIxMiIgeTE9IjQiIHgyPSIxMiIgeTI9IjIwIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PC9zdmc+", "crustaces": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48cGF0aCBkPSJNNyAxNCBROSAxMCAxMiA5IFExNSAxMCAxNyAxNCIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjYiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxjaXJjbGUgY3g9IjEyIiBjeT0iNSIgcj0iMS41IiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0xMCA5IFExMCA2IDEyIDUgUTE0IDYgMTQgOSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjQiIGZpbGw9Im5vbmUiLz48cGF0aCBkPSJNOCAxNCBRNyAxNyA5IDE5IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNCIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTE2IDE0IFExNyAxNyAxNSAxOSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjQiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjwvc3ZnPg==", "oeufs": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48ZWxsaXBzZSBjeD0iMTIiIGN5PSIxMyIgcng9IjUuNSIgcnk9IjYiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS43Ii8+PHBhdGggZD0iTTkuNSA3LjUgUTEyIDQgMTQuNSA3LjUiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS43IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48ZWxsaXBzZSBjeD0iMTIiIGN5PSIxNCIgcng9IjIuMiIgcnk9IjIuMiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=", "poissons": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48cGF0aCBkPSJNNyAxMiBDOSA4LjUgMTMgOCAxNyAxMiBDMTMgMTUuNSA5IDE1IDcgMTJaIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0xNyAxMiBMMjEgOSBMMjAgMTIgTDIxIDE1WiIgZmlsbD0id2hpdGUiLz48Y2lyY2xlIGN4PSIxMCIgY3k9IjExIiByPSIxIiBmaWxsPSIjOWM2YjM0Ii8+PC9zdmc+", "arachides": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48ZWxsaXBzZSBjeD0iMTAiIGN5PSIxMCIgcng9IjMiIHJ5PSI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNyIvPjxlbGxpcHNlIGN4PSIxNCIgY3k9IjE1IiByeD0iMyIgcnk9IjQiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS43Ii8+PHBhdGggZD0iTTExLjUgMTMgUTEyIDEyIDEyLjUgMTEiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS40IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48L3N2Zz4=", "soja": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48Y2lyY2xlIGN4PSIxMiIgY3k9IjkiIHI9IjMuNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjciLz48cGF0aCBkPSJNOC41IDEyIEM3IDE1IDggMTggMTIgMTkgQzE2IDE4IDE3IDE1IDE1LjUgMTIiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS43IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48bGluZSB4MT0iMTIiIHkxPSI1LjUiIHgyPSIxMiIgeTI9IjMuNSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjwvc3ZnPg==", "lait": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48cGF0aCBkPSJNOS41IDUuNSBMMTUuNSA1LjUgTDE3IDkgTDE3IDE5IEw3IDE5IEw3IDkgWiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjciIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48bGluZSB4MT0iNyIgeTE9IjkiIHgyPSIxNyIgeTI9IjkiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS4zIi8+PC9zdmc+", "fruits_coque": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48ZWxsaXBzZSBjeD0iMTIiIGN5PSIxNSIgcng9IjUiIHJ5PSI1IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNyIvPjxwYXRoIGQ9Ik05IDEyIFExMiA1LjUgMTUgMTIiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS43IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48bGluZSB4MT0iMTIiIHkxPSI4IiB4Mj0iMTIiIHkyPSI1IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PC9zdmc+", "celeri": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48bGluZSB4MT0iMTIiIHkxPSIxOSIgeDI9IjEyIiB5Mj0iNyIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik0xMiAxNCBDMTAgMTIgNyAxMiA2IDkuNSBDOC41IDguNSAxMSAxMC41IDEyIDEzIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0xMiAxMSBDMTQgOSAxNyA5IDE4IDYuNSBDMTUuNSA1LjUgMTMgNy41IDEyIDEwIiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg==", "moutarde": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48Y2lyY2xlIGN4PSIxMiIgY3k9IjE1IiByPSI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNyIvPjxwYXRoIGQ9Ik05LjUgMTMuNSBRMTIgMTEgMTQuNSAxMy41IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGNpcmNsZSBjeD0iMTIiIGN5PSI4LjUiIHI9IjIuMiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjYiLz48L3N2Zz4=", "sesame": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48ZWxsaXBzZSBjeD0iOC41IiBjeT0iOCIgcng9IjIiIHJ5PSIzLjIiIGZpbGw9IndoaXRlIiB0cmFuc2Zvcm09InJvdGF0ZSgtMjAgOC41IDgpIi8+PGVsbGlwc2UgY3g9IjE1LjUiIGN5PSI4IiByeD0iMiIgcnk9IjMuMiIgZmlsbD0id2hpdGUiIHRyYW5zZm9ybT0icm90YXRlKDIwIDE1LjUgOCkiLz48ZWxsaXBzZSBjeD0iOC41IiBjeT0iMTYiIHJ4PSIyIiByeT0iMy4yIiBmaWxsPSJ3aGl0ZSIgdHJhbnNmb3JtPSJyb3RhdGUoMjAgOC41IDE2KSIvPjxlbGxpcHNlIGN4PSIxNS41IiBjeT0iMTYiIHJ4PSIyIiByeT0iMy4yIiBmaWxsPSJ3aGl0ZSIgdHJhbnNmb3JtPSJyb3RhdGUoLTIwIDE1LjUgMTYpIi8+PGVsbGlwc2UgY3g9IjEyIiBjeT0iMTIiIHJ4PSIyIiByeT0iMy4yIiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg=="};
+const ALLERGEN_LIST = [{"key": "gluten", "label": "Gluten"}, {"key": "crustaces", "label": "Crustacés"}, {"key": "oeufs", "label": "Œufs"}, {"key": "poissons", "label": "Poissons"}, {"key": "arachides", "label": "Arachides"}, {"key": "soja", "label": "Soja"}, {"key": "lait", "label": "Lait"}, {"key": "fruits_coque", "label": "Fruits à coque"}, {"key": "celeri", "label": "Céleri"}, {"key": "moutarde", "label": "Moutarde"}, {"key": "sesame", "label": "Sésame"}];
+const DM = {"platDuJour": {"nom": "", "desc": "", "prix": "", "date": ""}, "sections": [{"titre": "Entrées", "sous": "Pour commencer", "plats": [{"nom": "Velouté de potimarron", "desc": "Huile de noisette torréfiée, éclats de châtaigne.", "prix": "9", "allergenes": ["lait", "fruits_coque"]}, {"nom": "Œuf parfait, champignons des bois", "desc": "Crème de champignons, copeaux de comté.", "prix": "11", "allergenes": ["oeufs", "lait"]}, {"nom": "Terrine de campagne maison", "desc": "Pickles de légumes, pain de seigle grillé.", "prix": "10", "allergenes": ["gluten"]}]}, {"titre": "Plats", "sous": "Le cœur du repas", "plats": [{"nom": "Suprême de volaille fermière", "desc": "Jus au thym, purée fumée.", "prix": "19", "allergenes": ["lait"]}, {"nom": "Filet de bœuf, sauce aux morilles", "desc": "Gratin dauphinois, légumes de saison.", "prix": "26", "allergenes": ["lait"]}, {"nom": "Pavé de cabillaud rôti", "desc": "Beurre blanc, écrasé de pommes de terre.", "prix": "21", "allergenes": ["poissons", "lait"]}, {"nom": "Risotto d'automne aux cèpes", "desc": "Noisettes torréfiées, parmesan. Végétarien.", "prix": "17", "allergenes": ["lait", "fruits_coque"]}]}, {"titre": "Desserts", "sous": "La douceur", "plats": [{"nom": "Tarte fine aux pommes", "desc": "Caramel au beurre salé, glace vanille.", "prix": "8", "allergenes": ["gluten", "lait", "oeufs"]}, {"nom": "Fondant au chocolat", "desc": "Cœur coulant, crème anglaise.", "prix": "8", "allergenes": ["gluten", "lait", "oeufs"]}, {"nom": "Fromages affinés", "desc": "Sélection du moment, confiture de saison.", "prix": "9", "allergenes": ["lait"]}]}, {"titre": "Desserts glacés", "sous": "Glaces & sorbets", "type": "glaces", "parfums": {"glaces": ["Vanille", "Chocolat", "Café", "Caramel beurre salé", "Fraise", "Pistache"], "sorbets": ["Citron", "Framboise", "Mangue", "Fruits rouges", "Menthe"]}, "plats": [{"nom": "Coupe 2 boules", "desc": "Au choix dans notre sélection.", "prix": "5", "allergenes": ["lait", "oeufs"]}, {"nom": "Coupe 3 boules", "desc": "Au choix, avec chantilly maison.", "prix": "7", "allergenes": ["lait", "oeufs"]}, {"nom": "Café liégeois", "desc": "Glace café, chantilly maison.", "prix": "7", "allergenes": ["lait", "oeufs"]}, {"nom": "Coupe enfant", "desc": "2 boules au choix, nappage au choix.", "prix": "4", "allergenes": ["lait", "oeufs"]}]}], "supplements": {"titre": "Suppléments", "lignes": [{"label": "Supplément sauce", "prix": "1,50 €"}, {"label": "Supplément fromage", "prix": "2 €"}, {"label": "Café ou infusion", "prix": "2 €"}, {"label": "Pain maison (portion)", "prix": "1 €"}]}, "menuEnfant": {"titre": "Menu enfant", "sous": "Jusqu’à 12 ans", "inclus": "Boisson + dessert inclus", "plats": [{"nom": "Steak haché frites", "desc": "Viande fraîche, frites maison.", "prix": "9", "allergenes": ["gluten"]}, {"nom": "Nuggets de poulet", "desc": "Frites maison, sauce tomate.", "prix": "9", "allergenes": ["gluten", "oeufs"]}, {"nom": "Pâtes au beurre", "desc": "Parmesan, option sauce tomate.", "prix": "7", "allergenes": ["gluten", "lait"]}]}, "formule": {"titre": "Formule du midi", "lignes": [{"label": "Entrée + Plat", "prix": "22 €"}, {"label": "Plat + Dessert", "prix": "22 €"}, {"label": "Entrée + Plat + Dessert", "prix": "27 €"}], "note": "Du lundi au vendredi, le midi"}};
 
-  function showApp(){$('gate').classList.add('hidden');$('app').classList.remove('hidden');}
-  async function verifyPw(pw){
-    let r;
-    try{r=await fetch('/api/menu',{method:'POST',headers:{'content-type':'application/json','x-admin-key':pw,'x-check':'1'}});}
-    catch(e){return{ok:false,msg:"Impossible de joindre le serveur."};}
-    if(r.status===200)return{ok:true};
-    if(r.status===401)return{ok:false,msg:"Mot de passe incorrect."};
-    if(r.status===404)return{ok:false,msg:"Fonction /api/menu introuvable — vérifiez que functions/api/menu.js est à la racine du dépôt."};
-    if(r.status===405)return{ok:false,msg:"Erreur 405 — POST refusé. Vérifiez l'emplacement de functions/api/menu.js et redéployez."};
-    let m="";try{m=(await r.json()).error||"";}catch(e){}
-    return{ok:false,msg:m||"Erreur serveur (code "+r.status+"). Vérifiez KV et ADMIN_KEY dans Cloudflare."};
-  }
-  $('loginBtn').addEventListener('click',async()=>{
-    const pw=$('pw').value.trim();if(!pw){$('loginErr').textContent="Entrez le mot de passe.";return;}
-    $('loginErr').textContent="Vérification…";
-    const res=await verifyPw(pw);
-    if(res.ok){PW=pw;sessionStorage.setItem('qpw',pw);await loadMenu();showApp();}
-    else{$('loginErr').textContent=res.msg;}
+let PW = sessionStorage.getItem("qpw") || "";
+let menu = null;
+function gid(id) { return document.getElementById(id); }
+function showApp() { gid("gate").classList.add("hidden"); gid("app").classList.remove("hidden"); }
+
+async function verifyPw(pw) {
+  let r;
+  try { r = await fetch("/api/menu", {method:"POST", headers:{"content-type":"application/json","x-admin-key":pw,"x-check":"1"}}); }
+  catch(e) { return {ok:false, msg:"Impossible de joindre le serveur."}; }
+  if (r.status === 200) return {ok:true};
+  if (r.status === 401) return {ok:false, msg:"Mot de passe incorrect."};
+  if (r.status === 404) return {ok:false, msg:"Fonction /api/menu introuvable."};
+  if (r.status === 405) return {ok:false, msg:"Erreur 405 — vérifiez l'emplacement de functions/api/menu.js."};
+  let m = ""; try { m = (await r.json()).error || ""; } catch(e) {}
+  return {ok:false, msg: m || "Erreur serveur (code " + r.status + ")."};
+}
+
+gid("loginBtn").addEventListener("click", async function() {
+  const pw = gid("pw").value.trim();
+  if (!pw) { gid("loginErr").textContent = "Entrez le mot de passe."; return; }
+  gid("loginErr").textContent = "Vérification…";
+  const res = await verifyPw(pw);
+  if (res.ok) { PW = pw; sessionStorage.setItem("qpw", pw); await loadMenu(); showApp(); }
+  else { gid("loginErr").textContent = res.msg; }
+});
+gid("pw").addEventListener("keydown", function(e) { if (e.key === "Enter") gid("loginBtn").click(); });
+gid("logoutBtn").addEventListener("click", function() { sessionStorage.removeItem("qpw"); location.reload(); });
+
+async function loadMenu() {
+  try { const r = await fetch("/api/menu", {cache:"no-store"}); menu = r.ok ? await r.json() : JSON.parse(JSON.stringify(DM)); }
+  catch(e) { menu = JSON.parse(JSON.stringify(DM)); }
+  if (!menu || !menu.sections) menu = JSON.parse(JSON.stringify(DM));
+  fillForm();
+}
+
+function fillForm() {
+  const pj = menu.platDuJour || {};
+  gid("pj_nom").value = pj.nom || "";
+  gid("pj_desc").value = pj.desc || "";
+  gid("pj_prix").value = pj.prix || "";
+  renderSections(); renderSup(); renderME(); renderF();
+}
+
+function esc(s) { return (s||"").replace(/[&<>]/g, function(c) { return {"&":"&amp;","<":"&lt;",">":"&gt;"}[c]; }); }
+function attr(s) { return (s||"").replace(/"/g, "&quot;").replace(/</g, "&lt;"); }
+
+function algChecks(selected, onChange) {
+  const d = document.createElement("div");
+  d.className = "alg-checks";
+  ALLERGEN_LIST.forEach(function(al) {
+    const lbl = document.createElement("label");
+    lbl.className = "alg-ck" + ((selected||[]).indexOf(al.key) >= 0 ? " checked" : "");
+    const chk = document.createElement("input");
+    chk.type = "checkbox"; chk.value = al.key;
+    if ((selected||[]).indexOf(al.key) >= 0) chk.checked = true;
+    chk.addEventListener("change", function() {
+      lbl.className = "alg-ck" + (chk.checked ? " checked" : "");
+      onChange();
+    });
+    const img = document.createElement("img");
+    img.src = ALLERGEN_IMGS[al.key] || ""; img.alt = al.label; img.width = 18; img.height = 18;
+    const sp = document.createElement("span"); sp.textContent = al.label;
+    lbl.appendChild(chk); lbl.appendChild(img); lbl.appendChild(sp);
+    d.appendChild(lbl);
   });
-  $('pw').addEventListener('keydown',e=>{if(e.key==='Enter')$('loginBtn').click();});
-  $('logoutBtn').addEventListener('click',()=>{sessionStorage.removeItem('qpw');location.reload();});
+  return d;
+}
 
-  async function loadMenu(){
-    try{const r=await fetch('/api/menu',{cache:'no-store'});menu=r.ok?await r.json():cp();}catch(e){menu=cp();}
-    if(!menu||!menu.sections)menu=cp();
-    fillForm();
-  }
-  function cp(){return JSON.parse(JSON.stringify(DM));}
-  function fillForm(){
-    const pj=menu.platDuJour||{};
-    $('pj_nom').value=pj.nom||"";$('pj_desc').value=pj.desc||"";$('pj_prix').value=pj.prix||"";
-    renderSections();renderSup();renderME();renderF();
-  }
-  function e(s){return(s||"").replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));}
-  function a(s){return(s||"").replace(/"/g,"&quot;").replace(/</g,"&lt;");}
+function dishRow(p, onDelete) {
+  const row = document.createElement("div"); row.className = "dish-row";
+  const g = document.createElement("div"); g.className = "g2";
+  const n = document.createElement("div"); n.innerHTML = "<label>Nom</label><input data-f=\"nom\" value=\"" + attr(p.nom) + "\">";
+  const pr = document.createElement("div"); pr.innerHTML = "<label>Prix</label><input data-f=\"prix\" value=\"" + attr(p.prix) + "\">";
+  g.appendChild(n); g.appendChild(pr); row.appendChild(g);
+  const dl = document.createElement("label"); dl.textContent = "Description"; row.appendChild(dl);
+  const ta = document.createElement("textarea"); ta.setAttribute("data-f","desc"); ta.value = p.desc || ""; row.appendChild(ta);
+  const al = document.createElement("label"); al.textContent = "Allergènes"; row.appendChild(al);
+  const ac = algChecks(p.allergenes||[], function() {
+    p.allergenes = Array.from(row.querySelectorAll(".alg-checks input:checked")).map(function(c){return c.value;});
+  });
+  row.appendChild(ac);
+  const ra = document.createElement("div"); ra.className = "ra";
+  const db = document.createElement("button"); db.className = "btn danger"; db.textContent = "Supprimer";
+  db.addEventListener("click", onDelete); ra.appendChild(db); row.appendChild(ra);
+  row.querySelectorAll("[data-f]").forEach(function(inp) {
+    inp.addEventListener("input", function() { p[inp.getAttribute("data-f")] = inp.value; });
+  });
+  return row;
+}
 
-  function algChecks(selected,onChange){
-    const d=document.createElement('div');d.className='alg-checks';
-    ALLERGEN_LIST.forEach(al=>{
-      const lbl=document.createElement('label');lbl.className='alg-check';
-      const chk=document.createElement('input');chk.type='checkbox';chk.value=al.key;
-      if((selected||[]).includes(al.key))chk.checked=true;
-      chk.addEventListener('change',onChange);
-      lbl.appendChild(chk);
-      const svg=document.createElement('span');svg.innerHTML=ALLERGEN_SVGS[al.key]||'';
-      lbl.appendChild(svg.firstElementChild||svg);
-      const sp=document.createElement('span');sp.textContent=al.label;lbl.appendChild(sp);
-      d.appendChild(lbl);
-    });
-    return d;
-  }
-
-  function dishRow(p, onUpdate, onDelete){
-    const row=document.createElement('div');row.className='dish-row';
-    row.innerHTML='<div class="g2"><div><label>Nom</label><input data-f="nom" value="'+a(p.nom)+'"></div>'+
-      '<div><label>Prix</label><input data-f="prix" value="'+a(p.prix)+'"></div></div>'+
-      '<label>Description</label><textarea data-f="desc">'+e(p.desc)+'</textarea>'+
-      '<label style="margin-top:.5rem">Allergènes</label>'+
-      '<div class="ra" style="margin-top:.5rem"><button class="btn danger">Supprimer</button></div>';
-    row.querySelectorAll('[data-f]').forEach(inp=>inp.addEventListener('input',()=>{p[inp.dataset.f]=inp.value;onUpdate&&onUpdate();}));
-    const algDiv=algChecks(p.allergenes||[],()=>{
-      p.allergenes=[...row.querySelectorAll('.alg-checks input:checked')].map(c=>c.value);
-      onUpdate&&onUpdate();
-    });
-    // insert before .ra
-    row.querySelector('.ra').before(algDiv);
-    row.querySelector('.danger').addEventListener('click',()=>onDelete&&onDelete());
-    return row;
-  }
-
-  function renderSections(){
-    const host=$('sections');host.innerHTML="";
-    (menu.sections||[]).forEach((sec,si)=>{
-      const card=document.createElement('div');card.className='card';
-      let extra='';
-      if(sec.parfums){
-        const pf=sec.parfums;
-        extra='<label>Glaces (séparées par ·)</label><input class="pf-glaces" value="'+a((pf.glaces||[]).join(' · '))+'">'+
-              '<label>Sorbets</label><input class="pf-sorbets" value="'+a((pf.sorbets||[]).join(' · '))+'">';
+function renderSections() {
+  const host = gid("sections"); host.innerHTML = "";
+  (menu.sections||[]).forEach(function(sec, si) {
+    const card = document.createElement("div"); card.className = "card";
+    const h3 = document.createElement("h3"); h3.innerHTML = "<span class=\"dmd\"></span> " + esc(sec.titre); card.appendChild(h3);
+    if (sec.parfums) {
+      const pf = sec.parfums;
+      if (pf.glaces) {
+        const lg = document.createElement("label"); lg.textContent = "Glaces (séparées par ·)"; card.appendChild(lg);
+        const ig = document.createElement("input"); ig.value = (pf.glaces||[]).join(" · ");
+        ig.addEventListener("input", function() { menu.sections[si].parfums.glaces = ig.value.split("·").map(function(s){return s.trim();}).filter(Boolean); });
+        card.appendChild(ig);
       }
-      card.innerHTML='<h3><span class="dmd"></span> '+sec.titre+'</h3>'+extra+'<div class="dishes"></div><button class="btn ghost add-line" data-si="'+si+'">+ Ajouter un plat</button>';
-      if(sec.parfums){
-        card.querySelector('.pf-glaces').addEventListener('input',ev=>{menu.sections[si].parfums.glaces=ev.target.value.split('·').map(s=>s.trim()).filter(Boolean);});
-        card.querySelector('.pf-sorbets').addEventListener('input',ev=>{menu.sections[si].parfums.sorbets=ev.target.value.split('·').map(s=>s.trim()).filter(Boolean);});
+      if (pf.sorbets) {
+        const ls = document.createElement("label"); ls.textContent = "Sorbets"; card.appendChild(ls);
+        const is = document.createElement("input"); is.value = (pf.sorbets||[]).join(" · ");
+        is.addEventListener("input", function() { menu.sections[si].parfums.sorbets = is.value.split("·").map(function(s){return s.trim();}).filter(Boolean); });
+        card.appendChild(is);
       }
-      const dishes=card.querySelector('.dishes');
-      (sec.plats||[]).forEach((p,pi)=>{
-        dishes.appendChild(dishRow(p,null,()=>{menu.sections[si].plats.splice(pi,1);renderSections();}));
+    }
+    const dishes = document.createElement("div"); card.appendChild(dishes);
+    function renderDishes() {
+      dishes.innerHTML = "";
+      (menu.sections[si].plats||[]).forEach(function(p, pi) {
+        dishes.appendChild(dishRow(p, function() { menu.sections[si].plats.splice(pi,1); renderDishes(); }));
       });
-      card.querySelector('[data-si]').addEventListener('click',()=>{menu.sections[si].plats.push({nom:"",desc:"",prix:"",allergenes:[]});renderSections();});
-      host.appendChild(card);
-    });
-  }
-
-  function renderSup(){
-    if(!menu.supplements)menu.supplements={titre:"Suppléments",lignes:[]};
-    const host=$('supLignes');host.innerHTML="";
-    (menu.supplements.lignes||[]).forEach((l,i)=>{
-      const row=document.createElement('div');row.className='fr';
-      row.innerHTML='<input data-f="label" value="'+a(l.label)+'" placeholder="Ex. Café"><input data-f="prix" value="'+a(l.prix)+'" placeholder="Ex. 2 €"><button class="btn danger">✕</button>';
-      row.querySelectorAll('[data-f]').forEach(inp=>inp.addEventListener('input',()=>{menu.supplements.lignes[i][inp.dataset.f]=inp.value;}));
-      row.querySelector('.danger').addEventListener('click',()=>{menu.supplements.lignes.splice(i,1);renderSup();});
-      host.appendChild(row);
-    });
-  }
-  $('addSup').addEventListener('click',()=>{menu.supplements.lignes.push({label:"",prix:""});renderSup();});
-
-  function renderME(){
-    if(!menu.menuEnfant)menu.menuEnfant={titre:"Menu enfant",sous:"Jusqu'à 12 ans",plats:[],inclus:""};
-    $('me_inclus').value=menu.menuEnfant.inclus||"";
-    const host=$('mePlats');host.innerHTML="";
-    (menu.menuEnfant.plats||[]).forEach((p,pi)=>{
-      host.appendChild(dishRow(p,null,()=>{menu.menuEnfant.plats.splice(pi,1);renderME();}));
-    });
-  }
-  $('me_inclus').addEventListener('input',()=>{menu.menuEnfant.inclus=$('me_inclus').value;});
-  $('addMePlat').addEventListener('click',()=>{menu.menuEnfant.plats.push({nom:"",desc:"",prix:"",allergenes:[]});renderME();});
-
-  function renderF(){
-    if(!menu.formule)menu.formule={titre:"Formule du midi",lignes:[],note:""};
-    const host=$('flignes');host.innerHTML="";
-    (menu.formule.lignes||[]).forEach((l,i)=>{
-      const row=document.createElement('div');row.className='fr';
-      row.innerHTML='<input data-f="label" value="'+a(l.label)+'" placeholder="Ex. Entrée + Plat"><input data-f="prix" value="'+a(l.prix)+'" placeholder="Ex. 22 €"><button class="btn danger">✕</button>';
-      row.querySelectorAll('[data-f]').forEach(inp=>inp.addEventListener('input',()=>{menu.formule.lignes[i][inp.dataset.f]=inp.value;}));
-      row.querySelector('.danger').addEventListener('click',()=>{menu.formule.lignes.splice(i,1);renderF();});
-      host.appendChild(row);
-    });
-    $('fnote').value=menu.formule.note||"";
-  }
-  $('addF').addEventListener('click',()=>{menu.formule.lignes.push({label:"",prix:""});renderF();});
-
-  $('saveBtn').addEventListener('click',async()=>{
-    const today=new Date().toISOString().slice(0,10);
-    const nom=$('pj_nom').value.trim();
-    menu.platDuJour={nom,desc:$('pj_desc').value.trim(),prix:$('pj_prix').value.trim(),date:nom?today:""};
-    menu.formule.note=$('fnote').value.trim();
-    const msgEl=$('msg');msgEl.className='msg';msgEl.textContent='Enregistrement…';
-    let r;
-    try{r=await fetch('/api/menu',{method:'POST',headers:{'content-type':'application/json','x-admin-key':PW},body:JSON.stringify(menu)});}
-    catch(err){msgEl.className='msg err';msgEl.textContent='Connexion impossible.';return;}
-    let data={};try{data=await r.json();}catch(ex){}
-    if(r.ok){msgEl.className='msg ok';msgEl.textContent='✓ Carte enregistrée.';setTimeout(()=>{if(msgEl.classList.contains('ok'))msgEl.textContent='';},4000);}
-    else if(r.status===401){msgEl.className='msg err';msgEl.textContent='Mot de passe refusé — cliquez sur « Quitter » et reconnectez-vous.';}
-    else if(r.status===405){msgEl.className='msg err';msgEl.textContent='Erreur 405 — vérifiez l\'emplacement de functions/api/menu.js dans votre dépôt.';}
-    else{msgEl.className='msg err';msgEl.textContent=(data.error||'Erreur serveur')+' ('+r.status+')';}
+    }
+    renderDishes();
+    const ab = document.createElement("button"); ab.className = "btn ghost add-line"; ab.textContent = "+ Ajouter un plat";
+    ab.addEventListener("click", function() { menu.sections[si].plats.push({nom:"",desc:"",prix:"",allergenes:[]}); renderDishes(); });
+    card.appendChild(ab); host.appendChild(card);
   });
+}
 
-  if(PW){loadMenu().then(showApp);}
+function renderSup() {
+  if (!menu.supplements) menu.supplements = {titre:"Suppléments", lignes:[]};
+  const host = gid("supLignes"); host.innerHTML = "";
+  (menu.supplements.lignes||[]).forEach(function(l, i) {
+    const row = document.createElement("div"); row.className = "fr";
+    const il = document.createElement("input"); il.setAttribute("data-f","label"); il.value = l.label||""; il.placeholder = "Ex. Café";
+    const ip = document.createElement("input"); ip.setAttribute("data-f","prix"); ip.value = l.prix||""; ip.placeholder = "Ex. 2 €";
+    const db = document.createElement("button"); db.className = "btn danger"; db.textContent = "✕";
+    il.addEventListener("input", function() { menu.supplements.lignes[i].label = il.value; });
+    ip.addEventListener("input", function() { menu.supplements.lignes[i].prix = ip.value; });
+    db.addEventListener("click", function() { menu.supplements.lignes.splice(i,1); renderSup(); });
+    row.appendChild(il); row.appendChild(ip); row.appendChild(db); host.appendChild(row);
+  });
+}
+gid("addSup").addEventListener("click", function() { menu.supplements.lignes.push({label:"",prix:""}); renderSup(); });
+
+function renderME() {
+  if (!menu.menuEnfant) menu.menuEnfant = {titre:"Menu enfant", sous:"Jusqu’à 12 ans", plats:[], inclus:""};
+  gid("me_inclus").value = menu.menuEnfant.inclus || "";
+  const host = gid("mePlats"); host.innerHTML = "";
+  function renderMEDishes() {
+    host.innerHTML = "";
+    (menu.menuEnfant.plats||[]).forEach(function(p, pi) {
+      host.appendChild(dishRow(p, function() { menu.menuEnfant.plats.splice(pi,1); renderMEDishes(); }));
+    });
+  }
+  renderMEDishes();
+  // store for re-render
+  gid("addMePlat")._renderDishes = renderMEDishes;
+}
+gid("me_inclus").addEventListener("input", function() { menu.menuEnfant.inclus = gid("me_inclus").value; });
+gid("addMePlat").addEventListener("click", function() { menu.menuEnfant.plats.push({nom:"",desc:"",prix:"",allergenes:[]}); if(gid("addMePlat")._renderDishes) gid("addMePlat")._renderDishes(); });
+
+function renderF() {
+  if (!menu.formule) menu.formule = {titre:"Formule du midi", lignes:[], note:""};
+  const host = gid("flignes"); host.innerHTML = "";
+  (menu.formule.lignes||[]).forEach(function(l, i) {
+    const row = document.createElement("div"); row.className = "fr";
+    const il = document.createElement("input"); il.value = l.label||""; il.placeholder = "Ex. Entrée + Plat";
+    const ip = document.createElement("input"); ip.value = l.prix||""; ip.placeholder = "Ex. 22 €";
+    const db = document.createElement("button"); db.className = "btn danger"; db.textContent = "✕";
+    il.addEventListener("input", function() { menu.formule.lignes[i].label = il.value; });
+    ip.addEventListener("input", function() { menu.formule.lignes[i].prix = ip.value; });
+    db.addEventListener("click", function() { menu.formule.lignes.splice(i,1); renderF(); });
+    row.appendChild(il); row.appendChild(ip); row.appendChild(db); host.appendChild(row);
+  });
+  gid("fnote").value = menu.formule.note || "";
+}
+gid("addF").addEventListener("click", function() { menu.formule.lignes.push({label:"",prix:""}); renderF(); });
+
+gid("saveBtn").addEventListener("click", async function() {
+  const today = new Date().toISOString().slice(0,10);
+  const nom = gid("pj_nom").value.trim();
+  menu.platDuJour = {nom:nom, desc:gid("pj_desc").value.trim(), prix:gid("pj_prix").value.trim(), date:nom?today:""};
+  menu.formule.note = gid("fnote").value.trim();
+  const msgEl = gid("msg"); msgEl.className = "msg"; msgEl.textContent = "Enregistrement…";
+  let r;
+  try { r = await fetch("/api/menu", {method:"POST", headers:{"content-type":"application/json","x-admin-key":PW}, body:JSON.stringify(menu)}); }
+  catch(err) { msgEl.className = "msg err"; msgEl.textContent = "Connexion impossible."; return; }
+  let data = {}; try { data = await r.json(); } catch(ex) {}
+  if (r.ok) { msgEl.className = "msg ok"; msgEl.textContent = "✓ Carte enregistrée."; setTimeout(function(){if(msgEl.classList.contains("ok"))msgEl.textContent="";}, 4000); }
+  else if (r.status === 401) { msgEl.className = "msg err"; msgEl.textContent = "Mot de passe refusé — cliquez sur « Quitter » et reconnectez-vous."; }
+  else { msgEl.className = "msg err"; msgEl.textContent = (data.error || "Erreur serveur") + " (" + r.status + ")."; }
+});
+
+if (PW) { loadMenu().then(showApp); }
 </script>
 </body>
 </html>

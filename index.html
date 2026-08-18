@@ -126,8 +126,8 @@
   /* Légende allergènes */
   .allergen-legend{margin-top:3rem;padding:1.2rem 1.6rem;background:rgba(247,240,228,.5);border:1px solid var(--line)}
   .allergen-legend__title{font-family:var(--ui);font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:.9rem}
-  .allergen-legend__grid{display:flex;flex-wrap:wrap;gap:.6rem}
-  .alg-item{display:inline-flex;align-items:center;gap:.4rem}
+  .allergen-legend__grid{display:grid;grid-template-columns:1fr 1fr;gap:.3rem .8rem}
+  .alg-item{display:flex;align-items:center;gap:.4rem;padding:.2rem 0}
   .alg-item svg{width:24px;height:24px;flex:none}
   .alg-item span{font-family:var(--ui);font-size:.7rem;color:var(--ink)}
 
@@ -347,7 +347,7 @@ function renderMenu(menu){
   const me=menu.menuEnfant;
   if(me){rH+='<div class="box-block"><div class="menu-block__head"><h3>'+esc(me.titre||'Menu enfant')+'</h3><span class="rule"></span>'+(me.sous?'<small>'+esc(me.sous)+'</small>':'')+'</div>'+(me.plats||[]).map(dishHTML).join('')+(me.inclus?'<p class="me-inclus">'+esc(me.inclus)+'</p>':'')+'</div>';}
   document.getElementById('carteCols').innerHTML='<div>'+lH+'</div><div>'+rH+'</div>';
-  document.getElementById('algLegend').innerHTML='<div class="alg-legend"><div class="alg-legend__title">Allergènes — informez-nous de vos intolérances</div><div class="alg-legend__grid">'+ALLERGEN_LIST.map(a=>'<span class="alg-item"><img src="'+ALLERGEN_IMGS[a.key]+'" alt="'+a.label+'" width="22" height="22"><span>'+a.label+'</span></span>').join('')+'</div></div>';
+  var _col1=ALLERGEN_LIST.slice(0,6),_col2=ALLERGEN_LIST.slice(6);function _algItem(a){return '<span class="alg-item"><img src="'+ALLERGEN_IMGS[a.key]+'" alt="'+a.label+'" width="22" height="22"><span>'+a.label+'</span></span>';}document.getElementById('algLegend').innerHTML='<div class="allergen-legend"><div class="allergen-legend__title">Allergènes — informez-nous de vos intolérances</div><div class="allergen-legend__grid">'+_col1.map(_algItem).join('')+_col2.map(_algItem).join('')+'</div></div>';
 }
 renderMenu(DEFAULT_MENU);
 fetch('/api/menu',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(d=>{if(d&&d.sections)renderMenu(d);}).catch(()=>{});
