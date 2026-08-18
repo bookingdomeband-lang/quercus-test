@@ -5,53 +5,51 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <meta name="robots" content="noindex,nofollow"/>
 <title>Administration — Le Quercus</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Crect width='20' height='20' fill='%23f7f0e4'/%3E%3Crect x='7' y='7' width='6' height='6' transform='rotate(45 10 10)' fill='%239c6b34'/%3E%3C/svg%3E"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
 <style>
-  :root{--cream:#f7f0e4;--cream-2:#f1e7d6;--forest:#2f3417;--copper:#9c6b34;--copper-2:#b98a45;--ink:#38341f;--muted:#8c8368;--line:rgba(156,107,52,.3);--display:"Cormorant Garamond",serif;--ui:"Jost",system-ui,sans-serif}
+  :root{--cream:#f7f0e4;--cream-2:#f1e7d6;--forest:#2f3417;--copper:#9c6b34;--copper-2:#b98a45;--ink:#38341f;--muted:#8c8368;--line:rgba(156,107,52,.3);--D:"Cormorant Garamond",serif;--U:"Jost",system-ui,sans-serif}
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:var(--ui);background:var(--cream);color:var(--ink);line-height:1.5;padding-bottom:5rem}
+  body{font-family:var(--U);background:var(--cream);color:var(--ink);padding-bottom:5rem}
   .topbar{position:sticky;top:0;z-index:5;background:var(--forest);color:#f7f0e4;display:flex;align-items:center;justify-content:space-between;padding:1rem clamp(1rem,4vw,2rem)}
-  .topbar .brand{font-family:var(--display);font-size:1.4rem;display:flex;align-items:center;gap:.5rem}
-  .topbar .brand i{width:7px;height:7px;background:var(--copper-2);transform:rotate(45deg)}
-  .topbar .brand small{font-family:var(--ui);font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--copper-2);margin-left:.4rem}
+  .brand{font-family:var(--D);font-size:1.4rem;display:flex;align-items:center;gap:.5rem}
+  .brand i{width:7px;height:7px;background:var(--copper-2);transform:rotate(45deg)}
+  .brand small{font-family:var(--U);font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--copper-2);margin-left:.4rem}
   .wrap{width:min(760px,92vw);margin:2.4rem auto}
-  h2{font-family:var(--display);font-weight:500;color:var(--forest);font-size:1.9rem;margin-bottom:.3rem}
-  .hint{font-size:.85rem;color:var(--muted);margin-bottom:1.4rem}
+  h2{font-family:var(--D);font-weight:500;color:var(--forest);font-size:1.9rem;margin-bottom:.3rem}
+  .hint{font-size:.85rem;color:var(--muted);margin-bottom:1.4rem;line-height:1.5}
   .card{background:#fff;border:1px solid var(--line);border-radius:4px;padding:1.4rem 1.5rem;margin-bottom:1.6rem}
-  .card>h3{font-family:var(--display);font-weight:500;color:var(--copper);font-size:1.5rem;margin-bottom:1rem;display:flex;align-items:center;gap:.6rem}
+  .card>h3{font-family:var(--D);font-weight:500;color:var(--copper);font-size:1.5rem;margin-bottom:1rem;display:flex;align-items:center;gap:.6rem}
   .dmd{width:7px;height:7px;background:var(--copper);transform:rotate(45deg);display:inline-block;flex:none}
   label{display:block;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:.8rem 0 .3rem}
-  label .soft{text-transform:none;letter-spacing:0;color:var(--muted);font-size:.85em}
-  input,textarea{width:100%;font-family:var(--ui);font-size:1rem;color:var(--ink);background:var(--cream);border:1px solid var(--line);border-radius:3px;padding:.6rem .7rem}
+  .soft{text-transform:none;letter-spacing:0;font-size:.85em}
+  input,textarea{width:100%;font-family:var(--U);font-size:1rem;color:var(--ink);background:var(--cream);border:1px solid var(--line);border-radius:3px;padding:.6rem .7rem}
   input:focus,textarea:focus{outline:none;border-color:var(--copper);background:#fff}
   textarea{resize:vertical;min-height:52px}
   .dish-row{border:1px dashed var(--line);border-radius:4px;padding:.9rem 1rem;margin-bottom:.9rem;background:var(--cream)}
-  .dish-row .grid2{display:grid;grid-template-columns:1fr 90px;gap:.6rem}
-  .row-actions{display:flex;justify-content:flex-end;margin-top:.5rem}
-  .btn{font-family:var(--ui);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--copper);color:var(--copper);background:none;padding:.55rem 1rem;border-radius:3px;cursor:pointer;transition:.2s}
+  .g2{display:grid;grid-template-columns:1fr 90px;gap:.6rem}
+  .ra{display:flex;justify-content:flex-end;margin-top:.5rem}
+  .btn{font-family:var(--U);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--copper);color:var(--copper);background:none;padding:.55rem 1rem;border-radius:3px;cursor:pointer;transition:.2s}
   .btn:hover{background:var(--copper);color:#fff}
-  .btn.ghost{border-color:var(--line);color:var(--muted)}
-  .btn.ghost:hover{background:var(--muted);color:#fff;border-color:var(--muted)}
-  .btn.danger{border-color:#b25b4a;color:#b25b4a;padding:.4rem .7rem;font-size:.68rem}
-  .btn.danger:hover{background:#b25b4a;color:#fff}
+  .ghost{border-color:var(--line)!important;color:var(--muted)!important}
+  .ghost:hover{background:var(--muted)!important;color:#fff!important}
+  .danger{border-color:#b25b4a!important;color:#b25b4a!important;padding:.4rem .7rem!important}
+  .danger:hover{background:#b25b4a!important;color:#fff!important}
   .add-line{margin-top:.5rem}
-  .formule-row{display:grid;grid-template-columns:1fr 110px auto;gap:.6rem;align-items:center;margin-bottom:.6rem}
+  .fr{display:grid;grid-template-columns:1fr 110px auto;gap:.6rem;align-items:center;margin-bottom:.6rem}
   .savebar{position:fixed;bottom:0;left:0;right:0;background:rgba(247,240,228,.96);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:.9rem clamp(1rem,4vw,2rem);display:flex;align-items:center;justify-content:space-between;gap:1rem}
-  .savebar .msg{font-size:.85rem;line-height:1.35}
-  .savebar .msg.ok{color:#2f5c1a}
-  .savebar .msg.err{color:#b25b4a}
-  .btn.save{background:var(--forest);border-color:var(--forest);color:#f7f0e4;font-size:.78rem;padding:.7rem 1.6rem}
-  .btn.save:hover{background:#474f2b}
+  .msg{font-size:.85rem;line-height:1.4}
+  .ok{color:#2f5c1a}.err{color:#b25b4a}
+  .save{background:var(--forest)!important;border-color:var(--forest)!important;color:#f7f0e4!important;font-size:.78rem!important;padding:.7rem 1.6rem!important}
+  .save:hover{background:#474f2b!important}
   .gate{min-height:100svh;display:flex;align-items:center;justify-content:center;padding:1.5rem}
-  .gate .box{width:min(380px,92vw);background:#fff;border:1px solid var(--line);border-radius:6px;padding:2.2rem 2rem;text-align:center}
-  .gate .diamond{width:12px;height:12px;background:var(--copper);transform:rotate(45deg);margin:0 auto 1rem}
-  .gate h1{font-family:var(--display);font-weight:500;color:var(--forest);font-size:1.8rem}
-  .gate p{font-size:.85rem;color:var(--muted);margin:.3rem 0 1.4rem}
-  .gate input{text-align:center;margin-bottom:1rem}
-  .gate .err-msg{color:#b25b4a;font-size:.8rem;min-height:1.2em;margin-top:.6rem;line-height:1.4}
+  .box{width:min(380px,92vw);background:#fff;border:1px solid var(--line);border-radius:6px;padding:2.2rem 2rem;text-align:center}
+  .diamond{width:12px;height:12px;background:var(--copper);transform:rotate(45deg);margin:0 auto 1rem}
+  .box h1{font-family:var(--D);font-weight:500;color:var(--forest);font-size:1.8rem}
+  .box p{font-size:.85rem;color:var(--muted);margin:.3rem 0 1.4rem}
+  .box input{text-align:center;margin-bottom:1rem}
+  .emsg{color:#b25b4a;font-size:.82rem;min-height:1.2em;margin-top:.6rem;line-height:1.4}
   .hidden{display:none!important}
 </style>
 </head>
@@ -63,7 +61,7 @@
     <p>Le Quercus · gestion de la carte</p>
     <input type="password" id="pw" placeholder="Mot de passe" autocomplete="current-password"/>
     <button class="btn save" id="loginBtn" style="width:100%">Entrer</button>
-    <div class="err-msg" id="loginErr"></div>
+    <div class="emsg" id="loginErr"></div>
   </div>
 </div>
 
@@ -77,7 +75,7 @@
     <p class="hint">Modifiez le plat du jour ou les plats, puis cliquez sur « Enregistrer ». Les changements sont visibles immédiatement sur le site.</p>
     <div class="card">
       <h3><span class="dmd"></span> Plat du jour</h3>
-      <label>Nom du plat <span class="soft">(laissez vide pour masquer le bloc)</span></label>
+      <label>Nom du plat <span class="soft">(laisser vide pour masquer)</span></label>
       <input id="pj_nom" placeholder="Ex. Blanquette de veau à l'ancienne"/>
       <label>Description</label>
       <textarea id="pj_desc" placeholder="Ex. Riz pilaf, légumes glacés."></textarea>
@@ -87,10 +85,10 @@
     <div id="sections"></div>
     <div class="card">
       <h3><span class="dmd"></span> Formule du midi</h3>
-      <div id="formuleLignes"></div>
-      <button class="btn ghost add-line" id="addFormule">+ Ajouter une ligne</button>
+      <div id="flignes"></div>
+      <button class="btn ghost add-line" id="addF">+ Ajouter une ligne</button>
       <label style="margin-top:1rem">Mention</label>
-      <input id="formule_note" placeholder="Ex. Du lundi au samedi, le midi"/>
+      <input id="fnote" placeholder="Ex. Du lundi au samedi, le midi"/>
     </div>
   </div>
   <div class="savebar">
@@ -100,8 +98,8 @@
 </div>
 
 <script>
-  const DEFAULT_MENU={"platDuJour": {"nom": "", "desc": "", "prix": "", "date": ""}, "sections": [{"titre": "Entrées", "sous": "Pour commencer", "plats": [{"nom": "Velouté de potimarron", "desc": "Huile de noisette torréfiée, éclats de châtaigne.", "prix": "9"}, {"nom": "Œuf parfait, champignons des bois", "desc": "Crème de champignons, copeaux de comté.", "prix": "11"}, {"nom": "Terrine de campagne maison", "desc": "Pickles de légumes, pain de seigle grillé.", "prix": "10"}]}, {"titre": "Plats", "sous": "Le cœur du repas", "plats": [{"nom": "Suprême de volaille fermière", "desc": "Jus au thym, purée fumée au bois de chêne.", "prix": "19"}, {"nom": "Filet de bœuf, sauce aux morilles", "desc": "Gratin dauphinois, légumes de saison.", "prix": "26"}, {"nom": "Pavé de cabillaud rôti", "desc": "Beurre blanc, écrasé de pommes de terre.", "prix": "21"}, {"nom": "Risotto d'automne aux cèpes", "desc": "Noisettes torréfiées, parmesan. Végétarien.", "prix": "17"}]}, {"titre": "Desserts", "sous": "La douceur", "plats": [{"nom": "Tarte fine aux pommes", "desc": "Caramel au beurre salé, glace vanille.", "prix": "8"}, {"nom": "Fondant au chocolat", "desc": "Cœur coulant, crème anglaise.", "prix": "8"}, {"nom": "Fromages affinés", "desc": "Sélection du moment, confiture de saison.", "prix": "9"}]}, {"titre": "Desserts glacés", "sous": "Glaces & sorbets", "plats": [{"nom": "Coupe vanille-caramel", "desc": "Glace vanille, sauce caramel maison, éclats de praline.", "prix": "7"}, {"nom": "Sorbet fruits rouges", "desc": "Coulis de framboise, menthe fraîche.", "prix": "6"}, {"nom": "Café liégeois", "desc": "Glace café, chantilly maison.", "prix": "7"}]}, {"titre": "Menu enfant", "sous": "Pour les petits · jusqu'à 12 ans", "plats": [{"nom": "Steak haché frites", "desc": "Viande fraîche, frites maison.", "prix": "9"}, {"nom": "Nuggets de poulet", "desc": "Frites maison, sauce tomate.", "prix": "9"}, {"nom": "Pâtes au beurre", "desc": "Parmesan, option sauce tomate.", "prix": "7"}]}], "formule": {"titre": "Formule du midi", "lignes": [{"label": "Entrée + Plat", "prix": "22 €"}, {"label": "Plat + Dessert", "prix": "22 €"}, {"label": "Entrée + Plat + Dessert", "prix": "27 €"}], "note": "Du lundi au samedi, le midi"}};
-  let KEYPW=sessionStorage.getItem('quercus_pw')||"";
+  const DM={"platDuJour": {"nom": "", "desc": "", "prix": "", "date": ""}, "sections": [{"titre": "Entrées", "sous": "Pour commencer", "plats": [{"nom": "Velouté de potimarron", "desc": "Huile de noisette torréfiée, éclats de châtaigne.", "prix": "9"}, {"nom": "Œuf parfait, champignons des bois", "desc": "Crème de champignons, copeaux de comté.", "prix": "11"}, {"nom": "Terrine de campagne maison", "desc": "Pickles de légumes, pain de seigle grillé.", "prix": "10"}]}, {"titre": "Plats", "sous": "Le cœur du repas", "plats": [{"nom": "Suprême de volaille fermière", "desc": "Jus au thym, purée fumée au bois de chêne.", "prix": "19"}, {"nom": "Filet de bœuf, sauce aux morilles", "desc": "Gratin dauphinois, légumes de saison.", "prix": "26"}, {"nom": "Pavé de cabillaud rôti", "desc": "Beurre blanc, écrasé de pommes de terre.", "prix": "21"}, {"nom": "Risotto d'automne aux cèpes", "desc": "Noisettes torréfiées, parmesan. Végétarien.", "prix": "17"}]}, {"titre": "Desserts", "sous": "La douceur", "plats": [{"nom": "Tarte fine aux pommes", "desc": "Caramel au beurre salé, glace vanille.", "prix": "8"}, {"nom": "Fondant au chocolat", "desc": "Cœur coulant, crème anglaise.", "prix": "8"}, {"nom": "Fromages affinés", "desc": "Sélection du moment, confiture de saison.", "prix": "9"}]}, {"titre": "Desserts glacés", "sous": "Glaces & sorbets", "plats": [{"nom": "Coupe vanille-caramel", "desc": "Glace vanille, sauce caramel maison, éclats de praline.", "prix": "7"}, {"nom": "Sorbet fruits rouges", "desc": "Coulis de framboise, menthe fraîche.", "prix": "6"}, {"nom": "Café liégeois", "desc": "Glace café, chantilly maison.", "prix": "7"}]}, {"titre": "Menu enfant", "sous": "Pour les petits · jusqu'à 12 ans", "plats": [{"nom": "Steak haché frites", "desc": "Viande fraîche, frites maison.", "prix": "9"}, {"nom": "Nuggets de poulet", "desc": "Frites maison, sauce tomate.", "prix": "9"}, {"nom": "Pâtes au beurre", "desc": "Parmesan, option sauce tomate.", "prix": "7"}]}], "formule": {"titre": "Formule du midi", "lignes": [{"label": "Entrée + Plat", "prix": "22 €"}, {"label": "Plat + Dessert", "prix": "22 €"}, {"label": "Entrée + Plat + Dessert", "prix": "27 €"}], "note": "Du lundi au samedi, le midi"}};
+  let PW=sessionStorage.getItem('qpw')||"";
   let menu=null;
   const $=id=>document.getElementById(id);
 
@@ -110,12 +108,13 @@
   async function verifyPw(pw){
     let r;
     try{r=await fetch('/api/menu',{method:'POST',headers:{'content-type':'application/json','x-admin-key':pw,'x-check':'1'}});}
-    catch(e){return{ok:false,reason:"Impossible de joindre le serveur."};}
+    catch(e){return{ok:false,msg:"Impossible de joindre le serveur."};}
     if(r.status===200)return{ok:true};
-    if(r.status===401)return{ok:false,reason:"Mot de passe incorrect."};
-    if(r.status===404)return{ok:false,reason:"Fonction /api/menu introuvable — vérifiez que le dossier « functions » est bien dans votre dépôt."};
+    if(r.status===401)return{ok:false,msg:"Mot de passe incorrect."};
+    if(r.status===404)return{ok:false,msg:"Fonction /api/menu introuvable — vérifiez que le dossier « functions » est présent dans votre dépôt et que Cloudflare l'a déployé."};
+    if(r.status===405)return{ok:false,msg:"Erreur 405 : Cloudflare ne reconnaît pas la méthode POST. Vérifiez que le fichier functions/api/menu.js est bien à la racine du dépôt (pas dans un sous-dossier) et redéployez."};
     let m="";try{m=(await r.json()).error||"";}catch(e){}
-    return{ok:false,reason:m||"Erreur serveur (code "+r.status+"). Vérifiez les réglages Cloudflare (KV + ADMIN_KEY)."};
+    return{ok:false,msg:m||"Erreur serveur (code "+r.status+"). Vérifiez KV et ADMIN_KEY dans Cloudflare."};
   }
 
   $('loginBtn').addEventListener('click',async()=>{
@@ -123,77 +122,79 @@
     if(!pw){$('loginErr').textContent="Entrez le mot de passe.";return;}
     $('loginErr').textContent="Vérification…";
     const res=await verifyPw(pw);
-    if(res.ok){KEYPW=pw;sessionStorage.setItem('quercus_pw',pw);await loadMenu();showApp();}
-    else{$('loginErr').textContent=res.reason;}
+    if(res.ok){PW=pw;sessionStorage.setItem('qpw',pw);await loadMenu();showApp();}
+    else{$('loginErr').textContent=res.msg;}
   });
   $('pw').addEventListener('keydown',e=>{if(e.key==='Enter')$('loginBtn').click();});
-  $('logoutBtn').addEventListener('click',()=>{sessionStorage.removeItem('quercus_pw');location.reload();});
+  $('logoutBtn').addEventListener('click',()=>{sessionStorage.removeItem('qpw');location.reload();});
 
   async function loadMenu(){
-    try{const r=await fetch('/api/menu',{cache:'no-store'});menu=r.ok?await r.json():JSON.parse(JSON.stringify(DEFAULT_MENU));}
-    catch(e){menu=JSON.parse(JSON.stringify(DEFAULT_MENU));}
-    if(!menu||!menu.sections)menu=JSON.parse(JSON.stringify(DEFAULT_MENU));
+    try{const r=await fetch('/api/menu',{cache:'no-store'});menu=r.ok?await r.json():cp();}
+    catch(e){menu=cp();}
+    if(!menu||!menu.sections)menu=cp();
     fillForm();
   }
+  function cp(){return JSON.parse(JSON.stringify(DM));}
   function fillForm(){
     const pj=menu.platDuJour||{};
     $('pj_nom').value=pj.nom||"";$('pj_desc').value=pj.desc||"";$('pj_prix').value=pj.prix||"";
-    renderSections();renderFormule();
+    renderSections();renderF();
   }
+  function e(s){return(s||"").replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));}
+  function a(s){return(s||"").replace(/"/g,"&quot;").replace(/</g,"&lt;");}
+
   function renderSections(){
     const host=$('sections');host.innerHTML="";
     (menu.sections||[]).forEach((sec,si)=>{
       const card=document.createElement('div');card.className='card';
-      card.innerHTML='<h3><span class="dmd"></span> '+sec.titre+'</h3><div class="dishes"></div><button class="btn ghost add-line" data-add="'+si+'">+ Ajouter un plat</button>';
+      card.innerHTML='<h3><span class="dmd"></span> '+sec.titre+'</h3><div class="dishes"></div><button class="btn ghost add-line" data-si="'+si+'">+ Ajouter un plat</button>';
       const dishes=card.querySelector('.dishes');
       (sec.plats||[]).forEach((p,pi)=>{
         const row=document.createElement('div');row.className='dish-row';
-        row.innerHTML='<div class="grid2"><div><label>Nom</label><input data-f="nom" value="'+a(p.nom)+'"></div>'+
+        row.innerHTML='<div class="g2"><div><label>Nom</label><input data-f="nom" value="'+a(p.nom)+'"></div>'+
           '<div><label>Prix</label><input data-f="prix" value="'+a(p.prix)+'"></div></div>'+
           '<label>Description</label><textarea data-f="desc">'+e(p.desc)+'</textarea>'+
-          '<div class="row-actions"><button class="btn danger" data-del>Supprimer</button></div>';
+          '<div class="ra"><button class="btn danger">Supprimer</button></div>';
         row.querySelectorAll('[data-f]').forEach(inp=>inp.addEventListener('input',()=>{menu.sections[si].plats[pi][inp.dataset.f]=inp.value;}));
-        row.querySelector('[data-del]').addEventListener('click',()=>{menu.sections[si].plats.splice(pi,1);renderSections();});
+        row.querySelector('.danger').addEventListener('click',()=>{menu.sections[si].plats.splice(pi,1);renderSections();});
         dishes.appendChild(row);
       });
-      card.querySelector('[data-add]').addEventListener('click',()=>{menu.sections[si].plats.push({nom:"",desc:"",prix:""});renderSections();});
+      card.querySelector('[data-si]').addEventListener('click',()=>{menu.sections[si].plats.push({nom:"",desc:"",prix:""});renderSections();});
       host.appendChild(card);
     });
   }
-  function renderFormule(){
+  function renderF(){
     if(!menu.formule)menu.formule={titre:"Formule du midi",lignes:[],note:""};
-    const host=$('formuleLignes');host.innerHTML="";
+    const host=$('flignes');host.innerHTML="";
     (menu.formule.lignes||[]).forEach((l,i)=>{
-      const row=document.createElement('div');row.className='formule-row';
-      row.innerHTML='<input data-f="label" value="'+a(l.label)+'" placeholder="Ex. Entrée + Plat"><input data-f="prix" value="'+a(l.prix)+'" placeholder="Ex. 22 €"><button class="btn danger" data-del>✕</button>';
+      const row=document.createElement('div');row.className='fr';
+      row.innerHTML='<input data-f="label" value="'+a(l.label)+'" placeholder="Ex. Entrée + Plat"><input data-f="prix" value="'+a(l.prix)+'" placeholder="Ex. 22 €"><button class="btn danger">✕</button>';
       row.querySelectorAll('[data-f]').forEach(inp=>inp.addEventListener('input',()=>{menu.formule.lignes[i][inp.dataset.f]=inp.value;}));
-      row.querySelector('[data-del]').addEventListener('click',()=>{menu.formule.lignes.splice(i,1);renderFormule();});
+      row.querySelector('.danger').addEventListener('click',()=>{menu.formule.lignes.splice(i,1);renderF();});
       host.appendChild(row);
     });
-    $('formule_note').value=menu.formule.note||"";
+    $('fnote').value=menu.formule.note||"";
   }
-  $('addFormule').addEventListener('click',()=>{menu.formule.lignes.push({label:"",prix:""});renderFormule();});
-
-  function e(s){return(s||"").replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));}
-  function a(s){return(s||"").replace(/"/g,"&quot;").replace(/</g,"&lt;");}
+  $('addF').addEventListener('click',()=>{menu.formule.lignes.push({label:"",prix:""});renderF();});
 
   $('saveBtn').addEventListener('click',async()=>{
     const today=new Date().toISOString().slice(0,10);
     const nom=$('pj_nom').value.trim();
     menu.platDuJour={nom,desc:$('pj_desc').value.trim(),prix:$('pj_prix').value.trim(),date:nom?today:""};
-    menu.formule.note=$('formule_note').value.trim();
-    const msg=$('msg');msg.className='msg';msg.textContent='Enregistrement…';
+    menu.formule.note=$('fnote').value.trim();
+    const msgEl=$('msg');msgEl.className='msg';msgEl.textContent='Enregistrement…';
     let r;
-    try{r=await fetch('/api/menu',{method:'POST',headers:{'content-type':'application/json','x-admin-key':KEYPW},body:JSON.stringify(menu)});}
-    catch(err){msg.className='msg err';msg.textContent='Connexion impossible.';return;}
+    try{r=await fetch('/api/menu',{method:'POST',headers:{'content-type':'application/json','x-admin-key':PW},body:JSON.stringify(menu)});}
+    catch(err){msgEl.className='msg err';msgEl.textContent='Connexion impossible.';return;}
     let data={};try{data=await r.json();}catch(ex){}
-    if(r.ok){msg.className='msg ok';msg.textContent='✓ Carte enregistrée — visible sur le site.';setTimeout(()=>{if(msg.classList.contains('ok'))msg.textContent='';},4000);}
-    else if(r.status===401){msg.className='msg err';msg.textContent='Mot de passe refusé. Cliquez sur « Quitter » et reconnectez-vous.';}
-    else if(r.status===404){msg.className='msg err';msg.textContent='Fonction /api/menu introuvable — le dossier « functions » n\'est pas déployé.';}
-    else{msg.className='msg err';msg.textContent=(data.error||'Erreur serveur')+'  (code '+r.status+').';}
+    if(r.ok){msgEl.className='msg ok';msgEl.textContent='✓ Carte enregistrée — visible sur le site.';setTimeout(()=>{if(msgEl.classList.contains('ok'))msgEl.textContent='';},4000);}
+    else if(r.status===401){msgEl.className='msg err';msgEl.textContent='Mot de passe refusé. Cliquez sur « Quitter » et reconnectez-vous.';}
+    else if(r.status===404){msgEl.className='msg err';msgEl.textContent='Fonction /api/menu introuvable — le dossier « functions » n\'est pas déployé.';}
+    else if(r.status===405){msgEl.className='msg err';msgEl.textContent='Erreur 405 — POST refusé par Cloudflare. Vérifiez l\'emplacement de functions/api/menu.js dans votre dépôt.';}
+    else{msgEl.className='msg err';msgEl.textContent=(data.error||'Erreur serveur')+' (code '+r.status+'). Vérifiez KV et ADMIN_KEY.';}
   });
 
-  if(KEYPW){loadMenu().then(showApp);}
+  if(PW){loadMenu().then(showApp);}
 </script>
 </body>
 </html>
