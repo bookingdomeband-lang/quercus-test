@@ -99,217 +99,228 @@ textarea{resize:vertical;min-height:52px}
   <div class="savebar"><span class="msg" id="msg"></span><button class="btn save" id="saveBtn">Enregistrer</button></div>
 </div>
 <script>
+const ALLERGEN_IMGS={"gluten": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48cGF0aCBkPSJNMTIgNGMwIDAgMSAzIDAgNXMtMyAyLTMgMiAyIDEgMiA0LTEgNS0xIDUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS42IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48cGF0aCBkPSJNMTIgNGMwIDAtMSAzIDAgNXMzIDIgMyAyLTIgMS0yIDQgMSA1IDEgNSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjYiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxsaW5lIHgxPSIxMiIgeTE9IjQiIHgyPSIxMiIgeTI9IjIwIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PC9zdmc+", "crustaces": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48cGF0aCBkPSJNNyAxNCBROSAxMCAxMiA5IFExNSAxMCAxNyAxNCIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjYiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxjaXJjbGUgY3g9IjEyIiBjeT0iNSIgcj0iMS41IiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0xMCA5IFExMCA2IDEyIDUgUTE0IDYgMTQgOSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjQiIGZpbGw9Im5vbmUiLz48cGF0aCBkPSJNOCAxNCBRNyAxNyA5IDE5IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNCIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTE2IDE0IFExNyAxNyAxNSAxOSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjQiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjwvc3ZnPg==", "oeufs": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48ZWxsaXBzZSBjeD0iMTIiIGN5PSIxMyIgcng9IjUuNSIgcnk9IjYiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS43Ii8+PHBhdGggZD0iTTkuNSA3LjUgUTEyIDQgMTQuNSA3LjUiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS43IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48ZWxsaXBzZSBjeD0iMTIiIGN5PSIxNCIgcng9IjIuMiIgcnk9IjIuMiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=", "poissons": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48cGF0aCBkPSJNNyAxMiBDOSA4LjUgMTMgOCAxNyAxMiBDMTMgMTUuNSA5IDE1IDcgMTJaIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0xNyAxMiBMMjEgOSBMMjAgMTIgTDIxIDE1WiIgZmlsbD0id2hpdGUiLz48Y2lyY2xlIGN4PSIxMCIgY3k9IjExIiByPSIxIiBmaWxsPSIjOWM2YjM0Ii8+PC9zdmc+", "arachides": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48ZWxsaXBzZSBjeD0iMTAiIGN5PSIxMCIgcng9IjMiIHJ5PSI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNyIvPjxlbGxpcHNlIGN4PSIxNCIgY3k9IjE1IiByeD0iMyIgcnk9IjQiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS43Ii8+PHBhdGggZD0iTTExLjUgMTMgUTEyIDEyIDEyLjUgMTEiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS40IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48L3N2Zz4=", "soja": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48Y2lyY2xlIGN4PSIxMiIgY3k9IjkiIHI9IjMuNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjciLz48cGF0aCBkPSJNOC41IDEyIEM3IDE1IDggMTggMTIgMTkgQzE2IDE4IDE3IDE1IDE1LjUgMTIiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS43IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48bGluZSB4MT0iMTIiIHkxPSI1LjUiIHgyPSIxMiIgeTI9IjMuNSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjwvc3ZnPg==", "lait": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48cGF0aCBkPSJNOS41IDUuNSBMMTUuNSA1LjUgTDE3IDkgTDE3IDE5IEw3IDE5IEw3IDkgWiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjciIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48bGluZSB4MT0iNyIgeTE9IjkiIHgyPSIxNyIgeTI9IjkiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS4zIi8+PC9zdmc+", "fruits_coque": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48ZWxsaXBzZSBjeD0iMTIiIGN5PSIxNSIgcng9IjUiIHJ5PSI1IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNyIvPjxwYXRoIGQ9Ik05IDEyIFExMiA1LjUgMTUgMTIiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS43IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48bGluZSB4MT0iMTIiIHkxPSI4IiB4Mj0iMTIiIHkyPSI1IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PC9zdmc+", "celeri": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48bGluZSB4MT0iMTIiIHkxPSIxOSIgeDI9IjEyIiB5Mj0iNyIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik0xMiAxNCBDMTAgMTIgNyAxMiA2IDkuNSBDOC41IDguNSAxMSAxMC41IDEyIDEzIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0xMiAxMSBDMTQgOSAxNyA5IDE4IDYuNSBDMTUuNSA1LjUgMTMgNy41IDEyIDEwIiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg==", "moutarde": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48Y2lyY2xlIGN4PSIxMiIgY3k9IjE1IiByPSI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNyIvPjxwYXRoIGQ9Ik05LjUgMTMuNSBRMTIgMTEgMTQuNSAxMy41IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGNpcmNsZSBjeD0iMTIiIGN5PSI4LjUiIHI9IjIuMiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjYiLz48L3N2Zz4=", "sesame": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48ZWxsaXBzZSBjeD0iOC41IiBjeT0iOCIgcng9IjIiIHJ5PSIzLjIiIGZpbGw9IndoaXRlIiB0cmFuc2Zvcm09InJvdGF0ZSgtMjAgOC41IDgpIi8+PGVsbGlwc2UgY3g9IjE1LjUiIGN5PSI4IiByeD0iMiIgcnk9IjMuMiIgZmlsbD0id2hpdGUiIHRyYW5zZm9ybT0icm90YXRlKDIwIDE1LjUgOCkiLz48ZWxsaXBzZSBjeD0iOC41IiBjeT0iMTYiIHJ4PSIyIiByeT0iMy4yIiBmaWxsPSJ3aGl0ZSIgdHJhbnNmb3JtPSJyb3RhdGUoMjAgOC41IDE2KSIvPjxlbGxpcHNlIGN4PSIxNS41IiBjeT0iMTYiIHJ4PSIyIiByeT0iMy4yIiBmaWxsPSJ3aGl0ZSIgdHJhbnNmb3JtPSJyb3RhdGUoLTIwIDE1LjUgMTYpIi8+PGVsbGlwc2UgY3g9IjEyIiBjeT0iMTIiIHJ4PSIyIiByeT0iMy4yIiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg=="};
+const ALLERGEN_LIST=[{"key": "gluten", "label": "Gluten"}, {"key": "crustaces", "label": "Crustacés"}, {"key": "oeufs", "label": "Œufs"}, {"key": "poissons", "label": "Poissons"}, {"key": "arachides", "label": "Arachides"}, {"key": "soja", "label": "Soja"}, {"key": "lait", "label": "Lait"}, {"key": "fruits_coque", "label": "Fruits à coque"}, {"key": "celeri", "label": "Céleri"}, {"key": "moutarde", "label": "Moutarde"}, {"key": "sesame", "label": "Sésame"}];
+const DM={"platDuJour": {"nom": "", "desc": "", "prix": "", "date": ""}, "sections": [{"titre": "Entrées", "sous": "Pour commencer", "plats": [{"nom": "Velouté de potimarron", "desc": "Huile de noisette torréfiée, éclats de châtaigne.", "prix": "9", "allergenes": ["lait", "fruits_coque"]}, {"nom": "Œuf parfait, champignons des bois", "desc": "Crème de champignons, copeaux de comté.", "prix": "11", "allergenes": ["oeufs", "lait"]}, {"nom": "Terrine de campagne maison", "desc": "Pickles de légumes, pain de seigle grillé.", "prix": "10", "allergenes": ["gluten"]}]}, {"titre": "Plats", "sous": "Le cœur du repas", "plats": [{"nom": "Suprême de volaille fermière", "desc": "Jus au thym, purée fumée.", "prix": "19", "allergenes": ["lait"]}, {"nom": "Filet de bœuf, sauce aux morilles", "desc": "Gratin dauphinois, légumes de saison.", "prix": "26", "allergenes": ["lait"]}, {"nom": "Pavé de cabillaud rôti", "desc": "Beurre blanc, écrasé de pommes de terre.", "prix": "21", "allergenes": ["poissons", "lait"]}, {"nom": "Risotto d'automne aux cèpes", "desc": "Noisettes torréfiées, parmesan. Végétarien.", "prix": "17", "allergenes": ["lait", "fruits_coque"]}]}, {"titre": "Desserts", "sous": "La douceur", "plats": [{"nom": "Tarte fine aux pommes", "desc": "Caramel au beurre salé, glace vanille.", "prix": "8", "allergenes": ["gluten", "lait", "oeufs"]}, {"nom": "Fondant au chocolat", "desc": "Cœur coulant, crème anglaise.", "prix": "8", "allergenes": ["gluten", "lait", "oeufs"]}, {"nom": "Fromages affinés", "desc": "Sélection du moment, confiture de saison.", "prix": "9", "allergenes": ["lait"]}]}, {"titre": "Desserts glacés", "sous": "Glaces & sorbets", "type": "glaces", "parfums": {"glaces": ["Vanille", "Chocolat", "Café", "Caramel beurre salé", "Fraise", "Pistache"], "sorbets": ["Citron", "Framboise", "Mangue", "Fruits rouges", "Menthe"]}, "plats": [{"nom": "Coupe 2 boules", "desc": "Au choix dans notre sélection.", "prix": "5", "allergenes": ["lait", "oeufs"]}, {"nom": "Coupe 3 boules", "desc": "Au choix, avec chantilly maison.", "prix": "7", "allergenes": ["lait", "oeufs"]}, {"nom": "Café liégeois", "desc": "Glace café, chantilly maison.", "prix": "7", "allergenes": ["lait", "oeufs"]}, {"nom": "Coupe enfant", "desc": "2 boules au choix, nappage au choix.", "prix": "4", "allergenes": ["lait", "oeufs"]}], "supplements": [{"label": "Sauce chocolat", "prix": "0,50 €"}, {"label": "Sauce caramel", "prix": "0,50 €"}, {"label": "Chantilly", "prix": "0,50 €"}, {"label": "Nappage fraise", "prix": "0,50 €"}], "parfumsLabel": "Nos parfums"}], "menuEnfant": {"titre": "Menu enfant", "sous": "Jusqu'à 12 ans", "inclus": "Boisson + dessert inclus", "plats": [{"nom": "Steak haché frites", "desc": "Viande fraîche, frites maison.", "prix": "9", "allergenes": ["gluten"]}, {"nom": "Nuggets de poulet", "desc": "Frites maison, sauce tomate.", "prix": "9", "allergenes": ["gluten", "oeufs"]}, {"nom": "Pâtes au beurre", "desc": "Parmesan, option sauce tomate.", "prix": "7", "allergenes": ["gluten", "lait"]}]}, "formule": {"titre": "Formule du midi", "lignes": [{"label": "Entrée + Plat", "prix": "22 €"}, {"label": "Plat + Dessert", "prix": "22 €"}, {"label": "Entrée + Plat + Dessert", "prix": "27 €"}], "note": "Du lundi au vendredi, le midi"}};
 
-const ALLERGEN_IMGS = {"gluten": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48cGF0aCBkPSJNMTIgNGMwIDAgMSAzIDAgNXMtMyAyLTMgMiAyIDEgMiA0LTEgNS0xIDUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS42IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48cGF0aCBkPSJNMTIgNGMwIDAtMSAzIDAgNXMzIDIgMyAyLTIgMS0yIDQgMSA1IDEgNSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjYiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxsaW5lIHgxPSIxMiIgeTE9IjQiIHgyPSIxMiIgeTI9IjIwIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PC9zdmc+", "crustaces": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48cGF0aCBkPSJNNyAxNCBROSAxMCAxMiA5IFExNSAxMCAxNyAxNCIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjYiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxjaXJjbGUgY3g9IjEyIiBjeT0iNSIgcj0iMS41IiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0xMCA5IFExMCA2IDEyIDUgUTE0IDYgMTQgOSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjQiIGZpbGw9Im5vbmUiLz48cGF0aCBkPSJNOCAxNCBRNyAxNyA5IDE5IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNCIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTE2IDE0IFExNyAxNyAxNSAxOSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjQiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjwvc3ZnPg==", "oeufs": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48ZWxsaXBzZSBjeD0iMTIiIGN5PSIxMyIgcng9IjUuNSIgcnk9IjYiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS43Ii8+PHBhdGggZD0iTTkuNSA3LjUgUTEyIDQgMTQuNSA3LjUiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS43IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48ZWxsaXBzZSBjeD0iMTIiIGN5PSIxNCIgcng9IjIuMiIgcnk9IjIuMiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=", "poissons": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48cGF0aCBkPSJNNyAxMiBDOSA4LjUgMTMgOCAxNyAxMiBDMTMgMTUuNSA5IDE1IDcgMTJaIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0xNyAxMiBMMjEgOSBMMjAgMTIgTDIxIDE1WiIgZmlsbD0id2hpdGUiLz48Y2lyY2xlIGN4PSIxMCIgY3k9IjExIiByPSIxIiBmaWxsPSIjOWM2YjM0Ii8+PC9zdmc+", "arachides": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48ZWxsaXBzZSBjeD0iMTAiIGN5PSIxMCIgcng9IjMiIHJ5PSI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNyIvPjxlbGxpcHNlIGN4PSIxNCIgY3k9IjE1IiByeD0iMyIgcnk9IjQiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS43Ii8+PHBhdGggZD0iTTExLjUgMTMgUTEyIDEyIDEyLjUgMTEiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS40IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48L3N2Zz4=", "soja": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48Y2lyY2xlIGN4PSIxMiIgY3k9IjkiIHI9IjMuNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjciLz48cGF0aCBkPSJNOC41IDEyIEM3IDE1IDggMTggMTIgMTkgQzE2IDE4IDE3IDE1IDE1LjUgMTIiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS43IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48bGluZSB4MT0iMTIiIHkxPSI1LjUiIHgyPSIxMiIgeTI9IjMuNSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjwvc3ZnPg==", "lait": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48cGF0aCBkPSJNOS41IDUuNSBMMTUuNSA1LjUgTDE3IDkgTDE3IDE5IEw3IDE5IEw3IDkgWiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjciIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48bGluZSB4MT0iNyIgeTE9IjkiIHgyPSIxNyIgeTI9IjkiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS4zIi8+PC9zdmc+", "fruits_coque": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48ZWxsaXBzZSBjeD0iMTIiIGN5PSIxNSIgcng9IjUiIHJ5PSI1IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNyIvPjxwYXRoIGQ9Ik05IDEyIFExMiA1LjUgMTUgMTIiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS43IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48bGluZSB4MT0iMTIiIHkxPSI4IiB4Mj0iMTIiIHkyPSI1IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PC9zdmc+", "celeri": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48bGluZSB4MT0iMTIiIHkxPSIxOSIgeDI9IjEyIiB5Mj0iNyIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik0xMiAxNCBDMTAgMTIgNyAxMiA2IDkuNSBDOC41IDguNSAxMSAxMC41IDEyIDEzIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0xMiAxMSBDMTQgOSAxNyA5IDE4IDYuNSBDMTUuNSA1LjUgMTMgNy41IDEyIDEwIiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg==", "moutarde": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48Y2lyY2xlIGN4PSIxMiIgY3k9IjE1IiByPSI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNyIvPjxwYXRoIGQ9Ik05LjUgMTMuNSBRMTIgMTEgMTQuNSAxMy41IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGNpcmNsZSBjeD0iMTIiIGN5PSI4LjUiIHI9IjIuMiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjYiLz48L3N2Zz4=", "sesame": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48ZWxsaXBzZSBjeD0iOC41IiBjeT0iOCIgcng9IjIiIHJ5PSIzLjIiIGZpbGw9IndoaXRlIiB0cmFuc2Zvcm09InJvdGF0ZSgtMjAgOC41IDgpIi8+PGVsbGlwc2UgY3g9IjE1LjUiIGN5PSI4IiByeD0iMiIgcnk9IjMuMiIgZmlsbD0id2hpdGUiIHRyYW5zZm9ybT0icm90YXRlKDIwIDE1LjUgOCkiLz48ZWxsaXBzZSBjeD0iOC41IiBjeT0iMTYiIHJ4PSIyIiByeT0iMy4yIiBmaWxsPSJ3aGl0ZSIgdHJhbnNmb3JtPSJyb3RhdGUoMjAgOC41IDE2KSIvPjxlbGxpcHNlIGN4PSIxNS41IiBjeT0iMTYiIHJ4PSIyIiByeT0iMy4yIiBmaWxsPSJ3aGl0ZSIgdHJhbnNmb3JtPSJyb3RhdGUoLTIwIDE1LjUgMTYpIi8+PGVsbGlwc2UgY3g9IjEyIiBjeT0iMTIiIHJ4PSIyIiByeT0iMy4yIiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg=="};
-const ALLERGEN_LIST = [{"key": "gluten", "label": "Gluten"}, {"key": "crustaces", "label": "Crustacés"}, {"key": "oeufs", "label": "Œufs"}, {"key": "poissons", "label": "Poissons"}, {"key": "arachides", "label": "Arachides"}, {"key": "soja", "label": "Soja"}, {"key": "lait", "label": "Lait"}, {"key": "fruits_coque", "label": "Fruits à coque"}, {"key": "celeri", "label": "Céleri"}, {"key": "moutarde", "label": "Moutarde"}, {"key": "sesame", "label": "Sésame"}];
-const DM = {"platDuJour": {"nom": "", "desc": "", "prix": "", "date": ""}, "sections": [{"titre": "Entrées", "sous": "Pour commencer", "plats": [{"nom": "Velouté de potimarron", "desc": "Huile de noisette torréfiée, éclats de châtaigne.", "prix": "9", "allergenes": ["lait", "fruits_coque"]}, {"nom": "Œuf parfait, champignons des bois", "desc": "Crème de champignons, copeaux de comté.", "prix": "11", "allergenes": ["oeufs", "lait"]}, {"nom": "Terrine de campagne maison", "desc": "Pickles de légumes, pain de seigle grillé.", "prix": "10", "allergenes": ["gluten"]}]}, {"titre": "Plats", "sous": "Le cœur du repas", "plats": [{"nom": "Suprême de volaille fermière", "desc": "Jus au thym, purée fumée.", "prix": "19", "allergenes": ["lait"]}, {"nom": "Filet de bœuf, sauce aux morilles", "desc": "Gratin dauphinois, légumes de saison.", "prix": "26", "allergenes": ["lait"]}, {"nom": "Pavé de cabillaud rôti", "desc": "Beurre blanc, écrasé de pommes de terre.", "prix": "21", "allergenes": ["poissons", "lait"]}, {"nom": "Risotto d'automne aux cèpes", "desc": "Noisettes torréfiées, parmesan. Végétarien.", "prix": "17", "allergenes": ["lait", "fruits_coque"]}]}, {"titre": "Desserts", "sous": "La douceur", "plats": [{"nom": "Tarte fine aux pommes", "desc": "Caramel au beurre salé, glace vanille.", "prix": "8", "allergenes": ["gluten", "lait", "oeufs"]}, {"nom": "Fondant au chocolat", "desc": "Cœur coulant, crème anglaise.", "prix": "8", "allergenes": ["gluten", "lait", "oeufs"]}, {"nom": "Fromages affinés", "desc": "Sélection du moment, confiture de saison.", "prix": "9", "allergenes": ["lait"]}]}, {"titre": "Desserts glacés", "sous": "Glaces & sorbets", "type": "glaces", "parfums": {"glaces": ["Vanille", "Chocolat", "Café", "Caramel beurre salé", "Fraise", "Pistache"], "sorbets": ["Citron", "Framboise", "Mangue", "Fruits rouges", "Menthe"]}, "plats": [{"nom": "Coupe 2 boules", "desc": "Au choix dans notre sélection.", "prix": "5", "allergenes": ["lait", "oeufs"]}, {"nom": "Coupe 3 boules", "desc": "Au choix, avec chantilly maison.", "prix": "7", "allergenes": ["lait", "oeufs"]}, {"nom": "Café liégeois", "desc": "Glace café, chantilly maison.", "prix": "7", "allergenes": ["lait", "oeufs"]}, {"nom": "Coupe enfant", "desc": "2 boules au choix, nappage au choix.", "prix": "4", "allergenes": ["lait", "oeufs"]}]}], "supplements": {"titre": "Suppléments", "lignes": [{"label": "Supplément sauce", "prix": "1,50 €"}, {"label": "Supplément fromage", "prix": "2 €"}, {"label": "Café ou infusion", "prix": "2 €"}, {"label": "Pain maison (portion)", "prix": "1 €"}]}, "menuEnfant": {"titre": "Menu enfant", "sous": "Jusqu’à 12 ans", "inclus": "Boisson + dessert inclus", "plats": [{"nom": "Steak haché frites", "desc": "Viande fraîche, frites maison.", "prix": "9", "allergenes": ["gluten"]}, {"nom": "Nuggets de poulet", "desc": "Frites maison, sauce tomate.", "prix": "9", "allergenes": ["gluten", "oeufs"]}, {"nom": "Pâtes au beurre", "desc": "Parmesan, option sauce tomate.", "prix": "7", "allergenes": ["gluten", "lait"]}]}, "formule": {"titre": "Formule du midi", "lignes": [{"label": "Entrée + Plat", "prix": "22 €"}, {"label": "Plat + Dessert", "prix": "22 €"}, {"label": "Entrée + Plat + Dessert", "prix": "27 €"}], "note": "Du lundi au vendredi, le midi"}};
+let PW=sessionStorage.getItem('qpw')||'';
+let menu=null;
+function gid(id){return document.getElementById(id);}
+function showApp(){gid('gate').classList.add('hidden');gid('app').classList.remove('hidden');}
 
-let PW = sessionStorage.getItem("qpw") || "";
-let menu = null;
-function gid(id) { return document.getElementById(id); }
-function showApp() { gid("gate").classList.add("hidden"); gid("app").classList.remove("hidden"); }
-
-async function verifyPw(pw) {
+async function verifyPw(pw){
   let r;
-  try { r = await fetch("/api/menu", {method:"POST", headers:{"content-type":"application/json","x-admin-key":pw,"x-check":"1"}}); }
-  catch(e) { return {ok:false, msg:"Impossible de joindre le serveur."}; }
-  if (r.status === 200) return {ok:true};
-  if (r.status === 401) return {ok:false, msg:"Mot de passe incorrect."};
-  if (r.status === 404) return {ok:false, msg:"Fonction /api/menu introuvable."};
-  if (r.status === 405) return {ok:false, msg:"Erreur 405 — vérifiez l'emplacement de functions/api/menu.js."};
-  let m = ""; try { m = (await r.json()).error || ""; } catch(e) {}
-  return {ok:false, msg: m || "Erreur serveur (code " + r.status + ")."};
+  try{r=await fetch('/api/menu',{method:'POST',headers:{'content-type':'application/json','x-admin-key':pw,'x-check':'1'}});}
+  catch(e){return{ok:false,msg:'Impossible de joindre le serveur.'};}
+  if(r.status===200)return{ok:true};
+  if(r.status===401)return{ok:false,msg:'Mot de passe incorrect.'};
+  if(r.status===404)return{ok:false,msg:'Fonction /api/menu introuvable.'};
+  let m='';try{m=(await r.json()).error||'';}catch(e){}
+  return{ok:false,msg:m||'Erreur serveur (code '+r.status+').'};
 }
 
-gid("loginBtn").addEventListener("click", async function() {
-  const pw = gid("pw").value.trim();
-  if (!pw) { gid("loginErr").textContent = "Entrez le mot de passe."; return; }
-  gid("loginErr").textContent = "Vérification…";
-  const res = await verifyPw(pw);
-  if (res.ok) { PW = pw; sessionStorage.setItem("qpw", pw); await loadMenu(); showApp(); }
-  else { gid("loginErr").textContent = res.msg; }
+gid('loginBtn').addEventListener('click',async function(){
+  var pw=gid('pw').value.trim();
+  if(!pw){gid('loginErr').textContent='Entrez le mot de passe.';return;}
+  gid('loginErr').textContent='Vérification…';
+  var res=await verifyPw(pw);
+  if(res.ok){PW=pw;sessionStorage.setItem('qpw',pw);await loadMenu();showApp();}
+  else{gid('loginErr').textContent=res.msg;}
 });
-gid("pw").addEventListener("keydown", function(e) { if (e.key === "Enter") gid("loginBtn").click(); });
-gid("logoutBtn").addEventListener("click", function() { sessionStorage.removeItem("qpw"); location.reload(); });
+gid('pw').addEventListener('keydown',function(e){if(e.key==='Enter')gid('loginBtn').click();});
+gid('logoutBtn').addEventListener('click',function(){sessionStorage.removeItem('qpw');location.reload();});
 
-async function loadMenu() {
-  try { const r = await fetch("/api/menu", {cache:"no-store"}); menu = r.ok ? await r.json() : JSON.parse(JSON.stringify(DM)); }
-  catch(e) { menu = JSON.parse(JSON.stringify(DM)); }
-  if (!menu || !menu.sections) menu = JSON.parse(JSON.stringify(DM));
+async function loadMenu(){
+  try{var r=await fetch('/api/menu',{cache:'no-store'});menu=r.ok?await r.json():JSON.parse(JSON.stringify(DM));}
+  catch(e){menu=JSON.parse(JSON.stringify(DM));}
+  if(!menu||!menu.sections)menu=JSON.parse(JSON.stringify(DM));
+  // Merge missing fields from DM into loaded menu
+  DM.sections.forEach(function(ds,i){
+    if(menu.sections[i]){
+      if(ds.parfums&&!menu.sections[i].parfums) menu.sections[i].parfums=ds.parfums;
+      if(ds.supplements&&!menu.sections[i].supplements) menu.sections[i].supplements=JSON.parse(JSON.stringify(ds.supplements));
+      if(ds.parfumsLabel&&!menu.sections[i].parfumsLabel) menu.sections[i].parfumsLabel=ds.parfumsLabel;
+    }
+  });
   fillForm();
 }
 
-function fillForm() {
-  const pj = menu.platDuJour || {};
-  gid("pj_nom").value = pj.nom || "";
-  gid("pj_desc").value = pj.desc || "";
-  gid("pj_prix").value = pj.prix || "";
+function fillForm(){
+  var pj=menu.platDuJour||{};
+  gid('pj_nom').value=pj.nom||'';
+  gid('pj_desc').value=pj.desc||'';
+  gid('pj_prix').value=pj.prix||'';
   renderSections(); renderME(); renderF();
 }
 
-function esc(s) { return (s||"").replace(/[&<>]/g, function(c) { return {"&":"&amp;","<":"&lt;",">":"&gt;"}[c]; }); }
-function attr(s) { return (s||"").replace(/"/g, "&quot;").replace(/</g, "&lt;"); }
+function esc(s){return(s||'').replace(/[&<>]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
+function attr(s){return(s||'').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
 
-function algChecks(selected, onChange) {
-  const d = document.createElement("div");
-  d.className = "alg-checks";
-  ALLERGEN_LIST.forEach(function(al) {
-    const lbl = document.createElement("label");
-    lbl.className = "alg-ck" + ((selected||[]).indexOf(al.key) >= 0 ? " checked" : "");
-    const chk = document.createElement("input");
-    chk.type = "checkbox"; chk.value = al.key;
-    if ((selected||[]).indexOf(al.key) >= 0) chk.checked = true;
-    chk.addEventListener("change", function() {
-      lbl.className = "alg-ck" + (chk.checked ? " checked" : "");
-      onChange();
-    });
-    const img = document.createElement("img");
-    img.src = ALLERGEN_IMGS[al.key] || ""; img.alt = al.label; img.width = 18; img.height = 18;
-    const sp = document.createElement("span"); sp.textContent = al.label;
+function algChecks(selected,onChange){
+  var d=document.createElement('div'); d.className='alg-checks';
+  ALLERGEN_LIST.forEach(function(al){
+    var lbl=document.createElement('label');
+    lbl.className='alg-ck'+((selected||[]).indexOf(al.key)>=0?' checked':'');
+    var chk=document.createElement('input'); chk.type='checkbox'; chk.value=al.key;
+    if((selected||[]).indexOf(al.key)>=0) chk.checked=true;
+    chk.addEventListener('change',function(){lbl.className='alg-ck'+(chk.checked?' checked':'');onChange();});
+    var img=document.createElement('img'); img.src=ALLERGEN_IMGS[al.key]||''; img.alt=al.label; img.width=18; img.height=18;
+    var sp=document.createElement('span'); sp.textContent=al.label;
     lbl.appendChild(chk); lbl.appendChild(img); lbl.appendChild(sp);
     d.appendChild(lbl);
   });
   return d;
 }
 
-function dishRow(p, onDelete) {
-  const row = document.createElement("div"); row.className = "dish-row";
-  const g = document.createElement("div"); g.className = "g2";
-  const n = document.createElement("div"); n.innerHTML = "<label>Nom</label><input data-f=\"nom\" value=\"" + attr(p.nom) + "\">";
-  const pr = document.createElement("div"); pr.innerHTML = "<label>Prix</label><input data-f=\"prix\" value=\"" + attr(p.prix) + "\">";
-  g.appendChild(n); g.appendChild(pr); row.appendChild(g);
-  const dl = document.createElement("label"); dl.textContent = "Description"; row.appendChild(dl);
-  const ta = document.createElement("textarea"); ta.setAttribute("data-f","desc"); ta.value = p.desc || ""; row.appendChild(ta);
-  const al = document.createElement("label"); al.textContent = "Allergènes"; row.appendChild(al);
-  const ac = algChecks(p.allergenes||[], function() {
-    p.allergenes = Array.from(row.querySelectorAll(".alg-checks input:checked")).map(function(c){return c.value;});
+function dishRow(p,onDelete){
+  var row=document.createElement('div'); row.className='dish-row';
+  var g=document.createElement('div'); g.className='g2';
+  var dn=document.createElement('div'); dn.innerHTML='<label>Nom</label><input data-f="nom" value="'+attr(p.nom)+'">';
+  var dp=document.createElement('div'); dp.innerHTML='<label>Prix</label><input data-f="prix" value="'+attr(p.prix)+'">';
+  g.appendChild(dn); g.appendChild(dp); row.appendChild(g);
+  var dl=document.createElement('label'); dl.textContent='Description'; row.appendChild(dl);
+  var ta=document.createElement('textarea'); ta.setAttribute('data-f','desc'); ta.value=p.desc||''; row.appendChild(ta);
+  var al=document.createElement('label'); al.textContent='Allergènes'; row.appendChild(al);
+  var ac=algChecks(p.allergenes||[],function(){
+    p.allergenes=Array.from(row.querySelectorAll('.alg-checks input:checked')).map(function(c){return c.value;});
   });
   row.appendChild(ac);
-  const ra = document.createElement("div"); ra.className = "ra";
-  const db = document.createElement("button"); db.className = "btn danger"; db.textContent = "Supprimer";
-  db.addEventListener("click", onDelete); ra.appendChild(db); row.appendChild(ra);
-  row.querySelectorAll("[data-f]").forEach(function(inp) {
-    inp.addEventListener("input", function() { p[inp.getAttribute("data-f")] = inp.value; });
+  var ra=document.createElement('div'); ra.className='ra';
+  var db=document.createElement('button'); db.className='btn danger'; db.textContent='Supprimer';
+  db.addEventListener('click',onDelete); ra.appendChild(db); row.appendChild(ra);
+  row.querySelectorAll('[data-f]').forEach(function(inp){
+    inp.addEventListener('input',function(){p[inp.getAttribute('data-f')]=inp.value;});
   });
   return row;
 }
 
-function renderSections() {
-  const host = gid("sections"); host.innerHTML = "";
-  (menu.sections||[]).forEach(function(sec, si) {
-    const card = document.createElement("div"); card.className = "card";
-    const h3 = document.createElement("h3"); h3.innerHTML = "<span class=\"dmd\"></span> " + esc(sec.titre); card.appendChild(h3);
-        if (sec.parfums) {
-      const pf = sec.parfums;
-      // Label des parfums
-      const lpfl = document.createElement("label"); lpfl.textContent = "Titre de la rubrique parfums"; card.appendChild(lpfl);
-      const ipfl = document.createElement("input"); ipfl.value = sec.parfumsLabel || "";
-      ipfl.placeholder = "Ex. Nos parfums";
-      ipfl.addEventListener("input", function() { menu.sections[si].parfumsLabel = ipfl.value; });
+function supRow(l,onDelete){
+  var row=document.createElement('div'); row.className='fr';
+  var il=document.createElement('input'); il.value=l.label||''; il.placeholder='Ex. Chantilly';
+  var ip=document.createElement('input'); ip.value=l.prix||''; ip.placeholder='Ex. 0,50 €';
+  var db=document.createElement('button'); db.className='btn danger'; db.textContent='✕';
+  il.addEventListener('input',function(){l.label=il.value;});
+  ip.addEventListener('input',function(){l.prix=ip.value;});
+  db.addEventListener('click',onDelete);
+  row.appendChild(il); row.appendChild(ip); row.appendChild(db);
+  return row;
+}
+
+function renderSections(){
+  var host=gid('sections'); host.innerHTML='';
+  (menu.sections||[]).forEach(function(sec,si){
+    var card=document.createElement('div'); card.className='card';
+    var h3=document.createElement('h3'); h3.innerHTML='<span class="dmd"></span> '+esc(sec.titre); card.appendChild(h3);
+
+    // Champs parfums (pour desserts glacés)
+    if(sec.parfums!==undefined){
+      var lpfl=document.createElement('label'); lpfl.textContent='Titre parfums'; card.appendChild(lpfl);
+      var ipfl=document.createElement('input'); ipfl.value=sec.parfumsLabel||''; ipfl.placeholder='Ex. Nos parfums';
+      ipfl.addEventListener('input',function(){menu.sections[si].parfumsLabel=ipfl.value;});
       card.appendChild(ipfl);
-      if (pf.glaces !== undefined) {
-        const lg = document.createElement("label"); lg.textContent = "Glaces (s\u00e9par\u00e9es par \u00b7)"; card.appendChild(lg);
-        const ig = document.createElement("input"); ig.value = (pf.glaces||[]).join(" \u00b7 ");
-        ig.addEventListener("input", function() { menu.sections[si].parfums.glaces = ig.value.split("\u00b7").map(function(s){return s.trim();}).filter(Boolean); });
+
+      if(sec.parfums.glaces!==undefined){
+        var lg=document.createElement('label'); lg.textContent='Glaces (séparées par ·)'; card.appendChild(lg);
+        var ig=document.createElement('input'); ig.value=(sec.parfums.glaces||[]).join(' · ');
+        ig.addEventListener('input',function(){menu.sections[si].parfums.glaces=ig.value.split('·').map(function(s){return s.trim();}).filter(Boolean);});
         card.appendChild(ig);
       }
-      if (pf.sorbets !== undefined) {
-        const ls = document.createElement("label"); ls.textContent = "Sorbets"; card.appendChild(ls);
-        const is = document.createElement("input"); is.value = (pf.sorbets||[]).join(" \u00b7 ");
-        is.addEventListener("input", function() { menu.sections[si].parfums.sorbets = is.value.split("\u00b7").map(function(s){return s.trim();}).filter(Boolean); });
+      if(sec.parfums.sorbets!==undefined){
+        var ls=document.createElement('label'); ls.textContent='Sorbets (séparés par ·)'; card.appendChild(ls);
+        var is=document.createElement('input'); is.value=(sec.parfums.sorbets||[]).join(' · ');
+        is.addEventListener('input',function(){menu.sections[si].parfums.sorbets=is.value.split('·').map(function(s){return s.trim();}).filter(Boolean);});
         card.appendChild(is);
       }
-      // Suppléments intégrés
-      const lsup = document.createElement("label"); lsup.textContent = "Suppl\u00e9ments"; card.appendChild(lsup);
-      const supHost = document.createElement("div"); supHost.className = "sup-host"; card.appendChild(supHost);
-      function renderSupRows() {
-        supHost.innerHTML = "";
-        (menu.sections[si].supplements||[]).forEach(function(l, li) {
-          const row = document.createElement("div"); row.className = "fr";
-          const il = document.createElement("input"); il.value = l.label||""; il.placeholder = "Ex. Chantilly";
-          const ip = document.createElement("input"); ip.value = l.prix||""; ip.placeholder = "Ex. 0,50 \u20ac";
-          const db = document.createElement("button"); db.className = "btn danger"; db.textContent = "\u2715";
-          il.addEventListener("input", function() { menu.sections[si].supplements[li].label = il.value; });
-          ip.addEventListener("input", function() { menu.sections[si].supplements[li].prix = ip.value; });
-          db.addEventListener("click", function() { menu.sections[si].supplements.splice(li,1); renderSupRows(); });
-          row.appendChild(il); row.appendChild(ip); row.appendChild(db); supHost.appendChild(row);
-        });
-      }
-      renderSupRows();
-      const addSup = document.createElement("button"); addSup.className = "btn ghost add-line";
-      addSup.textContent = "+ Ajouter un suppl\u00e9ment";
-      addSup.addEventListener("click", function() {
-        if (!menu.sections[si].supplements) menu.sections[si].supplements = [];
-        menu.sections[si].supplements.push({label:"",prix:""}); renderSupRows();
-      });
-      card.appendChild(addSup);
     }
-    const dishes = document.createElement("div"); card.appendChild(dishes);
-    function renderDishes() {
-      dishes.innerHTML = "";
-      (menu.sections[si].plats||[]).forEach(function(p, pi) {
-        dishes.appendChild(dishRow(p, function() { menu.sections[si].plats.splice(pi,1); renderDishes(); }));
+
+    // Plats
+    var dishes=document.createElement('div'); card.appendChild(dishes);
+    function renderDishes(){
+      dishes.innerHTML='';
+      (menu.sections[si].plats||[]).forEach(function(p,pi){
+        dishes.appendChild(dishRow(p,function(){menu.sections[si].plats.splice(pi,1);renderDishes();}));
       });
     }
     renderDishes();
-    const ab = document.createElement("button"); ab.className = "btn ghost add-line"; ab.textContent = "+ Ajouter un plat";
-    ab.addEventListener("click", function() { menu.sections[si].plats.push({nom:"",desc:"",prix:"",allergenes:[]}); renderDishes(); });
-    card.appendChild(ab); host.appendChild(card);
+    var ab=document.createElement('button'); ab.className='btn ghost add-line'; ab.textContent='+ Ajouter un plat';
+    ab.addEventListener('click',function(){menu.sections[si].plats.push({nom:'',desc:'',prix:'',allergenes:[]});renderDishes();});
+    card.appendChild(ab);
+
+    // Suppléments (pour desserts glacés)
+    if(sec.supplements!==undefined){
+      var lsup=document.createElement('label'); lsup.textContent='Suppléments'; card.appendChild(lsup);
+      var supHost=document.createElement('div'); card.appendChild(supHost);
+      function renderSups(){
+        supHost.innerHTML='';
+        (menu.sections[si].supplements||[]).forEach(function(l,li){
+          supHost.appendChild(supRow(l,function(){menu.sections[si].supplements.splice(li,1);renderSups();}));
+        });
+      }
+      renderSups();
+      var asup=document.createElement('button'); asup.className='btn ghost add-line'; asup.textContent='+ Ajouter un supplément';
+      asup.addEventListener('click',function(){
+        if(!menu.sections[si].supplements) menu.sections[si].supplements=[];
+        menu.sections[si].supplements.push({label:'',prix:''}); renderSups();
+      });
+      card.appendChild(asup);
+    }
+
+    host.appendChild(card);
   });
 }
 
-
-
-function renderME() {
-  if (!menu.menuEnfant) menu.menuEnfant = {titre:"Menu enfant", sous:"Jusqu’à 12 ans", plats:[], inclus:""};
-  gid("me_inclus").value = menu.menuEnfant.inclus || "";
-  const host = gid("mePlats"); host.innerHTML = "";
-  function renderMEDishes() {
-    host.innerHTML = "";
-    (menu.menuEnfant.plats||[]).forEach(function(p, pi) {
-      host.appendChild(dishRow(p, function() { menu.menuEnfant.plats.splice(pi,1); renderMEDishes(); }));
+function renderME(){
+  if(!menu.menuEnfant) menu.menuEnfant={titre:'Menu enfant',sous:'Jusqu\'à 12 ans',plats:[],inclus:''};
+  gid('me_inclus').value=menu.menuEnfant.inclus||'';
+  var host=gid('mePlats'); host.innerHTML='';
+  function renderMEDishes(){
+    host.innerHTML='';
+    (menu.menuEnfant.plats||[]).forEach(function(p,pi){
+      host.appendChild(dishRow(p,function(){menu.menuEnfant.plats.splice(pi,1);renderMEDishes();}));
     });
   }
   renderMEDishes();
-  // store for re-render
-  gid("addMePlat")._renderDishes = renderMEDishes;
+  gid('addMePlat')._render=renderMEDishes;
 }
-gid("me_inclus").addEventListener("input", function() { menu.menuEnfant.inclus = gid("me_inclus").value; });
-gid("addMePlat").addEventListener("click", function() { menu.menuEnfant.plats.push({nom:"",desc:"",prix:"",allergenes:[]}); if(gid("addMePlat")._renderDishes) gid("addMePlat")._renderDishes(); });
-
-function renderF() {
-  if (!menu.formule) menu.formule = {titre:"Formule du midi", lignes:[], note:""};
-  const host = gid("flignes"); host.innerHTML = "";
-  (menu.formule.lignes||[]).forEach(function(l, i) {
-    const row = document.createElement("div"); row.className = "fr";
-    const il = document.createElement("input"); il.value = l.label||""; il.placeholder = "Ex. Entrée + Plat";
-    const ip = document.createElement("input"); ip.value = l.prix||""; ip.placeholder = "Ex. 22 €";
-    const db = document.createElement("button"); db.className = "btn danger"; db.textContent = "✕";
-    il.addEventListener("input", function() { menu.formule.lignes[i].label = il.value; });
-    ip.addEventListener("input", function() { menu.formule.lignes[i].prix = ip.value; });
-    db.addEventListener("click", function() { menu.formule.lignes.splice(i,1); renderF(); });
-    row.appendChild(il); row.appendChild(ip); row.appendChild(db); host.appendChild(row);
-  });
-  gid("fnote").value = menu.formule.note || "";
-}
-gid("addF").addEventListener("click", function() { menu.formule.lignes.push({label:"",prix:""}); renderF(); });
-
-gid("saveBtn").addEventListener("click", async function() {
-  const today = new Date().toISOString().slice(0,10);
-  const nom = gid("pj_nom").value.trim();
-  menu.platDuJour = {nom:nom, desc:gid("pj_desc").value.trim(), prix:gid("pj_prix").value.trim(), date:nom?today:""};
-  menu.formule.note = gid("fnote").value.trim();
-  const msgEl = gid("msg"); msgEl.className = "msg"; msgEl.textContent = "Enregistrement…";
-  let r;
-  try { r = await fetch("/api/menu", {method:"POST", headers:{"content-type":"application/json","x-admin-key":PW}, body:JSON.stringify(menu)}); }
-  catch(err) { msgEl.className = "msg err"; msgEl.textContent = "Connexion impossible."; return; }
-  let data = {}; try { data = await r.json(); } catch(ex) {}
-  if (r.ok) { msgEl.className = "msg ok"; msgEl.textContent = "✓ Carte enregistrée."; setTimeout(function(){if(msgEl.classList.contains("ok"))msgEl.textContent="";}, 4000); }
-  else if (r.status === 401) { msgEl.className = "msg err"; msgEl.textContent = "Mot de passe refusé — cliquez sur « Quitter » et reconnectez-vous."; }
-  else { msgEl.className = "msg err"; msgEl.textContent = (data.error || "Erreur serveur") + " (" + r.status + ")."; }
+gid('me_inclus').addEventListener('input',function(){menu.menuEnfant.inclus=gid('me_inclus').value;});
+gid('addMePlat').addEventListener('click',function(){
+  menu.menuEnfant.plats.push({nom:'',desc:'',prix:'',allergenes:[]});
+  if(gid('addMePlat')._render) gid('addMePlat')._render();
 });
 
-if (PW) { loadMenu().then(showApp); }
+function renderF(){
+  if(!menu.formule) menu.formule={titre:'Formule du midi',lignes:[],note:''};
+  var host=gid('flignes'); host.innerHTML='';
+  (menu.formule.lignes||[]).forEach(function(l,i){
+    var row=document.createElement('div'); row.className='fr';
+    var il=document.createElement('input'); il.value=l.label||''; il.placeholder='Ex. Entrée + Plat';
+    var ip=document.createElement('input'); ip.value=l.prix||''; ip.placeholder='Ex. 22 €';
+    var db=document.createElement('button'); db.className='btn danger'; db.textContent='✕';
+    il.addEventListener('input',function(){menu.formule.lignes[i].label=il.value;});
+    ip.addEventListener('input',function(){menu.formule.lignes[i].prix=ip.value;});
+    db.addEventListener('click',function(){menu.formule.lignes.splice(i,1);renderF();});
+    row.appendChild(il); row.appendChild(ip); row.appendChild(db); host.appendChild(row);
+  });
+  gid('fnote').value=menu.formule.note||'';
+}
+gid('addF').addEventListener('click',function(){menu.formule.lignes.push({label:'',prix:''});renderF();});
+
+gid('saveBtn').addEventListener('click',async function(){
+  var today=new Date().toISOString().slice(0,10);
+  var nom=gid('pj_nom').value.trim();
+  menu.platDuJour={nom:nom,desc:gid('pj_desc').value.trim(),prix:gid('pj_prix').value.trim(),date:nom?today:''};
+  menu.formule.note=gid('fnote').value.trim();
+  var msgEl=gid('msg'); msgEl.className='msg'; msgEl.textContent='Enregistrement…';
+  var r;
+  try{r=await fetch('/api/menu',{method:'POST',headers:{'content-type':'application/json','x-admin-key':PW},body:JSON.stringify(menu)});}
+  catch(err){msgEl.className='msg err';msgEl.textContent='Connexion impossible.';return;}
+  var data={};try{data=await r.json();}catch(ex){}
+  if(r.ok){msgEl.className='msg ok';msgEl.textContent='✓ Carte enregistrée.';setTimeout(function(){if(msgEl.classList.contains('ok'))msgEl.textContent='';},4000);}
+  else if(r.status===401){msgEl.className='msg err';msgEl.textContent='Mot de passe refusé — cliquez sur Quitter et reconnectez-vous.';}
+  else{msgEl.className='msg err';msgEl.textContent=(data.error||'Erreur serveur')+' ('+r.status+')';}
+});
+
+if(PW){loadMenu().then(showApp);}
 </script>
 </body>
 </html>
