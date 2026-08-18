@@ -82,11 +82,7 @@ textarea{resize:vertical;min-height:52px}
       <label>Prix</label><input id="pj_prix" placeholder="Ex. 16" style="max-width:140px"/>
     </div>
     <div id="sections"></div>
-    <div class="card">
-      <h3><span class="dmd"></span> Suppléments</h3>
-      <div id="supLignes"></div>
-      <button class="btn ghost add-line" id="addSup">+ Ajouter un supplément</button>
-    </div>
+
     <div class="card">
       <h3><span class="dmd"></span> Menu enfant</h3>
       <label>Mention incluse</label><input id="me_inclus" placeholder="Ex. Boisson + dessert inclus"/>
@@ -148,7 +144,7 @@ function fillForm() {
   gid("pj_nom").value = pj.nom || "";
   gid("pj_desc").value = pj.desc || "";
   gid("pj_prix").value = pj.prix || "";
-  renderSections(); renderSup(); renderME(); renderF();
+  renderSections(); renderME(); renderF();
 }
 
 function esc(s) { return (s||"").replace(/[&<>]/g, function(c) { return {"&":"&amp;","<":"&lt;",">":"&gt;"}[c]; }); }
@@ -203,20 +199,50 @@ function renderSections() {
   (menu.sections||[]).forEach(function(sec, si) {
     const card = document.createElement("div"); card.className = "card";
     const h3 = document.createElement("h3"); h3.innerHTML = "<span class=\"dmd\"></span> " + esc(sec.titre); card.appendChild(h3);
-    if (sec.parfums) {
+        if (sec.parfums) {
       const pf = sec.parfums;
-      if (pf.glaces) {
-        const lg = document.createElement("label"); lg.textContent = "Glaces (séparées par ·)"; card.appendChild(lg);
-        const ig = document.createElement("input"); ig.value = (pf.glaces||[]).join(" · ");
-        ig.addEventListener("input", function() { menu.sections[si].parfums.glaces = ig.value.split("·").map(function(s){return s.trim();}).filter(Boolean); });
+      // Label des parfums
+      const lpfl = document.createElement("label"); lpfl.textContent = "Titre de la rubrique parfums"; card.appendChild(lpfl);
+      const ipfl = document.createElement("input"); ipfl.value = sec.parfumsLabel || "";
+      ipfl.placeholder = "Ex. Nos parfums";
+      ipfl.addEventListener("input", function() { menu.sections[si].parfumsLabel = ipfl.value; });
+      card.appendChild(ipfl);
+      if (pf.glaces !== undefined) {
+        const lg = document.createElement("label"); lg.textContent = "Glaces (s\u00e9par\u00e9es par \u00b7)"; card.appendChild(lg);
+        const ig = document.createElement("input"); ig.value = (pf.glaces||[]).join(" \u00b7 ");
+        ig.addEventListener("input", function() { menu.sections[si].parfums.glaces = ig.value.split("\u00b7").map(function(s){return s.trim();}).filter(Boolean); });
         card.appendChild(ig);
       }
-      if (pf.sorbets) {
+      if (pf.sorbets !== undefined) {
         const ls = document.createElement("label"); ls.textContent = "Sorbets"; card.appendChild(ls);
-        const is = document.createElement("input"); is.value = (pf.sorbets||[]).join(" · ");
-        is.addEventListener("input", function() { menu.sections[si].parfums.sorbets = is.value.split("·").map(function(s){return s.trim();}).filter(Boolean); });
+        const is = document.createElement("input"); is.value = (pf.sorbets||[]).join(" \u00b7 ");
+        is.addEventListener("input", function() { menu.sections[si].parfums.sorbets = is.value.split("\u00b7").map(function(s){return s.trim();}).filter(Boolean); });
         card.appendChild(is);
       }
+      // Suppléments intégrés
+      const lsup = document.createElement("label"); lsup.textContent = "Suppl\u00e9ments"; card.appendChild(lsup);
+      const supHost = document.createElement("div"); supHost.className = "sup-host"; card.appendChild(supHost);
+      function renderSupRows() {
+        supHost.innerHTML = "";
+        (menu.sections[si].supplements||[]).forEach(function(l, li) {
+          const row = document.createElement("div"); row.className = "fr";
+          const il = document.createElement("input"); il.value = l.label||""; il.placeholder = "Ex. Chantilly";
+          const ip = document.createElement("input"); ip.value = l.prix||""; ip.placeholder = "Ex. 0,50 \u20ac";
+          const db = document.createElement("button"); db.className = "btn danger"; db.textContent = "\u2715";
+          il.addEventListener("input", function() { menu.sections[si].supplements[li].label = il.value; });
+          ip.addEventListener("input", function() { menu.sections[si].supplements[li].prix = ip.value; });
+          db.addEventListener("click", function() { menu.sections[si].supplements.splice(li,1); renderSupRows(); });
+          row.appendChild(il); row.appendChild(ip); row.appendChild(db); supHost.appendChild(row);
+        });
+      }
+      renderSupRows();
+      const addSup = document.createElement("button"); addSup.className = "btn ghost add-line";
+      addSup.textContent = "+ Ajouter un suppl\u00e9ment";
+      addSup.addEventListener("click", function() {
+        if (!menu.sections[si].supplements) menu.sections[si].supplements = [];
+        menu.sections[si].supplements.push({label:"",prix:""}); renderSupRows();
+      });
+      card.appendChild(addSup);
     }
     const dishes = document.createElement("div"); card.appendChild(dishes);
     function renderDishes() {
@@ -232,21 +258,7 @@ function renderSections() {
   });
 }
 
-function renderSup() {
-  if (!menu.supplements) menu.supplements = {titre:"Suppléments", lignes:[]};
-  const host = gid("supLignes"); host.innerHTML = "";
-  (menu.supplements.lignes||[]).forEach(function(l, i) {
-    const row = document.createElement("div"); row.className = "fr";
-    const il = document.createElement("input"); il.setAttribute("data-f","label"); il.value = l.label||""; il.placeholder = "Ex. Café";
-    const ip = document.createElement("input"); ip.setAttribute("data-f","prix"); ip.value = l.prix||""; ip.placeholder = "Ex. 2 €";
-    const db = document.createElement("button"); db.className = "btn danger"; db.textContent = "✕";
-    il.addEventListener("input", function() { menu.supplements.lignes[i].label = il.value; });
-    ip.addEventListener("input", function() { menu.supplements.lignes[i].prix = ip.value; });
-    db.addEventListener("click", function() { menu.supplements.lignes.splice(i,1); renderSup(); });
-    row.appendChild(il); row.appendChild(ip); row.appendChild(db); host.appendChild(row);
-  });
-}
-gid("addSup").addEventListener("click", function() { menu.supplements.lignes.push({label:"",prix:""}); renderSup(); });
+
 
 function renderME() {
   if (!menu.menuEnfant) menu.menuEnfant = {titre:"Menu enfant", sous:"Jusqu’à 12 ans", plats:[], inclus:""};
