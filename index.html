@@ -93,14 +93,14 @@
 
   /* Plat */
   .dish{margin-bottom:1.2rem}
-  .dish__top{display:flex;align-items:center;gap:.4rem}
-  .dish__name{font-family:var(--display);font-size:1.28rem;color:var(--forest);flex:none}
-  .dish__leader{flex:1;border-bottom:1px dotted var(--copper);opacity:.4;min-width:8px}
+  .dish__top{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap}
+  .dish__name{font-family:var(--display);font-size:1.28rem;color:var(--forest);flex:0 1 auto;min-width:0}
+  .dish__leader{flex:1;border-bottom:1px dotted var(--copper);opacity:.4;min-width:4px}
   .dish__price{font-family:var(--ui);font-size:.9rem;color:var(--copper);font-variant-numeric:tabular-nums;white-space:nowrap;flex:none}
   .dish__desc{font-size:.98rem;color:var(--moss);max-width:46ch;line-height:1.55}
   .dish__desc em{color:var(--copper);font-style:italic}
   /* Allergènes affiché */
-  .dish__allergens{display:inline-flex;flex-wrap:nowrap;gap:2px;align-items:center;flex:none}.alg-badge{display:inline-flex}.alg-badge img{width:20px;height:20px;border-radius:50%;opacity:.88}.alg-badge span{display:none}
+  .dish__allergens{display:inline-flex;flex-wrap:nowrap;gap:2px;align-items:center;flex:none}.alg-badge{display:inline-flex;flex-shrink:0}.alg-badge img{width:20px;height:20px;border-radius:50%;opacity:.88}.alg-badge span{display:none}
 
   /* Parfums glaces */
   .parfums{margin:.5rem 0 .8rem;padding:.8rem 1rem;background:rgba(247,240,228,.6);border-left:2px solid var(--copper)}
@@ -168,7 +168,7 @@
   .foot-logo{width:52px;height:52px;background:var(--logo) center/contain no-repeat;flex:none}
   .foot-txt{min-width:0}
   .foot-txt b{font-family:var(--display);font-size:1.1rem;color:var(--forest);font-weight:500;display:block;line-height:1.2}
-  .foot-txt .foot-info{font-family:var(--ui);font-size:.73rem;letter-spacing:.04em;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .foot-txt .foot-info{font-family:var(--ui);font-size:.73rem;letter-spacing:.04em;color:var(--muted);white-space:normal;line-height:1.5}
   .foot-txt .foot-info a:hover{color:var(--copper)}
   .foot-right{display:flex;align-items:center;gap:1.1rem;flex:none}
   .foot-fb{color:var(--copper);display:flex;align-items:center;transition:color .2s}
@@ -182,10 +182,8 @@
     .histoire__grid,.carte__cols,.infos__grid{grid-template-columns:1fr}
     .histoire__figure{max-width:340px;margin-inline:auto}.galerie__grid{grid-template-columns:repeat(2,1fr)}
   }
-  @media(max-width:600px){
-    .foot-inner{flex-wrap:wrap;gap:.9rem}.foot-right{width:100%;justify-content:space-between}.foot-copy{text-align:left}.foot-txt .foot-info{white-space:normal}
-  }
-  @media(max-width:480px){.galerie__grid{grid-template-columns:1fr}.hero__meta{flex-direction:column;gap:.9rem}}
+  @media(max-width:600px){.foot-inner{flex-direction:column;align-items:flex-start;gap:.7rem;padding:1rem 0}.foot-left{width:100%;min-width:0}.foot-right{width:100%;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line-soft);padding-top:.8rem}.foot-copy{text-align:left;font-size:.6rem}.foot-txt b{font-size:1rem}}
+  @media(max-width:520px){.dish__top{flex-wrap:wrap;gap:.3rem .4rem}.dish__name{font-size:1.1rem;flex:1 1 100%}.dish__allergens{order:2;flex-shrink:0}.dish__leader{display:none}.dish__price{order:3;margin-left:auto;font-size:.88rem}.alg-badge img{width:18px;height:18px}}@media(max-width:480px){.galerie__grid{grid-template-columns:1fr}.hero__meta{flex-direction:column;gap:.9rem}}
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
 </style>
 </head>
