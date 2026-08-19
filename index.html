@@ -437,10 +437,10 @@ fetch('/api/menu',{cache:'no-store'})
   .then(function(r){return r.ok?r.json():null;})
   .then(function(d){
     if(d&&d.sections){
-      // Nettoyer l'ancien menuEnfant avec titre/sous mais sans contenu réel
-      if(d.menuEnfant&&!d.menuEnfant.prix&&!(d.menuEnfant.entrees&&d.menuEnfant.entrees.length)
-        &&!(d.menuEnfant.plats&&d.menuEnfant.plats.length)&&!(d.menuEnfant.desserts&&d.menuEnfant.desserts.length)){
-        d.menuEnfant=null;
+      // Nettoyer titre/sous résiduels du menuEnfant dans les données KV
+      if(d.menuEnfant){
+        delete d.menuEnfant.titre;
+        delete d.menuEnfant.sous;
       }
       renderMenu(d);
     }
