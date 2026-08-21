@@ -360,7 +360,24 @@ function renderNewsAdmin(){
       +'<textarea class="ni-extrait" placeholder="Court résumé...">'+esc(n.extrait||'')+'</textarea>'
       +'<label>Détail (affiché dans la fenêtre)</label>'
       +'<textarea class="ni-corps" style="min-height:80px" placeholder="Texte complet...">'+esc(n.corps||'')+'</textarea>'
-      +'<div class="ra"><button class="btn danger ni-del">Supprimer</button></div>';
+      +'<label>Photo <span class="soft">(optionnelle)</span></label>'+'<div class="ni-photo-wrap"></div>'+'<input class="ni-photo-url" placeholder="URL de la photo (https://...)" style="margin-bottom:.3rem"/>'+'<label style="margin-top:.3rem">Ou importer depuis votre appareil</label>'+'<input class="ni-photo-file" type="file" accept="image/*" style="margin-bottom:.5rem"/>'+'<div class="ra"><button class="btn danger ni-del">Supprimer</button></div>';
+    // Photo upload
+    var photoWrap=block.querySelector('.ni-photo-wrap');
+    if(n.photo){var prev=document.createElement('img');prev.src=n.photo;prev.style.cssText='width:100%;max-height:120px;object-fit:cover;margin-bottom:.4rem;display:block';photoWrap.appendChild(prev);}
+    block.querySelector('.ni-photo-url').value=n.photo||'';
+    block.querySelector('.ni-photo-url').addEventListener('input',function(e){currentNews[i].photo=e.target.value;if(e.target.value){if(photoWrap.querySelector('img'))photoWrap.querySelector('img').src=e.target.value;else{var im=document.createElement('img');im.src=e.target.value;im.style.cssText='width:100%;max-height:120px;object-fit:cover;margin-bottom:.4rem;display:block';photoWrap.prepend(im);}}});
+    block.querySelector('.ni-photo-file').addEventListener('change',function(e){
+      var file=e.target.files[0];if(!file)return;
+      var reader=new FileReader();
+      reader.onload=function(ev){
+        currentNews[i].photo=ev.target.result;
+        block.querySelector('.ni-photo-url').value='';
+        var im=photoWrap.querySelector('img');
+        if(im)im.src=ev.target.result;
+        else{im=document.createElement('img');im.src=ev.target.result;im.style.cssText='width:100%;max-height:120px;object-fit:cover;margin-bottom:.4rem;display:block';photoWrap.prepend(im);}
+      };
+      reader.readAsDataURL(file);
+    });
     block.querySelector('.ni-titre').addEventListener('input',function(e){currentNews[i].titre=e.target.value;});
     block.querySelector('.ni-date').addEventListener('input',function(e){currentNews[i].date=e.target.value;});
     block.querySelector('.ni-extrait').addEventListener('input',function(e){currentNews[i].extrait=e.target.value;});
