@@ -54,6 +54,12 @@ textarea{resize:vertical;min-height:52px}
 .box input{text-align:center;margin-bottom:1rem}
 .emsg{color:#b25b4a;font-size:.82rem;min-height:1.2em;margin-top:.6rem;line-height:1.4}
 .hidden{display:none!important}
+.tabs{display:flex;gap:0;margin-bottom:1.6rem;border-bottom:2px solid var(--line)}
+.tab{font-family:var(--U);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+background:none;border:none;padding:.7rem 1.4rem;cursor:pointer;color:var(--muted);
+border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .2s,border-color .2s}
+.tab:hover{color:var(--copper)}
+.tab.active{color:var(--copper);border-bottom-color:var(--copper);font-weight:500}
 </style>
 </head>
 <body>
@@ -73,8 +79,11 @@ textarea{resize:vertical;min-height:52px}
     <button class="btn ghost" id="logoutBtn" style="color:#f7f0e4;border-color:rgba(247,240,228,.35)">Quitter</button>
   </div>
   <div class="wrap">
-    <h2>Modifier la carte</h2>
-    <p class="hint">Modifiez le plat du jour ou les plats et leurs allergènes, puis cliquez sur « Enregistrer ».</p>
+    <div class="tabs">
+      <button class="tab active" data-tab="carte">La carte</button>
+      <button class="tab" data-tab="news">News &amp; Événements</button>
+    </div>
+    <div id="tab-carte">
     <div class="card">
       <h3><span class="dmd"></span> Plat du jour</h3>
       <label>Nom <span class="soft">(vide = masqué)</span></label><input id="pj_nom" placeholder="Ex. Blanquette de veau"/>
@@ -103,7 +112,9 @@ textarea{resize:vertical;min-height:52px}
       <label style="margin-top:1rem">Mention</label><input id="fnote" placeholder="Ex. Du lundi au vendredi, le midi"/>
     </div>
   </div>
-    <div class="card" id="newsCard">
+    </div><!-- /tab-carte -->
+    <div id="tab-news" class="hidden">
+    <div class="card">
       <h3><span class="dmd"></span> News &amp; Événements</h3>
       <p style="font-size:.82rem;color:var(--muted);margin-bottom:1rem">Ajoutez des événements ponctuels. Un clic sur la carte ouvre une fenêtre avec le détail.</p>
       <div id="newsItems"></div>
@@ -129,6 +140,7 @@ textarea{resize:vertical;min-height:52px}
       <label style="margin-top:1rem">Mention</label><input id="fnote" placeholder="Ex. Du lundi au vendredi, le midi"/>
     </div>
   </div>
+    </div><!-- /tab-news -->
   <div class="savebar"><span class="msg" id="msg"></span><button class="btn save" id="saveBtn">Enregistrer</button></div>
 </div>
 <script>
@@ -138,16 +150,29 @@ const DM={"platDuJour": {"nom": "", "desc": "", "prix": "", "date": ""}, "sectio
 
 let PW=sessionStorage.getItem('qpw')||'';
 let menu=null;
+var currentNews=[];
+
 function gid(id){return document.getElementById(id);}
 function showApp(){gid('gate').classList.add('hidden');gid('app').classList.remove('hidden');}
 
+/* ── onglets ── */
+document.querySelectorAll('.tab').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.tab').forEach(function(b){b.classList.remove('active');});
+    btn.classList.add('active');
+    var tab=btn.getAttribute('data-tab');
+    gid('tab-carte').classList.toggle('hidden', tab!=='carte');
+    gid('tab-news').classList.toggle('hidden', tab!=='news');
+  });
+});
+
 async function verifyPw(pw){
-  let r;
+  var r;
   try{r=await fetch('/api/menu',{method:'POST',headers:{'content-type':'application/json','x-admin-key':pw,'x-check':'1'}});}
   catch(e){return{ok:false,msg:'Impossible de joindre le serveur.'};}
   if(r.status===200)return{ok:true};
   if(r.status===401)return{ok:false,msg:'Mot de passe incorrect.'};
-  let m='';try{m=(await r.json()).error||'';}catch(e){}
+  var m='';try{m=(await r.json()).error||'';}catch(e){}
   return{ok:false,msg:m||'Erreur serveur (code '+r.status+').'};
 }
 
@@ -156,7 +181,7 @@ gid('loginBtn').addEventListener('click',async function(){
   if(!pw){gid('loginErr').textContent='Entrez le mot de passe.';return;}
   gid('loginErr').textContent='Vérification…';
   var res=await verifyPw(pw);
-  if(res.ok){PW=pw;sessionStorage.setItem('qpw',pw);await loadMenu();showApp();}
+  if(res.ok){PW=pw;sessionStorage.setItem('qpw',pw);await Promise.all([loadMenu(),loadNews()]);showApp();}
   else{gid('loginErr').textContent=res.msg;}
 });
 gid('pw').addEventListener('keydown',function(e){if(e.key==='Enter')gid('loginBtn').click();});
@@ -165,34 +190,25 @@ gid('logoutBtn').addEventListener('click',function(){sessionStorage.removeItem('
 async function loadMenu(){
   try{var r=await fetch('/api/menu',{cache:'no-store'});menu=r.ok?await r.json():JSON.parse(JSON.stringify(DM));}
   catch(e){menu=JSON.parse(JSON.stringify(DM));}
-  if(!menu||!menu.sections) menu=JSON.parse(JSON.stringify(DM));
-  // Fusionner les champs manquants depuis DM
+  if(!menu||!menu.sections)menu=JSON.parse(JSON.stringify(DM));
   DM.sections.forEach(function(ds,i){
-    if(menu.sections[i]){
-      if(ds.parfums&&!menu.sections[i].parfums) menu.sections[i].parfums=JSON.parse(JSON.stringify(ds.parfums));
-      if(ds.supplements&&!menu.sections[i].supplements) menu.sections[i].supplements=JSON.parse(JSON.stringify(ds.supplements));
-      if(ds.parfumsLabel&&!menu.sections[i].parfumsLabel) menu.sections[i].parfumsLabel=ds.parfumsLabel;
-      if(ds.sauces&&!menu.sections[i].sauces) menu.sections[i].sauces=JSON.parse(JSON.stringify(ds.sauces));
-      if(ds.accompagnements&&!menu.sections[i].accompagnements) menu.sections[i].accompagnements=JSON.parse(JSON.stringify(ds.accompagnements));
-      if(ds.accompagnements&&menu.sections[i].accompagnements&&!menu.sections[i].accompagnements.supp2) menu.sections[i].accompagnements.supp2=ds.accompagnements.supp2||'';
-    }
+    if(!menu.sections[i])return;
+    var ms=menu.sections[i];
+    if(ds.parfums&&!ms.parfums)ms.parfums=JSON.parse(JSON.stringify(ds.parfums));
+    if(ds.supplements&&!ms.supplements)ms.supplements=JSON.parse(JSON.stringify(ds.supplements));
+    if(ds.parfumsLabel&&!ms.parfumsLabel)ms.parfumsLabel=ds.parfumsLabel;
+    if(ds.sauces&&!ms.sauces)ms.sauces=JSON.parse(JSON.stringify(ds.sauces));
+    if(ds.accompagnements&&!ms.accompagnements)ms.accompagnements=JSON.parse(JSON.stringify(ds.accompagnements));
   });
-  // Forcer la nouvelle structure menuEnfant si l'ancienne est encore en KV
-  // Supprimer titre/sous résiduels sans écraser le contenu existant
-  if(menu.menuEnfant){
-    delete menu.menuEnfant.titre;
-    delete menu.menuEnfant.sous;
-    // Si pas de structure entrees/plats/desserts, initialiser depuis DM
-    if(!menu.menuEnfant.entrees&&!menu.menuEnfant.plats&&!menu.menuEnfant.desserts){
-      var dme=JSON.parse(JSON.stringify(DM.menuEnfant));
-      menu.menuEnfant.entrees=dme.entrees||[];
-      menu.menuEnfant.plats=dme.plats||[];
-      menu.menuEnfant.desserts=dme.desserts||[];
-    }
-  } else {
-    menu.menuEnfant=JSON.parse(JSON.stringify(DM.menuEnfant));
-  }
+  if(menu.menuEnfant){delete menu.menuEnfant.titre;delete menu.menuEnfant.sous;}
+  if(!menu.menuEnfant||!menu.menuEnfant.entrees)menu.menuEnfant=JSON.parse(JSON.stringify(DM.menuEnfant));
   fillForm();
+}
+
+async function loadNews(){
+  try{var r=await fetch('/api/news',{cache:'no-store'});currentNews=r.ok?await r.json():[];}
+  catch(e){currentNews=[];}
+  renderNewsAdmin();
 }
 
 function fillForm(){
@@ -200,83 +216,98 @@ function fillForm(){
   gid('pj_nom').value=pj.nom||'';
   gid('pj_desc').value=pj.desc||'';
   gid('pj_prix').value=pj.prix||'';
-  renderSections(); renderME(); renderF();
+  renderSections();renderME();renderF();
 }
 
 function esc(s){return(s||'').replace(/[&<>]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
 function attr(s){return(s||'').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
 
 function algChecks(selected,onChange){
-  var d=document.createElement('div'); d.className='alg-checks';
+  var d=document.createElement('div');d.className='alg-checks';
   ALLERGEN_LIST.forEach(function(al){
     var lbl=document.createElement('label');
     lbl.className='alg-ck'+((selected||[]).indexOf(al.key)>=0?' checked':'');
-    var chk=document.createElement('input'); chk.type='checkbox'; chk.value=al.key;
-    if((selected||[]).indexOf(al.key)>=0) chk.checked=true;
+    var chk=document.createElement('input');chk.type='checkbox';chk.value=al.key;
+    if((selected||[]).indexOf(al.key)>=0)chk.checked=true;
     chk.addEventListener('change',function(){lbl.className='alg-ck'+(chk.checked?' checked':'');onChange();});
-    var img=document.createElement('img'); img.src=ALLERGEN_IMGS[al.key]||''; img.alt=al.label; img.width=18; img.height=18;
-    var sp=document.createElement('span'); sp.textContent=al.label;
-    lbl.appendChild(chk); lbl.appendChild(img); lbl.appendChild(sp);
-    d.appendChild(lbl);
+    var img=document.createElement('img');img.src=ALLERGEN_IMGS[al.key]||'';img.alt=al.label;img.width=18;img.height=18;
+    var sp=document.createElement('span');sp.textContent=al.label;
+    lbl.appendChild(chk);lbl.appendChild(img);lbl.appendChild(sp);d.appendChild(lbl);
   });
   return d;
 }
 
 function dishRow(p,onDelete,showPrice){
   showPrice=(showPrice===undefined)?true:showPrice;
-  var row=document.createElement('div'); row.className='dish-row';
-  var g=document.createElement('div'); g.className='g2';
-  var dn=document.createElement('div'); dn.innerHTML='<label>Nom</label><input data-f="nom" value="'+attr(p.nom)+'">';
+  var row=document.createElement('div');row.className='dish-row';
+  var g=document.createElement('div');g.className='g2';
+  var dn=document.createElement('div');dn.innerHTML='<label>Nom</label><input data-f="nom" value="'+attr(p.nom||'')+'">';
   g.appendChild(dn);
   if(showPrice){var dp=document.createElement('div');dp.innerHTML='<label>Prix</label><input data-f="prix" value="'+attr(p.prix||'')+'">';g.appendChild(dp);}
   row.appendChild(g);
-  var dl=document.createElement('label'); dl.textContent='Description'; row.appendChild(dl);
-  var ta=document.createElement('textarea'); ta.setAttribute('data-f','desc'); ta.value=p.desc||''; row.appendChild(ta);
-  var al=document.createElement('label'); al.textContent='Allergènes'; row.appendChild(al);
-  var ac=algChecks(p.allergenes||[],function(){
-    p.allergenes=Array.from(row.querySelectorAll('.alg-checks input:checked')).map(function(c){return c.value;});
-  });
+  var dl=document.createElement('label');dl.textContent='Description';row.appendChild(dl);
+  var ta=document.createElement('textarea');ta.setAttribute('data-f','desc');ta.value=p.desc||'';row.appendChild(ta);
+  var al=document.createElement('label');al.textContent='Allergènes';row.appendChild(al);
+  var ac=algChecks(p.allergenes||[],function(){p.allergenes=Array.from(row.querySelectorAll('.alg-checks input:checked')).map(function(c){return c.value;});});
   row.appendChild(ac);
-  var ra=document.createElement('div'); ra.className='ra';
-  var db=document.createElement('button'); db.className='btn danger'; db.textContent='Supprimer';
-  db.addEventListener('click',onDelete); ra.appendChild(db); row.appendChild(ra);
+  var ra=document.createElement('div');ra.className='ra';
+  var db=document.createElement('button');db.className='btn danger';db.textContent='Supprimer';
+  db.addEventListener('click',onDelete);ra.appendChild(db);row.appendChild(ra);
   row.querySelectorAll('[data-f]').forEach(function(inp){inp.addEventListener('input',function(){p[inp.getAttribute('data-f')]=inp.value;});});
   return row;
 }
 
 function supRow(l,onDelete){
-  var row=document.createElement('div'); row.className='fr';
-  var il=document.createElement('input'); il.value=l.label||''; il.placeholder='Ex. Chantilly';
-  var ip=document.createElement('input'); ip.value=l.prix||''; ip.placeholder='Ex. 0,50 €';
-  var db=document.createElement('button'); db.className='btn danger'; db.textContent='✕';
+  var row=document.createElement('div');row.className='fr';
+  var il=document.createElement('input');il.value=l.label||'';il.placeholder='Ex. Chantilly';
+  var ip=document.createElement('input');ip.value=l.prix||'';ip.placeholder='Ex. 0,50 €';
+  var db=document.createElement('button');db.className='btn danger';db.textContent='✕';
   il.addEventListener('input',function(){l.label=il.value;});
   ip.addEventListener('input',function(){l.prix=ip.value;});
   db.addEventListener('click',onDelete);
-  row.appendChild(il); row.appendChild(ip); row.appendChild(db);
-  return row;
+  row.appendChild(il);row.appendChild(ip);row.appendChild(db);return row;
 }
 
 function renderSections(){
-  var host=gid('sections'); host.innerHTML='';
-  (menu.sections||[]).filter(function(sec){return sec.titre!=='Menu enfant';}).forEach(function(sec,si){
-    var card=document.createElement('div'); card.className='card';
-    var h3=document.createElement('h3'); h3.innerHTML='<span class="dmd"></span> '+esc(sec.titre); card.appendChild(h3);
+  var host=gid('sections');host.innerHTML='';
+  (menu.sections||[]).filter(function(s){return s.titre!=='Menu enfant';}).forEach(function(sec,si){
+    var card=document.createElement('div');card.className='card';
+    var h3=document.createElement('h3');h3.innerHTML='<span class="dmd"></span> '+esc(sec.titre);card.appendChild(h3);
     if(sec.parfums!==undefined){
-      var lpfl=document.createElement('label'); lpfl.textContent='Titre parfums'; card.appendChild(lpfl);
-      var ipfl=document.createElement('input'); ipfl.value=sec.parfumsLabel||''; ipfl.placeholder='Ex. Nos parfums';
-      ipfl.addEventListener('input',function(){menu.sections[si].parfumsLabel=ipfl.value;}); card.appendChild(ipfl);
+      var lpfl=document.createElement('label');lpfl.textContent='Titre parfums';card.appendChild(lpfl);
+      var ipfl=document.createElement('input');ipfl.value=sec.parfumsLabel||'';ipfl.placeholder='Ex. Nos parfums';
+      ipfl.addEventListener('input',function(){menu.sections[si].parfumsLabel=ipfl.value;});card.appendChild(ipfl);
       if(sec.parfums.glaces!==undefined){
-        var lg=document.createElement('label'); lg.textContent='Glaces (séparées par ·)'; card.appendChild(lg);
-        var ig=document.createElement('input'); ig.value=(sec.parfums.glaces||[]).join(' · ');
-        ig.addEventListener('input',function(){menu.sections[si].parfums.glaces=ig.value.split('·').map(function(s){return s.trim();}).filter(Boolean);}); card.appendChild(ig);
+        var lg=document.createElement('label');lg.textContent='Glaces (séparées par ·)';card.appendChild(lg);
+        var ig=document.createElement('input');ig.value=(sec.parfums.glaces||[]).join(' · ');
+        ig.addEventListener('input',function(){menu.sections[si].parfums.glaces=ig.value.split('·').map(function(s){return s.trim();}).filter(Boolean);});card.appendChild(ig);
       }
       if(sec.parfums.sorbets!==undefined){
-        var ls=document.createElement('label'); ls.textContent='Sorbets (séparés par ·)'; card.appendChild(ls);
-        var is=document.createElement('input'); is.value=(sec.parfums.sorbets||[]).join(' · ');
-        is.addEventListener('input',function(){menu.sections[si].parfums.sorbets=is.value.split('·').map(function(s){return s.trim();}).filter(Boolean);}); card.appendChild(is);
+        var ls=document.createElement('label');ls.textContent='Sorbets (séparés par ·)';card.appendChild(ls);
+        var is=document.createElement('input');is.value=(sec.parfums.sorbets||[]).join(' · ');
+        is.addEventListener('input',function(){menu.sections[si].parfums.sorbets=is.value.split('·').map(function(s){return s.trim();}).filter(Boolean);});card.appendChild(is);
       }
     }
-    var dishes=document.createElement('div'); card.appendChild(dishes);
+    if(sec.sauces!==undefined){
+      var lsa=document.createElement('label');lsa.textContent='Sauces (séparées par ·)';card.appendChild(lsa);
+      var isa=document.createElement('input');isa.value=(sec.sauces.items||[]).join(' · ');
+      isa.addEventListener('input',function(){menu.sections[si].sauces.items=isa.value.split('·').map(function(s){return s.trim();}).filter(Boolean);});card.appendChild(isa);
+      var lsas=document.createElement('label');lsas.textContent='Mention sauce';card.appendChild(lsas);
+      var isas=document.createElement('input');isas.value=sec.sauces.supp||'';
+      isas.addEventListener('input',function(){menu.sections[si].sauces.supp=isas.value;});card.appendChild(isas);
+    }
+    if(sec.accompagnements!==undefined){
+      var lac=document.createElement('label');lac.textContent='Accompagnements (séparés par ·)';card.appendChild(lac);
+      var iac=document.createElement('input');iac.value=(sec.accompagnements.items||[]).join(' · ');
+      iac.addEventListener('input',function(){menu.sections[si].accompagnements.items=iac.value.split('·').map(function(s){return s.trim();}).filter(Boolean);});card.appendChild(iac);
+      var lacs=document.createElement('label');lacs.textContent='Mention supplément';card.appendChild(lacs);
+      var iacs=document.createElement('input');iacs.value=sec.accompagnements.supp||'';
+      iacs.addEventListener('input',function(){menu.sections[si].accompagnements.supp=iacs.value;});card.appendChild(iacs);
+      var lacs2=document.createElement('label');lacs2.textContent='Mention assiette seule';card.appendChild(lacs2);
+      var iacs2=document.createElement('input');iacs2.value=sec.accompagnements.supp2||'';
+      iacs2.addEventListener('input',function(){menu.sections[si].accompagnements.supp2=iacs2.value;});card.appendChild(iacs2);
+    }
+    var dishes=document.createElement('div');card.appendChild(dishes);
     function renderDishes(){
       dishes.innerHTML='';
       (menu.sections[si].plats||[]).forEach(function(p,pi){
@@ -284,36 +315,11 @@ function renderSections(){
       });
     }
     renderDishes();
-    var ab=document.createElement('button'); ab.className='btn ghost add-line'; ab.textContent='+ Ajouter un plat';
-    ab.addEventListener('click',function(){menu.sections[si].plats.push({nom:'',desc:'',prix:'',allergenes:[]});renderDishes();}); card.appendChild(ab);
-    // Sauces et accompagnements (section Plats)
-    if(sec.sauces!==undefined){
-      var lsauce=document.createElement('label'); lsauce.textContent='Sauces (séparées par ·)'; card.appendChild(lsauce);
-      var isau=document.createElement('input'); isau.value=(sec.sauces.items||[]).join(' · '); isau.placeholder='Ex. Poivre vert · Roquefort';
-      isau.addEventListener('input',function(){ menu.sections[si].sauces.items=isau.value.split('·').map(function(s){return s.trim();}).filter(Boolean); });
-      card.appendChild(isau);
-      var lsausupp=document.createElement('label'); lsausupp.textContent='Mention tarif sauce'; card.appendChild(lsausupp);
-      var isausupp=document.createElement('input'); isausupp.value=sec.sauces.supp||''; isausupp.placeholder='Ex. Sauce supplémentaire : 0,50 €';
-      isausupp.addEventListener('input',function(){ menu.sections[si].sauces.supp=isausupp.value; });
-      card.appendChild(isausupp);
-    }
-    if(sec.accompagnements!==undefined){
-      var lacc=document.createElement('label'); lacc.textContent='Accompagnements (séparés par ·)'; card.appendChild(lacc);
-      var iacc=document.createElement('input'); iacc.value=(sec.accompagnements.items||[]).join(' · '); iacc.placeholder='Ex. Frites · Riz · Légumes';
-      iacc.addEventListener('input',function(){ menu.sections[si].accompagnements.items=iacc.value.split('·').map(function(s){return s.trim();}).filter(Boolean); });
-      card.appendChild(iacc);
-      var laccsupp=document.createElement('label'); laccsupp.textContent='Mention tarif accompagnement'; card.appendChild(laccsupp);
-      var iaccsupp=document.createElement('input'); iaccsupp.value=sec.accompagnements.supp||''; iaccsupp.placeholder='Ex. Accompagnement supplémentaire : 2 €';
-      iaccsupp.addEventListener('input',function(){ menu.sections[si].accompagnements.supp=iaccsupp.value; });
-      card.appendChild(iaccsupp);
-      var laccsupp2=document.createElement('label'); laccsupp2.textContent='Mention assiette seule'; card.appendChild(laccsupp2);
-      var iaccsupp2=document.createElement('input'); iaccsupp2.value=sec.accompagnements.supp2||''; iaccsupp2.placeholder='Ex. Assiette seule : 5 €';
-      iaccsupp2.addEventListener('input',function(){ menu.sections[si].accompagnements.supp2=iaccsupp2.value; });
-      card.appendChild(iaccsupp2);
-    }
+    var ab=document.createElement('button');ab.className='btn ghost add-line';ab.textContent='+ Ajouter un plat';
+    ab.addEventListener('click',function(){menu.sections[si].plats.push({nom:'',desc:'',prix:'',allergenes:[]});renderDishes();});card.appendChild(ab);
     if(sec.supplements!==undefined){
-      var lsup=document.createElement('label'); lsup.textContent='Suppléments'; card.appendChild(lsup);
-      var supHost=document.createElement('div'); card.appendChild(supHost);
+      var lsup=document.createElement('label');lsup.textContent='Suppléments';card.appendChild(lsup);
+      var supHost=document.createElement('div');card.appendChild(supHost);
       function renderSups(){
         supHost.innerHTML='';
         (menu.sections[si].supplements||[]).forEach(function(l,li){
@@ -321,22 +327,17 @@ function renderSections(){
         });
       }
       renderSups();
-      var asup=document.createElement('button'); asup.className='btn ghost add-line'; asup.textContent='+ Ajouter un supplément';
-      asup.addEventListener('click',function(){if(!menu.sections[si].supplements)menu.sections[si].supplements=[];menu.sections[si].supplements.push({label:'',prix:''});renderSups();}); card.appendChild(asup);
+      var asup=document.createElement('button');asup.className='btn ghost add-line';asup.textContent='+ Ajouter un supplément';
+      asup.addEventListener('click',function(){if(!menu.sections[si].supplements)menu.sections[si].supplements=[];menu.sections[si].supplements.push({label:'',prix:''});renderSups();});card.appendChild(asup);
     }
     host.appendChild(card);
   });
 }
 
-// Helper : champ textarea pour liste d'options séparées par ·
-
-
-
 function renderME(){
   var me=menu.menuEnfant||{};
   gid('me_prix').value=me.prix||'';
   gid('me_inclus').value=me.inclus||'';
-  // Champs listes
   gid('me_entrees').value=(me.entrees||[]).join(' · ');
   gid('me_plats_list').value=(me.plats||[]).join(' · ');
   gid('me_desserts').value=(me.desserts||[]).join(' · ');
@@ -348,105 +349,71 @@ gid('me_plats_list').addEventListener('input',function(){if(!menu.menuEnfant)men
 gid('me_desserts').addEventListener('input',function(){if(!menu.menuEnfant)menu.menuEnfant={};menu.menuEnfant.desserts=gid('me_desserts').value.split('·').map(function(s){return s.trim();}).filter(Boolean);});
 
 function renderF(){
-  if(!menu.formule) menu.formule={titre:'Formule du midi',lignes:[],note:''};
-  var host=gid('flignes'); host.innerHTML='';
+  if(!menu.formule)menu.formule={titre:'Formule du midi',lignes:[],note:''};
+  var host=gid('flignes');host.innerHTML='';
   (menu.formule.lignes||[]).forEach(function(l,i){
-    var row=document.createElement('div'); row.className='fr';
-    var il=document.createElement('input'); il.value=l.label||''; il.placeholder='Ex. Entrée + Plat';
-    var ip=document.createElement('input'); ip.value=l.prix||''; ip.placeholder='Ex. 22 €';
-    var db=document.createElement('button'); db.className='btn danger'; db.textContent='✕';
+    var row=document.createElement('div');row.className='fr';
+    var il=document.createElement('input');il.value=l.label||'';il.placeholder='Ex. Entrée + Plat';
+    var ip=document.createElement('input');ip.value=l.prix||'';ip.placeholder='Ex. 22 €';
+    var db=document.createElement('button');db.className='btn danger';db.textContent='✕';
     il.addEventListener('input',function(){menu.formule.lignes[i].label=il.value;});
     ip.addEventListener('input',function(){menu.formule.lignes[i].prix=ip.value;});
     db.addEventListener('click',function(){menu.formule.lignes.splice(i,1);renderF();});
-    row.appendChild(il); row.appendChild(ip); row.appendChild(db); host.appendChild(row);
+    row.appendChild(il);row.appendChild(ip);row.appendChild(db);host.appendChild(row);
   });
   gid('fnote').value=menu.formule.note||'';
 }
 gid('addF').addEventListener('click',function(){menu.formule.lignes.push({label:'',prix:''});renderF();});
 
+/* ── news admin ── */
+function renderNewsAdmin(){
+  var host=gid('newsItems');host.innerHTML='';
+  currentNews.forEach(function(n,i){
+    var block=document.createElement('div');block.className='dish-row';block.style.marginBottom='1rem';
+    block.innerHTML=
+      '<div class="g2" style="margin-bottom:.5rem">'
+        +'<div><label>Titre</label><input class="ni-titre" value="'+attr(n.titre||'')+'" placeholder="Ex. Fermeture exceptionnelle"/></div>'
+        +'<div><label>Date</label><input class="ni-date" type="date" value="'+(n.date||'')+'" /></div>'
+      +'</div>'
+      +'<label>Résumé (affiché sur la carte)</label>'
+      +'<textarea class="ni-extrait" placeholder="Court résumé...">'+esc(n.extrait||'')+'</textarea>'
+      +'<label>Détail (affiché dans la fenêtre)</label>'
+      +'<textarea class="ni-corps" style="min-height:80px" placeholder="Texte complet...">'+esc(n.corps||'')+'</textarea>'
+      +'<div class="ra"><button class="btn danger ni-del">Supprimer</button></div>';
+    block.querySelector('.ni-titre').addEventListener('input',function(e){currentNews[i].titre=e.target.value;});
+    block.querySelector('.ni-date').addEventListener('input',function(e){currentNews[i].date=e.target.value;});
+    block.querySelector('.ni-extrait').addEventListener('input',function(e){currentNews[i].extrait=e.target.value;});
+    block.querySelector('.ni-corps').addEventListener('input',function(e){currentNews[i].corps=e.target.value;});
+    block.querySelector('.ni-del').addEventListener('click',function(){currentNews.splice(i,1);renderNewsAdmin();});
+    host.appendChild(block);
+  });
+}
+gid('addNews').addEventListener('click',function(){currentNews.push({titre:'',date:'',extrait:'',corps:''});renderNewsAdmin();});
+
+/* ── save ── */
 gid('saveBtn').addEventListener('click',async function(){
   var today=new Date().toISOString().slice(0,10);
   var nom=gid('pj_nom').value.trim();
   menu.platDuJour={nom:nom,desc:gid('pj_desc').value.trim(),prix:gid('pj_prix').value.trim(),date:nom?today:''};
   menu.formule.note=gid('fnote').value.trim();
-  var msgEl=gid('msg'); msgEl.className='msg'; msgEl.textContent='Enregistrement…';
-  var r;
-  try{r=await fetch('/api/menu',{method:'POST',headers:{'content-type':'application/json','x-admin-key':PW},body:JSON.stringify(menu)});}
-  catch(err){msgEl.className='msg err';msgEl.textContent='Connexion impossible.';return;}
-  var data={};try{data=await r.json();}catch(ex){}
-  if(r.ok){msgEl.className='msg ok';msgEl.textContent='✓ Carte enregistrée.';setTimeout(function(){if(msgEl.classList.contains('ok'))msgEl.textContent='';},4000);}
-  else if(r.status===401){msgEl.className='msg err';msgEl.textContent='Mot de passe refusé — cliquez sur Quitter et reconnectez-vous.';}
-  else{msgEl.className='msg err';msgEl.textContent=(data.error||'Erreur serveur')+' ('+r.status+')';}
-});
-
-// ── NEWS ADMIN ────────────────────────────────────────────────────────────────
-var currentNews = [];
-
-async function loadNews() {
-  try {
-    var r = await fetch('/api/news', {cache:'no-store'});
-    currentNews = r.ok ? await r.json() : [];
-  } catch(e) { currentNews = []; }
-  renderNewsAdmin();
-}
-
-function renderNewsAdmin() {
-  var host = gid('newsItems'); host.innerHTML = '';
-  currentNews.forEach(function(n, i) {
-    var block = document.createElement('div');
-    block.className = 'dish-row';
-    block.style.marginBottom = '1rem';
-    block.innerHTML =
-      '<div class="g2" style="margin-bottom:.5rem">'
-        + '<div><label>Titre</label><input class="ni-titre" value="' + attr(n.titre||'') + '" placeholder="Ex. Fermeture exceptionnelle"/></div>'
-        + '<div><label>Date</label><input class="ni-date" type="date" value="' + (n.date||'') + '"/></div>'
-      + '</div>'
-      + '<label>Résumé (affiché sur la carte)</label>'
-      + '<textarea class="ni-extrait" placeholder="Court résumé visible sur la carte...">' + esc(n.extrait||'') + '</textarea>'
-      + '<label>Détail (affiché dans la fenêtre)</label>'
-      + '<textarea class="ni-corps" style="min-height:80px" placeholder="Texte complet affiché quand on clique sur la carte...">' + esc(n.corps||'') + '</textarea>'
-      + '<div class="ra"><button class="btn danger ni-del">Supprimer</button></div>';
-
-    block.querySelector('.ni-titre').addEventListener('input', function(e){ currentNews[i].titre = e.target.value; });
-    block.querySelector('.ni-date').addEventListener('input', function(e){ currentNews[i].date = e.target.value; });
-    block.querySelector('.ni-extrait').addEventListener('input', function(e){ currentNews[i].extrait = e.target.value; });
-    block.querySelector('.ni-corps').addEventListener('input', function(e){ currentNews[i].corps = e.target.value; });
-    block.querySelector('.ni-del').addEventListener('click', function(){ currentNews.splice(i, 1); renderNewsAdmin(); });
-    host.appendChild(block);
-  });
-}
-
-gid('addNews').addEventListener('click', function() {
-  currentNews.push({titre:'', date:'', extrait:'', corps:''});
-  renderNewsAdmin();
-});
-
-// Sauvegarder les news en même temps que le menu
-var _origSave = gid('saveBtn').onclick;
-gid('saveBtn').addEventListener('click', async function() {
-  var msgEl = gid('msg');
-  try {
-    var r = await fetch('/api/news', {
-      method: 'POST',
-      headers: {'content-type':'application/json','x-admin-key':PW},
-      body: JSON.stringify(currentNews)
-    });
-    if (r.ok) {
-      // Message de succès géré par le save menu ci-dessus
-    } else {
-      msgEl.className = 'msg err';
-      msgEl.textContent = 'News : erreur enregistrement (code ' + r.status + ')';
-    }
-  } catch(e) {
-    msgEl.className = 'msg err';
-    msgEl.textContent = 'News : connexion impossible.';
+  var msgEl=gid('msg');msgEl.className='msg';msgEl.textContent='Enregistrement…';
+  var ok=true;
+  try{
+    var r=await fetch('/api/menu',{method:'POST',headers:{'content-type':'application/json','x-admin-key':PW},body:JSON.stringify(menu)});
+    var data={};try{data=await r.json();}catch(ex){}
+    if(!r.ok){ok=false;msgEl.className='msg err';msgEl.textContent=(data.error||'Erreur menu')+' ('+r.status+')';}
+  }catch(e){ok=false;msgEl.className='msg err';msgEl.textContent='Connexion impossible.';}
+  if(ok){
+    try{
+      var rn=await fetch('/api/news',{method:'POST',headers:{'content-type':'application/json','x-admin-key':PW},body:JSON.stringify(currentNews)});
+      if(!rn.ok){msgEl.className='msg err';msgEl.textContent='Menu OK, erreur news ('+rn.status+')';}
+      else{msgEl.className='msg ok';msgEl.textContent='✓ Tout enregistré.';setTimeout(function(){if(msgEl.classList.contains('ok'))msgEl.textContent='';},4000);}
+    }catch(e){msgEl.className='msg err';msgEl.textContent='News : connexion impossible.';}
   }
+  if(r&&r.status===401){msgEl.className='msg err';msgEl.textContent='Mot de passe refusé — reconnectez-vous.';}
 });
 
-loadNews();
-
-if(PW){loadMenu().then(showApp);}
-
+if(PW){Promise.all([loadMenu(),loadNews()]).then(showApp);}
 </script>
 </body>
 </html>
