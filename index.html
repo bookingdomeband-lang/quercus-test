@@ -139,7 +139,7 @@
   .galerie__hint{text-align:center;margin-top:1.6rem;font-family:var(--ui);font-size:.72rem;color:var(--muted)}
 
   /* INFOS */
-  .infos{background:var(--section-alt);color:var(--ink)}
+  .news{background:var(--cream)}.news__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem}.news__empty{text-align:center;font-family:var(--ui);font-size:.85rem;color:var(--muted);padding:2rem 0}.news-card{border:1px solid var(--line);background:var(--cream-2);padding:1.4rem 1.5rem;cursor:pointer;transition:border-color .2s,box-shadow .2s;position:relative}.news-card:hover{border-color:var(--copper);box-shadow:0 4px 20px rgba(156,107,52,.12)}.news-card__date{font-family:var(--ui);font-size:.64rem;letter-spacing:.22em;text-transform:uppercase;color:var(--copper);margin-bottom:.5rem}.news-card__title{font-family:var(--display);font-size:1.3rem;color:var(--forest);line-height:1.2;margin-bottom:.5rem}.news-card__excerpt{font-size:.92rem;color:var(--moss);line-height:1.55;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.news-card__more{font-family:var(--ui);font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--copper);margin-top:.9rem;display:inline-block}.news-modal{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:1rem}.news-modal.hidden{display:none}.news-modal__backdrop{position:absolute;inset:0;background:rgba(26,18,11,.55);backdrop-filter:blur(3px)}.news-modal__box{position:relative;z-index:1;background:var(--cream);border:1px solid var(--line);max-width:600px;width:100%;max-height:85svh;overflow-y:auto;padding:2.2rem 2rem}.news-modal__close{position:absolute;top:.9rem;right:1rem;background:none;border:0;font-size:1.6rem;cursor:pointer;color:var(--muted);line-height:1}.news-modal__close:hover{color:var(--forest)}.news-modal__date{font-family:var(--ui);font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--copper);margin-bottom:.6rem}.news-modal__title{font-family:var(--display);font-size:2rem;color:var(--forest);margin-bottom:1rem}.news-modal__body{font-size:1.05rem;color:var(--ink);line-height:1.7;white-space:pre-wrap}.avis{background:var(--section-alt)}.avis__note{text-align:center;margin-bottom:2.4rem}.avis__stars{font-size:1.4rem;color:var(--copper);letter-spacing:.1rem}.avis__score{font-family:var(--display);font-size:2.2rem;color:var(--forest);margin:.2rem 0}.avis__count{font-family:var(--ui);font-size:.75rem;letter-spacing:.1em;color:var(--muted)}.avis__link{display:inline-flex;align-items:center;gap:.5rem;margin-top:1rem;font-family:var(--ui);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--copper);border:1px solid var(--line);padding:.7rem 1.3rem;transition:.25s}.avis__link:hover{background:var(--copper);color:var(--cream);border-color:var(--copper)}.avis__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;margin-top:2rem}.avis-card{background:var(--cream);border:1px solid var(--line);padding:1.3rem 1.4rem}.avis-card__stars{color:var(--copper);font-size:1rem;margin-bottom:.5rem}.avis-card__text{font-size:.97rem;color:var(--moss);line-height:1.6;font-style:italic;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}.avis-card__author{font-family:var(--ui);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:.8rem}@media(max-width:860px){.news__grid{grid-template-columns:repeat(2,1fr)}.avis__grid{grid-template-columns:1fr}}@media(max-width:480px){.news__grid{grid-template-columns:1fr}.avis__grid{grid-template-columns:1fr}}.infos{background:var(--section-alt);color:var(--ink)}
   .infos .section-head h2{color:var(--forest)}.infos .eyebrow{color:var(--copper)}
   .infos .ornament::before,.infos .ornament::after{background:var(--line)}
   .infos .ornament i{background:var(--copper)}
@@ -183,7 +183,7 @@
     .histoire__figure{max-width:340px;margin-inline:auto}.galerie__grid{grid-template-columns:repeat(2,1fr)}
   }
   @media(max-width:600px){.foot-inner{flex-direction:column;align-items:flex-start;gap:.7rem;padding:1rem 0}.foot-left{width:100%;min-width:0}.foot-right{width:100%;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line-soft);padding-top:.8rem}.foot-copy{text-align:left;font-size:.6rem}.foot-txt b{font-size:1rem}}
-  @media(max-width:520px){.dish__top{flex-wrap:wrap;gap:.3rem .4rem}.dish__name{font-size:1.1rem;flex:1 1 100%}.dish__allergens{order:2;flex-shrink:0}.dish__leader{display:none}.dish__price{order:3;margin-left:auto;font-size:.88rem}.alg-badge img{width:18px;height:18px}}@media(max-width:480px){.galerie__grid{grid-template-columns:1fr}.hero__meta{flex-direction:column;gap:.9rem}}
+  @media(max-width:520px){.dish__top{flex-wrap:wrap;gap:.25rem .3rem;align-items:baseline}.dish__name{font-size:1.05rem;flex:0 1 auto;min-width:0}.dish__allergens{flex:none;display:inline-flex}.dish__leader{flex:1;min-width:8px;display:block}.dish__price{flex:none;font-size:.88rem;white-space:nowrap}.alg-badge img{width:16px;height:16px}}@media(max-width:480px){.galerie__grid{grid-template-columns:1fr}.hero__meta{flex-direction:column;gap:.9rem}}
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -193,7 +193,7 @@
   <a class="nav__brand" href="#top" aria-label="Le Quercus"><span class="mark"></span></a>
   <div class="nav__right">
     <div class="nav__links" id="navLinks">
-      <a href="#histoire">La maison</a><a href="#carte">La carte</a><a href="#galerie">Galerie</a><a href="#infos">Horaires &amp; contact</a>
+      <a href="#histoire">La maison</a><a href="#carte">La carte</a><a href="#news">News</a><a href="#infos">Horaires &amp; contact</a>
       <a class="nav__fb" href="https://www.facebook.com/profile.php?id=61592902424774&locale=fr_FR" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.99 3.66 9.12 8.44 9.88v-6.99H7.9V12h2.54V9.77c0-2.51 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.77l-.44 2.89h-2.33v6.99C18.34 21.12 22 16.99 22 12z"/></svg></a>
       <a class="nav__cta" href="tel:0667500117">06&nbsp;67&nbsp;50&nbsp;01&nbsp;17</a>
     </div>
@@ -242,18 +242,54 @@
   </div>
 </section>
 
-<section class="galerie" id="galerie">
+<section class="news" id="news">
   <div class="wrap">
-    <div class="section-head"><p class="eyebrow">En images</p><h2>L'ambiance</h2></div>
-    <div class="galerie__grid">
-      <div class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="4" width="18" height="14" rx="1"/><path d="M3 15l5-4 4 3 4-5 5 6"/><circle cx="8" cy="9" r="1.4"/></svg><span>La salle</span></div>
-      <div class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="4" width="18" height="14" rx="1"/><path d="M3 15l5-4 4 3 4-5 5 6"/><circle cx="8" cy="9" r="1.4"/></svg><span>Le comptoir</span></div>
-      <div class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="4" width="18" height="14" rx="1"/><path d="M3 15l5-4 4 3 4-5 5 6"/><circle cx="8" cy="9" r="1.4"/></svg><span>L'assiette</span></div>
-      <div class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="4" width="18" height="14" rx="1"/><path d="M3 15l5-4 4 3 4-5 5 6"/><circle cx="8" cy="9" r="1.4"/></svg><span>La terrasse</span></div>
-      <div class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="4" width="18" height="14" rx="1"/><path d="M3 15l5-4 4 3 4-5 5 6"/><circle cx="8" cy="9" r="1.4"/></svg><span>La cave</span></div>
-      <div class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="4" width="18" height="14" rx="1"/><path d="M3 15l5-4 4 3 4-5 5 6"/><circle cx="8" cy="9" r="1.4"/></svg><span>Le dressage</span></div>
+    <div class="section-head"><p class="eyebrow">Actualités</p><h2>News &amp; Événements</h2></div>
+    <div class="news__grid" id="newsGrid"></div>
+    <p class="news__empty hidden" id="newsEmpty">Aucun événement en ce moment — revenez bientôt !</p>
+  </div>
+  <!-- Modal news -->
+  <div class="news-modal hidden" id="newsModal" role="dialog" aria-modal="true">
+    <div class="news-modal__backdrop" id="newsModalBackdrop"></div>
+    <div class="news-modal__box">
+      <button class="news-modal__close" id="newsModalClose" aria-label="Fermer">&times;</button>
+      <p class="news-modal__date" id="newsModalDate"></p>
+      <h3 class="news-modal__title" id="newsModalTitle"></h3>
+      <div class="news-modal__body" id="newsModalBody"></div>
     </div>
-    <p class="galerie__hint">Emplacements réservés aux vraies photos.</p>
+  </div>
+</section>
+
+<section class="avis" id="avis">
+  <div class="wrap">
+    <div class="section-head"><p class="eyebrow">Ils nous font confiance</p><h2>Avis clients</h2></div>
+    <div class="avis__note">
+      <div class="avis__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="avis__score">4,8 <span style="font-size:1rem;color:var(--muted)">/&nbsp;5</span></div>
+      <div class="avis__count">Basé sur les avis Google</div>
+      <a class="avis__link" href="https://search.google.com/local/reviews?placeid=VOTRE_PLACE_ID" target="_blank" rel="noopener">
+        Voir tous les avis &rarr;
+      </a>
+    </div>
+    <div class="avis__grid" id="avisGrid">
+      <!-- Avis statiques à personnaliser -->
+      <div class="avis-card">
+        <div class="avis-card__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="avis-card__text">Un restaurant de village comme on en rêve. Cuisine généreuse, produits frais et accueil chaleureux. On y reviendra sans hésiter !</p>
+        <div class="avis-card__author">Marie L. &mdash; Google</div>
+      </div>
+      <div class="avis-card">
+        <div class="avis-card__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="avis-card__text">Excellente adresse ! Le menu du midi est copieux et savoureux. Le service est attentionné et les prix vraiment raisonnables.</p>
+        <div class="avis-card__author">Thomas B. &mdash; Google</div>
+      </div>
+      <div class="avis-card">
+        <div class="avis-card__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="avis-card__text">Nous avons adoré l'ambiance et la carte. Les desserts sont faits maison et délicieux. Une vraie cuisine traditionnell
+const DEFAULT_MENU={"platDuJour": {"nom": "", "desc": "", "prix": "", "date": ""}, "sections": [{"titre": "Entrées", "sous": "Pour commencer", "plats": [{"nom": "Velouté de potimarron", "desc": "Huile de noisette torréfiée, éclats de châtaigne.", "prix": "9", "allergenes": ["lait", "fruits_coque"]}, {"nom": "Œuf parfait, champignons des bois", "desc": "Crème de champignons, copeaux de comté.", "prix": "11", "allergenes": ["oeufs", "lait"]}, {"nom": "Terrine de campagne maison", "desc": "Pickles de légumes, pain de seigle grillé.", "prix": "10", "allergenes": ["gluten"]}]}, {"titre": "Plats", "sous": "Le cœur du repas", "plats": [{"nom": "Suprême de volaille fermière", "desc": "Jus au thym, purée fumée.", "prix": "19", "allergenes": ["lait"]}, {"nom": "Filet de bœuf, sauce aux morilles", "desc": "Gratin dauphinois, légumes de saison.", "prix": "26", "allergenes": ["lait"]}, {"nom": "Pavé de cabillaud rôti", "desc": "Beurre blanc, écrasé de pommes de terre.", "prix": "21", "allergenes": ["poissons", "lait"]}, {"nom": "Risotto d'automne aux cèpes", "desc": "Noisettes torréfiées, parmesan. Végétarien.", "prix": "17", "allergenes": ["lait", "fruits_coque"]}], "sauces": {"items": ["Crème champignons", "Poivre vert", "Camembert", "Roquefort", "Beurre maître d'hôtel"], "supp": "Sauce supplémentaire : 0,50 €"}, "accompagnements": {"items": ["Frites", "Pommes grenailles", "Riz", "Légumes", "Salade verte"], "supp": "Accompagnement supplémentaire : 2 €", "supp2": "Assiette d'accompagnement seule : 5 €"}}, {"titre": "Desserts", "sous": "La douceur", "plats": [{"nom": "Tarte fine aux pommes", "desc": "Caramel au beurre salé, glace vanille.", "prix": "8", "allergenes": ["gluten", "lait", "oeufs"]}, {"nom": "Fondant au chocolat", "desc": "Cœur coulant, crème anglaise.", "prix": "8", "allergenes": ["gluten", "lait", "oeufs"]}, {"nom": "Fromages affinés", "desc": "Sélection du moment, confiture de saison.", "prix": "9", "allergenes": ["lait"]}]}, {"titre": "Desserts glacés", "sous": "Glaces & sorbets", "type": "glaces", "parfums": {"glaces": ["Vanille", "Chocolat", "Café", "Caramel beurre salé", "Fraise", "Pistache"], "sorbets": ["Citron", "Framboise", "Mangue", "Fruits rouges", "Menthe"]}, "plats": [{"nom": "Coupe 2 boules", "desc": "Au choix dans notre sélection.", "prix": "5", "allergenes": ["lait", "oeufs"]}, {"nom": "Coupe 3 boules", "desc": "Au choix, avec chantilly maison.", "prix": "7", "allergenes": ["lait", "oeufs"]}, {"nom": "Café liégeois", "desc": "Glace café, chantilly maison.", "prix": "7", "allergenes": ["lait", "oeufs"]}, {"nom": "Coupe enfant", "desc": "2 boules au choix, nappage au choix.", "prix": "4", "allergenes": ["lait", "oeufs"]}], "supplements": [{"label": "Sauce chocolat", "prix": "0,50 €"}, {"label": "Sauce caramel", "prix": "0,50 €"}, {"label": "Chantilly", "prix": "0,50 €"}, {"label": "Nappage fraise", "prix": "0,50 €"}], "parfumsLabel": "Nos parfums"}], "menuEnfant": {"prix": "15 €", "entrees": ["Soupe du jour", "Crudités maison"], "plats": ["Steak haché frites", "Nuggets de poulet, frites", "Pâtes au beurre", "Poisson pané, purée"], "desserts": ["Boule de glace au choix", "Compote maison", "Yaourt"], "inclus": "Boisson incluse"}, "formule": {"titre": "Formule du midi", "lignes": [{"label": "Entrée + Plat", "prix": "22 €"}, {"label": "Plat + Dessert", "prix": "22 €"}, {"label": "Entrée + Plat + Dessert", "prix": "27 €"}], "note": "Du lundi au vendredi, le midi"}};        </div>
+        <div class="avis-card__author">Sophie M. &mdash; Google</div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -283,7 +319,6 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.5 2.1L8 9.5a16 16 0 0 0 6 6l1-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.7 2Z"/></svg>
           <a href="tel:0667500117"><small>Réservations</small>06 67 50 01 17</a>
         </div>
-        
         <div class="contact-line">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
           <a href="mailto:restaurant.quercus@gmail.com"><small>E-mail</small>restaurant.quercus@gmail.com</a>
@@ -312,9 +347,7 @@
     </div>
   </div>
 </footer>
-
 <script>
-const DEFAULT_MENU={"platDuJour": {"nom": "", "desc": "", "prix": "", "date": ""}, "sections": [{"titre": "Entrées", "sous": "Pour commencer", "plats": [{"nom": "Velouté de potimarron", "desc": "Huile de noisette torréfiée, éclats de châtaigne.", "prix": "9", "allergenes": ["lait", "fruits_coque"]}, {"nom": "Œuf parfait, champignons des bois", "desc": "Crème de champignons, copeaux de comté.", "prix": "11", "allergenes": ["oeufs", "lait"]}, {"nom": "Terrine de campagne maison", "desc": "Pickles de légumes, pain de seigle grillé.", "prix": "10", "allergenes": ["gluten"]}]}, {"titre": "Plats", "sous": "Le cœur du repas", "plats": [{"nom": "Suprême de volaille fermière", "desc": "Jus au thym, purée fumée.", "prix": "19", "allergenes": ["lait"]}, {"nom": "Filet de bœuf, sauce aux morilles", "desc": "Gratin dauphinois, légumes de saison.", "prix": "26", "allergenes": ["lait"]}, {"nom": "Pavé de cabillaud rôti", "desc": "Beurre blanc, écrasé de pommes de terre.", "prix": "21", "allergenes": ["poissons", "lait"]}, {"nom": "Risotto d'automne aux cèpes", "desc": "Noisettes torréfiées, parmesan. Végétarien.", "prix": "17", "allergenes": ["lait", "fruits_coque"]}], "sauces": {"items": ["Crème champignons", "Poivre vert", "Camembert", "Roquefort", "Beurre maître d'hôtel"], "supp": "Sauce supplémentaire : 0,50 €"}, "accompagnements": {"items": ["Frites", "Pommes grenailles", "Riz", "Légumes", "Salade verte"], "supp": "Accompagnement supplémentaire : 2 €", "supp2": "Assiette d'accompagnement seule : 5 €"}}, {"titre": "Desserts", "sous": "La douceur", "plats": [{"nom": "Tarte fine aux pommes", "desc": "Caramel au beurre salé, glace vanille.", "prix": "8", "allergenes": ["gluten", "lait", "oeufs"]}, {"nom": "Fondant au chocolat", "desc": "Cœur coulant, crème anglaise.", "prix": "8", "allergenes": ["gluten", "lait", "oeufs"]}, {"nom": "Fromages affinés", "desc": "Sélection du moment, confiture de saison.", "prix": "9", "allergenes": ["lait"]}]}, {"titre": "Desserts glacés", "sous": "Glaces & sorbets", "type": "glaces", "parfums": {"glaces": ["Vanille", "Chocolat", "Café", "Caramel beurre salé", "Fraise", "Pistache"], "sorbets": ["Citron", "Framboise", "Mangue", "Fruits rouges", "Menthe"]}, "plats": [{"nom": "Coupe 2 boules", "desc": "Au choix dans notre sélection.", "prix": "5", "allergenes": ["lait", "oeufs"]}, {"nom": "Coupe 3 boules", "desc": "Au choix, avec chantilly maison.", "prix": "7", "allergenes": ["lait", "oeufs"]}, {"nom": "Café liégeois", "desc": "Glace café, chantilly maison.", "prix": "7", "allergenes": ["lait", "oeufs"]}, {"nom": "Coupe enfant", "desc": "2 boules au choix, nappage au choix.", "prix": "4", "allergenes": ["lait", "oeufs"]}], "supplements": [{"label": "Sauce chocolat", "prix": "0,50 €"}, {"label": "Sauce caramel", "prix": "0,50 €"}, {"label": "Chantilly", "prix": "0,50 €"}, {"label": "Nappage fraise", "prix": "0,50 €"}], "parfumsLabel": "Nos parfums"}], "menuEnfant": {"prix": "15 €", "entrees": ["Soupe du jour", "Crudités maison"], "plats": ["Steak haché frites", "Nuggets de poulet, frites", "Pâtes au beurre", "Poisson pané, purée"], "desserts": ["Boule de glace au choix", "Compote maison", "Yaourt"], "inclus": "Boisson incluse"}, "formule": {"titre": "Formule du midi", "lignes": [{"label": "Entrée + Plat", "prix": "22 €"}, {"label": "Plat + Dessert", "prix": "22 €"}, {"label": "Entrée + Plat + Dessert", "prix": "27 €"}], "note": "Du lundi au vendredi, le midi"}};
 const ALLERGEN_IMGS={"gluten": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48cGF0aCBkPSJNMTIgNGMwIDAgMSAzIDAgNXMtMyAyLTMgMiAyIDEgMiA0LTEgNS0xIDUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS42IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48cGF0aCBkPSJNMTIgNGMwIDAtMSAzIDAgNXMzIDIgMyAyLTIgMS0yIDQgMSA1IDEgNSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjYiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxsaW5lIHgxPSIxMiIgeTE9IjQiIHgyPSIxMiIgeTI9IjIwIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PC9zdmc+", "crustaces": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48cGF0aCBkPSJNNyAxNCBROSAxMCAxMiA5IFExNSAxMCAxNyAxNCIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjYiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxjaXJjbGUgY3g9IjEyIiBjeT0iNSIgcj0iMS41IiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0xMCA5IFExMCA2IDEyIDUgUTE0IDYgMTQgOSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjQiIGZpbGw9Im5vbmUiLz48cGF0aCBkPSJNOCAxNCBRNyAxNyA5IDE5IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNCIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTE2IDE0IFExNyAxNyAxNSAxOSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjQiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjwvc3ZnPg==", "oeufs": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48ZWxsaXBzZSBjeD0iMTIiIGN5PSIxMyIgcng9IjUuNSIgcnk9IjYiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS43Ii8+PHBhdGggZD0iTTkuNSA3LjUgUTEyIDQgMTQuNSA3LjUiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS43IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48ZWxsaXBzZSBjeD0iMTIiIGN5PSIxNCIgcng9IjIuMiIgcnk9IjIuMiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=", "poissons": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48cGF0aCBkPSJNNyAxMiBDOSA4LjUgMTMgOCAxNyAxMiBDMTMgMTUuNSA5IDE1IDcgMTJaIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0xNyAxMiBMMjEgOSBMMjAgMTIgTDIxIDE1WiIgZmlsbD0id2hpdGUiLz48Y2lyY2xlIGN4PSIxMCIgY3k9IjExIiByPSIxIiBmaWxsPSIjOWM2YjM0Ii8+PC9zdmc+", "arachides": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48ZWxsaXBzZSBjeD0iMTAiIGN5PSIxMCIgcng9IjMiIHJ5PSI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNyIvPjxlbGxpcHNlIGN4PSIxNCIgY3k9IjE1IiByeD0iMyIgcnk9IjQiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS43Ii8+PHBhdGggZD0iTTExLjUgMTMgUTEyIDEyIDEyLjUgMTEiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS40IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48L3N2Zz4=", "soja": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48Y2lyY2xlIGN4PSIxMiIgY3k9IjkiIHI9IjMuNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjciLz48cGF0aCBkPSJNOC41IDEyIEM3IDE1IDggMTggMTIgMTkgQzE2IDE4IDE3IDE1IDE1LjUgMTIiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS43IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48bGluZSB4MT0iMTIiIHkxPSI1LjUiIHgyPSIxMiIgeTI9IjMuNSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjwvc3ZnPg==", "lait": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48cGF0aCBkPSJNOS41IDUuNSBMMTUuNSA1LjUgTDE3IDkgTDE3IDE5IEw3IDE5IEw3IDkgWiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjciIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48bGluZSB4MT0iNyIgeTE9IjkiIHgyPSIxNyIgeTI9IjkiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS4zIi8+PC9zdmc+", "fruits_coque": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48ZWxsaXBzZSBjeD0iMTIiIGN5PSIxNSIgcng9IjUiIHJ5PSI1IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNyIvPjxwYXRoIGQ9Ik05IDEyIFExMiA1LjUgMTUgMTIiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS43IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48bGluZSB4MT0iMTIiIHkxPSI4IiB4Mj0iMTIiIHkyPSI1IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PC9zdmc+", "celeri": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48bGluZSB4MT0iMTIiIHkxPSIxOSIgeDI9IjEyIiB5Mj0iNyIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik0xMiAxNCBDMTAgMTIgNyAxMiA2IDkuNSBDOC41IDguNSAxMSAxMC41IDEyIDEzIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0xMiAxMSBDMTQgOSAxNyA5IDE4IDYuNSBDMTUuNSA1LjUgMTMgNy41IDEyIDEwIiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg==", "moutarde": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48Y2lyY2xlIGN4PSIxMiIgY3k9IjE1IiByPSI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNyIvPjxwYXRoIGQ9Ik05LjUgMTMuNSBRMTIgMTEgMTQuNSAxMy41IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGNpcmNsZSBjeD0iMTIiIGN5PSI4LjUiIHI9IjIuMiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjYiLz48L3N2Zz4=", "sesame": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTEiIGZpbGw9IiM5YzZiMzQiLz48ZWxsaXBzZSBjeD0iOC41IiBjeT0iOCIgcng9IjIiIHJ5PSIzLjIiIGZpbGw9IndoaXRlIiB0cmFuc2Zvcm09InJvdGF0ZSgtMjAgOC41IDgpIi8+PGVsbGlwc2UgY3g9IjE1LjUiIGN5PSI4IiByeD0iMiIgcnk9IjMuMiIgZmlsbD0id2hpdGUiIHRyYW5zZm9ybT0icm90YXRlKDIwIDE1LjUgOCkiLz48ZWxsaXBzZSBjeD0iOC41IiBjeT0iMTYiIHJ4PSIyIiByeT0iMy4yIiBmaWxsPSJ3aGl0ZSIgdHJhbnNmb3JtPSJyb3RhdGUoMjAgOC41IDE2KSIvPjxlbGxpcHNlIGN4PSIxNS41IiBjeT0iMTYiIHJ4PSIyIiByeT0iMy4yIiBmaWxsPSJ3aGl0ZSIgdHJhbnNmb3JtPSJyb3RhdGUoLTIwIDE1LjUgMTYpIi8+PGVsbGlwc2UgY3g9IjEyIiBjeT0iMTIiIHJ4PSIyIiByeT0iMy4yIiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg=="};
 const ALLERGEN_LIST=[{"key": "gluten", "label": "Gluten"}, {"key": "crustaces", "label": "Crustacés"}, {"key": "oeufs", "label": "Œufs"}, {"key": "poissons", "label": "Poissons"}, {"key": "arachides", "label": "Arachides"}, {"key": "soja", "label": "Soja"}, {"key": "lait", "label": "Lait"}, {"key": "fruits_coque", "label": "Fruits à coque"}, {"key": "celeri", "label": "Céleri"}, {"key": "moutarde", "label": "Moutarde"}, {"key": "sesame", "label": "Sésame"}];
 
@@ -421,7 +454,141 @@ function renderMenu(menu){
       +(dt?'<p class="pj-date">'+dt+'</p>':'')+'</div>';
   } else pjEl.innerHTML='';
 
-  var secs=menu.sections||[];
+  // Filtrer toute section résiduelle nommée 'Menu enfant' dans les données KV
+  var secs=(menu.sections||[]).filter(function(s){return s.titre!=='Menu enfant';});
+  var half=Math.ceil(secs.length/2);
+  var lH=secs.slice(0,half).map(secHTML).join('')+boxFormule(menu.formule);
+  var rH=secs.slice(half).map(secHTML).join('')+boxMenuEnfant(menu.menuEnfant);
+  document.getElementById('carteCols').innerHTML='<div>'+lH+'</div><div>'+rH+'</div>';
+
+  var c1=ALLERGEN_LIST.slice(0,6), c2=ALLERGEN_LIST.slice(6);
+  function ai(a){return '<span class="alg-item"><img src="'+ALLERGEN_IMGS[a.key]+'" alt="'+a.label+'" width="16" height="16"><span>'+a.label+'</span></span>';}
+  document.getElementById('algLegend').innerHTML='<div class="allergen-legend"><div class="allergen-legend__title">Allergènes — informez-nous de vos intolérances</div><div class="allergen-legend__grid">'+c1.map(ai).join('')+c2.map(ai).join('')+'</div></div>';
+}
+
+renderMenu(DEFAULT_MENU);
+
+// ── NEWS ──────────────────────────────────────────────────────────────────────
+var DEFAULT_NEWS=[{"titre": "Bienvenue au Quercus !", "date": "2025-01-01", "extrait": "Notre restaurant ouvre ses portes. Venez découvrir notre cuisine traditionnelle dans une ambiance chaleureuse.", "corps": "Nous sommes ravis de vous accueillir au Quercus !\n\nNotre équipe vous propose une cuisine de saison, faite maison, avec des produits locaux. Réservations au 06 67 50 01 17."}];
+function fmtDate(s){
+  if(!s) return '';
+  var d=new Date(s+'T00:00:00');
+  return isNaN(d)?s:d.toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});
+}
+function renderNews(list){
+  var grid=document.getElementById('newsGrid');
+  var empty=document.getElementById('newsEmpty');
+  if(!list||!list.length){grid.innerHTML='';if(empty)empty.classList.remove('hidden');return;}
+  if(empty) empty.classList.add('hidden');
+  grid.innerHTML=list.map(function(n,i){
+    return '<div class="news-card" data-i="'+i+'">'
+      +(n.date?'<div class="news-card__date">'+fmtDate(n.date)+'</div>':'')
+      +'<div class="news-card__title">'+esc(n.titre||'')+'</div>'
+      +(n.extrait?'<div class="news-card__excerpt">'+esc(n.extrait)+'</div>':'')
+      +'<span class="news-card__more">Lire la suite &rarr;</span>'
+      +'</div>';
+  }).join('');
+  // Attacher les événements modal
+  grid.querySelectorAll('.news-card').forEach(function(card){
+    card.addEventListener('click',function(){
+      var n=currentNews[parseInt(card.getAttribute('data-i'))];
+      if(!n) return;
+      document.getElementById('newsModalDate').textContent=fmtDate(n.date)||'';
+      document.getElementById('newsModalTitle').textContent=n.titre||'';
+      document.getElementById('newsModalBody').textContent=n.corps||n.extrait||'';
+      document.getElementById('newsModal').classList.remove('hidden');
+      document.body.style.overflow='hidden';
+    });
+  });
+}
+var currentNews=DEFAULT_NEWS;
+renderNews(currentNews);
+// Charger depuis KV
+fetch('/api/news',{cache:'no-store'})
+  .then(function(r){return r.ok?r.json():null;})
+  .then(function(d){if(d&&Array.isArray(d)){currentNews=d;renderNews(d);}})
+  .catch(function(){});
+// Modal
+function closeModal(){
+  document.getElementById('newsModal').classList.add('hidden');
+  document.body.style.overflow='';
+}
+document.getElementById('newsModalClose').addEventListener('click',closeModal);
+document.getElementById('newsModalBackdrop').addEventListener('click',closeModal);
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
+
+fetch('/api/menu',{cache:'no-store'})
+  .then(function(r){return r.ok?r.json():null;})
+  .then(function(d){
+    if(d&&d.sections){
+      // Nettoyer titre/sous résiduels du menuEnfant dans les données KV
+      if(d.menuEnfant){
+        delete d.menuEnfant.titre;
+        delete d.menuEnfant.sous;
+      }
+      renderMenu(d);
+    }
+  })
+  .catch(function(){});
+
+document.getElementById('year').textContent=new Date().getFullYear();
+var nav=document.getElementById('nav');
+function onScroll(){nav.classList.toggle('scrolled',window.scrollY>40);}
+onScroll(); window.addEventListener('scroll',onScroll,{passive:true});
+var tog=document.getElementById('navToggle'), lnks=document.getElementById('navLinks');
+tog.addEventListener('click',function(){var o=lnks.classList.toggle('open');tog.setAttribute('aria-expanded',o);});
+lnks.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){lnks.classList.remove('open');tog.setAttribute('aria-expanded',false);});});
+var sch={0:[],1:[[690,870]],2:[[690,870]],3:[[690,870]],4:[[690,870]],5:[[690,870],[1110,1320]],6:[[690,870],[1110,1320]]};
+var now=new Date(), day=now.getDay(), mins=now.getHours()*60+now.getMinutes();
+var isOpen=(sch[day]||[]).some(function(r){return mins>=r[0]&&mins<r[1];});
+document.getElementById('status').classList.add(isOpen?'is-open':'is-closed');
+document.getElementById('statusText').textContent=isOpen?'Ouvert maintenant':'Fermé actuellement';
+var tli=document.querySelector('#hours li[data-day="'+day+'"]');
+if(tli) tli.classList.add('today');
+
+function boxMenuEnfant(me){
+  if(!me) return '';
+  var hasContent=me.prix||(me.entrees&&me.entrees.length)||(me.plats&&me.plats.length)||(me.desserts&&me.desserts.length);
+  if(!hasContent) return '';
+  var h='<div class="box-block">'
+    +'<div class="menu-block__head"><h3>Menu enfant</h3><span class="rule"></span></div>';
+  // Prix global
+  if(me.prix){
+    h+='<div class="me-prix-line"><b>Entrée · Plat · Dessert</b><span>'+esc(me.prix)+'</span></div>';
+  }
+  // Entrées
+  if(me.entrees&&me.entrees.length){
+    h+='<div class="me-section"><div class="me-section-title">Entrées</div>'
+      +'<div class="me-options">'+me.entrees.map(esc).join(' &nbsp;·&nbsp; ')+'</div></div>';
+  }
+  // Plats
+  if(me.plats&&me.plats.length){
+    h+='<div class="me-section"><div class="me-section-title">Plats</div>'
+      +'<div class="me-options">'+me.plats.map(esc).join(' &nbsp;·&nbsp; ')+'</div></div>';
+  }
+  // Desserts
+  if(me.desserts&&me.desserts.length){
+    h+='<div class="me-section"><div class="me-section-title">Desserts</div>'
+      +'<div class="me-options">'+me.desserts.map(esc).join(' &nbsp;·&nbsp; ')+'</div></div>';
+  }
+  // Inclus
+  if(me.inclus) h+='<p class="me-inclus">'+esc(me.inclus)+'</p>';
+  return h+'</div>';
+}
+
+function renderMenu(menu){
+  var pj=menu.platDuJour||{}, pjEl=document.getElementById('platJour');
+  if(pj.nom&&pj.nom.trim()){
+    var dt='';
+    if(pj.date){var d=new Date(pj.date+'T00:00:00');if(!isNaN(d))dt=d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});}
+    pjEl.innerHTML='<div class="plat-jour"><span class="eyebrow">Le plat du jour</span><h3>'+esc(pj.nom)+'</h3>'
+      +(pj.desc?'<p class="pj-desc">'+descHTML(pj.desc)+'</p>':'')
+      +(pj.prix?'<p class="pj-prix">'+esc(pj.prix)+(/[€]|eur/i.test(pj.prix)?'':' €')+'</p>':'')
+      +(dt?'<p class="pj-date">'+dt+'</p>':'')+'</div>';
+  } else pjEl.innerHTML='';
+
+  // Filtrer toute section résiduelle nommée 'Menu enfant' dans les données KV
+  var secs=(menu.sections||[]).filter(function(s){return s.titre!=='Menu enfant';});
   var half=Math.ceil(secs.length/2);
   var lH=secs.slice(0,half).map(secHTML).join('')+boxFormule(menu.formule);
   var rH=secs.slice(half).map(secHTML).join('')+boxMenuEnfant(menu.menuEnfant);
@@ -461,6 +628,7 @@ document.getElementById('status').classList.add(isOpen?'is-open':'is-closed');
 document.getElementById('statusText').textContent=isOpen?'Ouvert maintenant':'Fermé actuellement';
 var tli=document.querySelector('#hours li[data-day="'+day+'"]');
 if(tli) tli.classList.add('today');
+
 </script>
 </body>
 </html>
